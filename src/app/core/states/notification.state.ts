@@ -5,6 +5,7 @@ import { INotification, NotificationStatus } from 'src/app/data/interfaces/model
 
 import * as R from 'ramda';
 import { Notification } from '../models/notification';
+import { Injectable } from '@angular/core';
 
 // import { Notification, INotification                 } from '../models/notification';
 // import { PaginateOptions, IPaginateResult2            } from '../services/basePagination';
@@ -43,10 +44,12 @@ export interface NotificationState {
       selectedId: 0
     }
 })
+@Injectable()
 export class NotificationStore {
     // private notificationOptions: PaginateOptions   = null;
 
-    constructor(/*private store: Store,private notifService: NotificactionsService*/) {
+    constructor(private store: Store,
+                private notifService: NotificactionsService) {
         // this.notificationOptions        = new PaginateOptions();
         // this.notificationOptions.limit  = 50;
         // this.notificationOptions.page   = 0;
@@ -79,7 +82,7 @@ export class NotificationStore {
 
     @Action(LoadNotifications)
     LoadNotifications(stateContext: StateContext<NotificationState>) {
-      /*  this.notifService.apiNotificationsGet().subscribe(
+        this.notifService.apiNotificationsGet().subscribe(
             // (notifs: INotification[]) => {
             (notifs: INotification[]) => {
               const filterRead = R.filter(isRead);
@@ -97,7 +100,7 @@ export class NotificationStore {
               // Log errors if any
               console.log(err);
             }
-        );*/
+        );
     }
 
     @Action(SelectNotification)

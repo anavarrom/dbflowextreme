@@ -29,6 +29,9 @@ import { NotificationDetailComponent } from './notifications/notification-detail
 import { CalendarsTabePageComponent } from './calendars/calendars-tabe-page/calendars-tabe-page.component';
 import { ChatsTabePageComponent } from './chats/chats-tabe-page/chats-tabe-page.component';
 import { ChatDetailComponent } from './chats/chat-detail/chat-detail.component';
+import { ProfileComponent } from './profile/profile.component';
+import { HomeComponent } from './home/home.component';
+import { DisplayDataComponent } from './display-data/display-data.component';
 
 const externalModules = [
   CommonModule,
@@ -45,7 +48,10 @@ const dbFlow6Components = [
   NotificationDetailComponent,
   CalendarsTabePageComponent,
   ChatsTabePageComponent,
-  ChatDetailComponent
+  ChatDetailComponent,
+  DisplayDataComponent,
+  HomeComponent,
+  ProfileComponent
 ];
 
 

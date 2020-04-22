@@ -14,6 +14,8 @@ import * as moment from 'moment';
 import { Observable } from 'rxjs';
 // import { map, take } from 'rxjs/operators';
 import 'rxjs/add/operator/map';
+import { InjectSetupWrapper } from '@angular/core/testing';
+import { Injectable } from '@angular/core';
 //import 'rxjs/Rx';
 
 // Create an interface for
@@ -37,14 +39,14 @@ export interface ChatState {
       selectedId: 0
     }
 })
+@Injectable()
 export class ChatStore {
 
   public connectionStatus$: Observable<string>;
 
-    constructor(/*private store: Store, private chatService: ChatService,
+    constructor(private store: Store, private chatService: ChatService,
                 private messageService: MessageService, 
-                //private wsServ: wsService
-                private _stompService: StompService*/) {
+                private _stompService: StompService) {
         // this.notificationOptions        = new PaginateOptions();
         // this.notificationOptions.limit  = 50;
         // this.notificationOptions.page   = 0;
@@ -54,14 +56,14 @@ export class ChatStore {
         .subscribe((status: string) => {
         console.log(`Stomp connection status: ${status}`);
       });*/
-/*
+
     let stomp_subscription = this._stompService.subscribe('/chat/newMessageOK');
 
     stomp_subscription.map((message: ChatMessage) => {
       return message.body;
     }).subscribe((msgBody: string) => {
       console.log(`Received: ${msgBody}`);
-    });*/
+    });
 
     }
 
@@ -79,7 +81,6 @@ export class ChatStore {
 
     @Action(LoadChats)
     LoadChats(stateContext: StateContext<ChatState>) {
-      /*
         this.chatService.query().subscribe(
             // (notifs: INotification[]) => {
             (chatsRead: HttpResponse<IChat[]>) => {
@@ -89,13 +90,13 @@ export class ChatStore {
               // Log errors if any
               console.log(err);
             }
-        );*/
+        );
     }
 
     @Action(SelectChat)
     SelectChat(stateContext: StateContext<ChatState>, action: SelectChat) {
       // Lo primero que tenemos que hacer es ver si tenemos mensajes
-     /* let selectedChat: Chat = R.find((chat: Chat) => (chat.id  === action.id), stateContext.getState().chats);
+      let selectedChat: Chat = R.find((chat: Chat) => (chat.id  === action.id), stateContext.getState().chats);
       if (!selectedChat.hasOwnProperty('messages')) {
         // No tenemos mensajes.... cargamos
         this.messageService.queryAllMessagesFrom(selectedChat.id).subscribe(
@@ -113,7 +114,7 @@ export class ChatStore {
             console.log(err);
           }
       );
-      }*/
+      }
     }
 
   @Action(NewMessage)
@@ -136,6 +137,6 @@ export class ChatStore {
     // Lanzamos por websocket el mensaje
     // const event = new SendWebSocketMessage({ type: 'message', msg });
     // this.store.dispatch(event);
-    // this._stompService.publish('/chat/newMessage',  JSON.stringify(msg));
+    this._stompService.publish('/chat/newMessage',  JSON.stringify(msg));
   }
 }

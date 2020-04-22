@@ -25,6 +25,8 @@ import { InjectableRxStompConfig, RxStompService, rxStompServiceFactory, StompSe
 // Project Services
 // import { UsersService           } from './services/users.service';
 import { NotificactionsService           } from '../data/api/notifications.service';
+import { ChatService } from '../data/api/chat.service';
+import { MessageService } from '../data/api/message.service';
 // import { CalendarService           } from './services/calendar.service';
 // import { ProcessMessageComponent} from './messages/process-message/process-message.component';
 // import { SearchComponent } from './search/search.component'
@@ -47,9 +49,9 @@ const dbFlow6Stores = [
 ];
 
 const dbFlow6Services = [
-    // UsersService,
     NotificactionsService,
-    // CalendarService
+    ChatService,
+    MessageService
 ];
 
 
