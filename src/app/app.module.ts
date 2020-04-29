@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, APP_INITIALIZER } from '@angular/core';
+import { NgModule, APP_INITIALIZER, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { SideNavOuterToolbarModule, SideNavInnerToolbarModule, SingleCardModule } from './shared/layouts';
@@ -84,13 +84,13 @@ const customModules = [
     AuthService,
     ScreenService,
     AppInfoService,
-    /*AppAuthGuard,
+    AppAuthGuard,
     {
       provide: APP_INITIALIZER,
       useFactory: initializer,
       multi: true,
       deps: [KeycloakService]
-    }*/
+    }
   ],
   bootstrap: [AppComponent]
 })

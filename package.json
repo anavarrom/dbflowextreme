@@ -28,7 +28,6 @@
     "@ngxs/store": "^3.6.2",
     "@stomp/ng2-stompjs": "^7.2.0",
     "@types/ramda": "^0.27.3",
-    "core-js": "^3.6.5",
     "devextreme": "latest",
     "devextreme-angular": "latest",
     "devextreme-schematics": "^1.1.13",

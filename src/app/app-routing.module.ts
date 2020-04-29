@@ -1,43 +1,52 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { LoginFormComponent } from './shared/components';
-import { AuthGuardService } from './shared/services';
 import { HomeComponent } from './secure/home/home.component';
 import { ProfileComponent } from './secure/profile/profile.component';
 import { DisplayDataComponent } from './secure/display-data/display-data.component';
 import { DxDataGridModule, DxFormModule } from 'devextreme-angular';
+import { AppAuthGuard } from './shared/guards/AppAuthGuard';
+import { ChatsTabePageComponent } from './secure/chats/chats-tabe-page/chats-tabe-page.component';
 
 const routes: Routes = [
   {
     path: 'display-data',
     component: DisplayDataComponent,
-    canActivate: [ AuthGuardService ]
+    canActivate: [AppAuthGuard],
+    data: { roles: ['ROLE_USER'] }
   },
   {
     path: 'profile',
     component: ProfileComponent,
-    canActivate: [ AuthGuardService ]
+    canActivate: [AppAuthGuard],
+    data: { roles: ['ROLE_USER'] }
   },
   {
     path: 'home',
     component: HomeComponent,
-    canActivate: [ AuthGuardService ]
+    canActivate: [AppAuthGuard],
+    data: { roles: ['ROLE_USER'] }
+  },
+  {
+    path: 'chats',
+    component: ChatsTabePageComponent,
+    canActivate: [AppAuthGuard],
+    data: { roles: ['ROLE_USER'] }
   },
   {
     path: 'login-form',
-    component: LoginFormComponent,
-    canActivate: [ AuthGuardService ]
+    component: LoginFormComponent
   },
   {
     path: '**',
     redirectTo: 'home',
-    canActivate: [ AuthGuardService ]
+    canActivate: [AppAuthGuard]
   }
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes), DxDataGridModule, DxFormModule],
-  providers: [AuthGuardService],
+  providers: [],
   exports: [RouterModule],
   declarations: []
 })

@@ -113,7 +113,9 @@ export class ChatStore {
             // Log errors if any
             console.log(err);
           }
-      );
+        );
+      } else {
+        stateContext.patchState({ selectedId: action.id});
       }
     }
 

@@ -15,6 +15,10 @@ export const navigation = [
       {
         text: 'Display Data',
         path: '/display-data'
+      },
+      {
+        text: 'Chats',
+        path: '/chats'
       }
     ]
   }

@@ -1,0 +1,50 @@
+.contenedor {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    display: flex;
+    height: 100%;
+    align-items: stretch;
+    border: 5px solid red;
+}
+
+.listaChats {
+    // flex-grow: 1;
+    flex-basis: 25%;
+//    border: 5px solid red;
+    height: 100%;
+}
+
+.listaMensajes {
+    // flex-grow: 3;
+    flex-basis: 75%;
+//    border: 5px solid red;
+    height: 100%;
+}
+
+.c1 {
+    flex-direction: column;
+    flex-wrap: nowrap;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    align-items: stretch;
+    border: 5px solid red;
+}
+
+
+
+.caja { 
+    font-family: Century Gothic,CenturyGothic,AppleGothic,sans-serif; 
+    color: #ffffff; 
+    font-size: 18px; 
+    font-weight: 400; 
+    text-align: center; 
+    background: #889ccf; 
+    margin: 0 0 25px; 
+    overflow: hidden; 
+    padding: 20px; 
+    border-radius: 35px 0px 35px 0px; 
+    -moz-border-radius: 35px 0px 35px 0px; 
+    -webkit-border-radius: 35px 0px 35px 0px; 
+    border: 2px solid #5878ca;
+}

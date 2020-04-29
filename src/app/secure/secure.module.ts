@@ -33,6 +33,18 @@ import { ProfileComponent } from './profile/profile.component';
 import { HomeComponent } from './home/home.component';
 import { DisplayDataComponent } from './display-data/display-data.component';
 
+import { DxTileViewModule, DxToolbarModule, DxButtonModule, DxListModule, DxBoxModule, DxResponsiveBoxModule, DxTemplateModule } from 'devextreme-angular';
+
+const devExtremeModule = [
+  DxTemplateModule,
+  DxTileViewModule,
+  DxButtonModule,
+  DxListModule,
+  DxBoxModule,
+  DxResponsiveBoxModule,
+  DxToolbarModule
+];
+
 const externalModules = [
   CommonModule,
   FormsModule,
@@ -57,6 +69,7 @@ const dbFlow6Components = [
 
 @NgModule({
   imports: [
+    devExtremeModule,
     externalModules,
     CoreModule
   ],
