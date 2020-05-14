@@ -81,7 +81,7 @@ export class ChatStore {
 
     @Action(LoadChats)
     LoadChats(stateContext: StateContext<ChatState>) {
-        this.chatService.query().subscribe(
+        this.chatService.queryAllChatsFromUser().subscribe(
             // (notifs: INotification[]) => {
             (chatsRead: HttpResponse<IChat[]>) => {
               // Actualizamos el estado con pathState({nombre_propiedad: valor}).

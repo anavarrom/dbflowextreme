@@ -11,40 +11,49 @@ import { IChat, IChatMessage } from '../../data/interfaces/models';
 
 import {environment} from '../../../environments/environment';
 
-type EntityResponseType = HttpResponse<IChat>;
-type EntityArrayResponseType = HttpResponse<IChat[]>;
+type ChatResponseType = HttpResponse<IChat>;
+type ChatArrayResponseType = HttpResponse<IChat[]>;
 
 @Injectable()
 export class ChatService {
-  public resourceUrl = environment.basePath + '/dbflowchat/api/chats';
-
+  public chatURL: string      = environment.basePath + '/dbflowchat/api/';
+  public resourceUrl: string  = this.chatURL + 'chats';
+  public userChatsURL: string = this.chatURL + 'userchats';
+ 
   constructor(protected http: HttpClient) {}
 
-  create(chat: IChat): Observable<EntityResponseType> {
+  create(chat: IChat): Observable<ChatResponseType> {
     const copy = this.convertDateFromClient(chat);
     return this.http
       .post<IChat>(this.resourceUrl, copy, { observe: 'response' })
-      .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
+      .pipe(map((res: ChatResponseType) => this.convertDateFromServer(res)));
   }
 
-  update(chat: IChat): Observable<EntityResponseType> {
+  update(chat: IChat): Observable<ChatResponseType> {
     const copy = this.convertDateFromClient(chat);
     return this.http
       .put<IChat>(this.resourceUrl, copy, { observe: 'response' })
-      .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
+      .pipe(map((res: ChatResponseType) => this.convertDateFromServer(res)));
   }
 
-  find(id: number): Observable<EntityResponseType> {
+  find(id: number): Observable<ChatResponseType> {
     return this.http
       .get<IChat>(`${this.resourceUrl}/${id}`, { observe: 'response' })
-      .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
+      .pipe(map((res: ChatResponseType) => this.convertDateFromServer(res)));
   }
 
-  query(req?: any): Observable<EntityArrayResponseType> {
+  query(req?: any): Observable<ChatArrayResponseType> {
     const options = createRequestOption(req);
     return this.http
       .get<IChat[]>(this.resourceUrl, { params: options, observe: 'response' })
-      .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
+      .pipe(map((res: ChatArrayResponseType) => this.convertDateArrayFromServer(res)));
+  }
+
+  queryAllChatsFromUser(req?: any): Observable<ChatArrayResponseType> {
+    const options = createRequestOption(req);
+    return this.http
+      .get<IChatMessage[]>(this.userChatsURL, { params: options, observe: 'response' })
+      .pipe(map((res: ChatArrayResponseType) => this.convertDateArrayFromServer(res)));
   }
 
   delete(id: number): Observable<HttpResponse<any>> {
@@ -59,7 +68,7 @@ export class ChatService {
     return copy;
   }
 
-  protected convertDateFromServer(res: EntityResponseType): EntityResponseType {
+  protected convertDateFromServer(res: ChatResponseType): ChatResponseType {
     if (res.body) {
       res.body.createdDate = res.body.createdDate != null ? moment(res.body.createdDate) : null;
       res.body.lastMessage = res.body.lastMessage != null ? moment(res.body.lastMessage) : null;
@@ -67,7 +76,7 @@ export class ChatService {
     return res;
   }
 
-  protected convertDateArrayFromServer(res: EntityArrayResponseType): EntityArrayResponseType {
+  protected convertDateArrayFromServer(res: ChatArrayResponseType): ChatArrayResponseType {
     if (res.body) {
       res.body.forEach((chat: IChat) => {
         chat.createdDate = chat.createdDate != null ? moment(chat.createdDate) : null;

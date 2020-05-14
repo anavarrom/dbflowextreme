@@ -11,6 +11,16 @@ export const enum ChatType {
     NOTIFICATION = 'NOTIFICATION'
 }
 
+export interface IDbFlowAccount {
+    username: string;
+    firstName: string;
+    lastName: string;
+    enabled: boolean;
+    email: string;
+    authorities: string[];
+    imageUrl: string;
+}
+
 export interface INotification {
     id?: number;
     subject?: string;
@@ -46,6 +56,7 @@ export interface IChat {
     ownerId?: number;
     to?: string;
     toId?: number;
+    withContact?: string;
     subject?: string;
     createdDate?: Moment;
     lastMessage?: Moment;

@@ -23,10 +23,10 @@ let keycloakConfig: KeycloakConfig = {
   url: 'http://localhost:9080/auth',
   // url: '/auth',
   realm: 'jhipster',
-  clientId: 'web_app',
-  // credentials: {
-  //   secret: "57115dc3-4a3c-497a-8727-456386a29cd9"
-  //  }
+  clientId: 'dbFlow',
+   credentials: {
+     secret: "12fdc4d9-997f-43e2-aa28-ce4df1dc1448"
+   }
 };
 
 const stompConfig: StompConfig = {

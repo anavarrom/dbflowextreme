@@ -1,12 +1,13 @@
-export class Account {
+import { IDbFlowAccount } from 'src/app/data/interfaces/models';
+
+export class DbFlowAccount implements IDbFlowAccount {
     constructor(
-      public activated: boolean,
-      public authorities: string[],
-      public email: string,
+      public username: string,
       public firstName: string,
-      public langKey: string,
       public lastName: string,
-      public login: string,
+      public enabled: boolean,
+      public email: string,
+      public authorities: string[],
       public imageUrl: string
     ) {}
   }

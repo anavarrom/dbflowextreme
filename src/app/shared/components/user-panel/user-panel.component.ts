@@ -3,6 +3,10 @@ import { CommonModule } from '@angular/common';
 
 import { DxListModule } from 'devextreme-angular/ui/list';
 import { DxContextMenuModule } from 'devextreme-angular/ui/context-menu';
+import { Store, Select } from '@ngxs/store';
+import { SessionStore } from 'src/app/core/states/session.state';
+import { Observable } from 'rxjs';
+import { IDbFlowAccount } from 'src/app/data/interfaces/models';
 
 @Component({
   selector: 'app-user-panel',
@@ -17,7 +21,10 @@ export class UserPanelComponent {
   @Input()
   menuMode: string;
 
-  constructor() {}
+  @Select(SessionStore.currentUser) public sessionUser$: Observable<IDbFlowAccount>;
+
+  constructor(private store: Store) {
+  }
 }
 
 @NgModule({

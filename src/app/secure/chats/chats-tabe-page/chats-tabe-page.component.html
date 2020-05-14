@@ -1,19 +1,20 @@
-
 <div class="content-block">
-  <div class="contenedor">
-    <div class="listaChats">
+  <div class="chatContainer">
+    <div class="chatList">
       <dx-list [dataSource]="(chats$ | async)" [grouped]="false" [searchEnabled]="true" selectionMode="single"
       searchExpr="subject" searchMode="contains" (onSelectionChanged)=chatSelected($event)>
-        <div *dxTemplate="let chat of 'item'">
-          <div>
-            {{chat.subject}}
-          </div>
-        </div>
-        <div *dxTemplate="let item of 'group'">
+        <div *dxTemplate="let chat of 'item'" class="chat">
+           <div class="chat_block_left"> 
+             <p class="contact">{{chat.withContact}} </p>
+             <p class="subject">{{chat.subject}}</p>
+            </div>
+           <div class="chat_block_right">
+              <p class="timeAgo">{{chat.lastMessage | amTimeAgo}} </p>
+            </div>           
         </div>
       </dx-list>
     </div> 
-    <div class="listaMensajes">
+    <div class="chatMessages">
       <dx-toolbar style="background-color: transparent;">
         <dxi-item location="center" widget="dxButton" locateInMenu="never">
             <div *dxTemplate>

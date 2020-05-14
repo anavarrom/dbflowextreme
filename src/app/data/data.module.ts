@@ -3,7 +3,7 @@ import { Configuration } from './configuration';
 import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 
-import { NotificactionsService } from './api/notifications.service';
+import { NotificactionService } from './api/notification.service';
 import { KeycloakBearerInterceptor } from 'keycloak-angular';
 
 @NgModule({

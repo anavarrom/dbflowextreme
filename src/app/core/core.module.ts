@@ -24,32 +24,32 @@ import { InjectableRxStompConfig, RxStompService, rxStompServiceFactory, StompSe
 
 // Project Services
 // import { UsersService           } from './services/users.service';
-import { NotificactionsService           } from '../data/api/notifications.service';
+import { NotificactionService           } from '../data/api/notification.service';
 import { ChatService } from '../data/api/chat.service';
 import { MessageService } from '../data/api/message.service';
+import { SessionStore } from './states/session.state';
 // import { CalendarService           } from './services/calendar.service';
 // import { ProcessMessageComponent} from './messages/process-message/process-message.component';
 // import { SearchComponent } from './search/search.component'
 
 
+const dbFlow6Stores = [
+  NotificationStore,
+  ChatStore,
+  SessionStore
+];
 
 const externalModules = [
   CommonModule,
-  NgxsModule.forRoot([NotificationStore, ChatStore], { developmentMode: !environment.production }),
+  NgxsModule.forRoot( dbFlow6Stores, { developmentMode: !environment.production }),
   NgxsReduxDevtoolsPluginModule.forRoot(),
   NgxsLoggerPluginModule.forRoot(),
   NgxsRouterPluginModule.forRoot(),
 ];
 
-const dbFlow6Stores = [
-    // NotificationStore,
-    // ChatStore,
-    // UserStore,
-    // MessageStore
-];
 
 const dbFlow6Services = [
-    NotificactionsService,
+    NotificactionService,
     ChatService,
     MessageService
 ];

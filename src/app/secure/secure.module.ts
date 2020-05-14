@@ -6,6 +6,7 @@ import { FormsModule       } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 // import { OnsenModule       } from 'ngx-onsenui';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { MomentModule } from 'ngx-moment';
 
 // import { FlexLayoutModule } from '@angular/flex-layout';
 // import { NgxJsonViewerModule } from 'ngx-json-viewer';
@@ -50,6 +51,7 @@ const externalModules = [
   FormsModule,
   // MobxAngularModule,
   RouterModule,
+  MomentModule
   // OnsenModule
 ];
 

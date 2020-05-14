@@ -1,11 +1,12 @@
 import { State, Store, StateContext, Action, Selector } from '@ngxs/store';
 import { LoadNotifications, SelectNotification } from '../actions/notification.actions';
-import { NotificactionsService } from 'src/app/data/api/notifications.service';
+import { NotificactionService } from 'src/app/data/api/notification.service';
 import { INotification, NotificationStatus } from 'src/app/data/interfaces/models';
 
 import * as R from 'ramda';
 import { Notification } from '../models/notification';
 import { Injectable } from '@angular/core';
+import { HttpResponse } from '@angular/common/http';
 
 // import { Notification, INotification                 } from '../models/notification';
 // import { PaginateOptions, IPaginateResult2            } from '../services/basePagination';
@@ -49,7 +50,7 @@ export class NotificationStore {
     // private notificationOptions: PaginateOptions   = null;
 
     constructor(private store: Store,
-                private notifService: NotificactionsService) {
+                private notifService: NotificactionService) {
         // this.notificationOptions        = new PaginateOptions();
         // this.notificationOptions.limit  = 50;
         // this.notificationOptions.page   = 0;
@@ -82,14 +83,14 @@ export class NotificationStore {
 
     @Action(LoadNotifications)
     LoadNotifications(stateContext: StateContext<NotificationState>) {
-        this.notifService.apiNotificationsGet().subscribe(
+        this.notifService.query().subscribe(
             // (notifs: INotification[]) => {
-            (notifs: INotification[]) => {
+            (notifs: HttpResponse<INotification[]>) => {
               const filterRead = R.filter(isRead);
               const filterReceived = R.filter(isReceived);
 
-              const rNotifs: Notification[] = filterRead(notifs) as Notification[];
-              const receivedNotifs: Notification[] = filterReceived(notifs) as Notification[];
+              const rNotifs: Notification[] = filterRead(notifs.body) as Notification[];
+              const receivedNotifs: Notification[] = filterReceived(notifs.body) as Notification[];
 
               // const notifs2: Notification[] = notifs.docs as Notification[];
 
