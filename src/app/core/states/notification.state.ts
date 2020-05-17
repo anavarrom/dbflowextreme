@@ -7,6 +7,8 @@ import * as R from 'ramda';
 import { Notification } from '../models/notification';
 import { Injectable } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
+import { Appointment } from '../models/appointment';
+import * as moment from 'moment';
 
 // import { Notification, INotification                 } from '../models/notification';
 // import { PaginateOptions, IPaginateResult2            } from '../services/basePagination';
@@ -20,12 +22,17 @@ function isReceived(notif: INotification) {
   return (notif.status !== NotificationStatus.READ);
 }
 
+function toAppointment(notif: INotification): Appointment{
+  return new Appointment(notif.id, notif.subject, notif.body, moment(), notif.dueDate, true);
+}
+
 
 // Create an interface for
 export interface NotificationState {
     // notifications: Notification[];
     pendingNotifs: Notification[];
     readNotifs: Notification[];
+    allNotifs: Notification[];
     pendingSize: number;
     readSize: number;
     selectedId: number;
@@ -40,9 +47,10 @@ export interface NotificationState {
     defaults: {
       pendingNotifs: [],
       readNotifs: [],
+      allNotifs: [],
       pendingSize: 0,
       readSize: 0,
-      selectedId: 0
+      selectedId: 0,
     }
 })
 @Injectable()
@@ -69,11 +77,23 @@ export class NotificationStore {
     }
 
     @Selector()
+    // @ImmutableSelector()
+    static all(state: NotificationState): Notification[] {
+      return state.allNotifs;
+    }
+
+    @Selector()
+    // @ImmutableSelector()
+    static allAsAppointments(state: NotificationState): Appointment[] {
+      return R.map(toAppointment, state.allNotifs);
+    }
+
+    @Selector()
     static selected(state: NotificationState): Notification | null {
       // tslint:disable-next-line: only-arrow-functions
-      // return R.find( function(n: Notification) { return (n.id  === state.selectedPendingId); }, state.pendingNotifs);
-      return R.find((n: Notification) => (n.id  === state.selectedId), state.pendingNotifs) ||
-             R.find((n: Notification) => (n.id  === state.selectedId), state.readNotifs);
+      return R.find((n: Notification) => (n.id  === state.selectedId), state.allNotifs);
+      // return R.find((n: Notification) => (n.id  === state.selectedId), state.pendingNotifs) ||
+      //        R.find((n: Notification) => (n.id  === state.selectedId), state.readNotifs);
     }
 
     /*@Selector()
@@ -95,6 +115,7 @@ export class NotificationStore {
               // const notifs2: Notification[] = notifs.docs as Notification[];
 
               // Actualizamos el estado con pathState({nombre_propiedad: valor}).
+              stateContext.patchState({ allNotifs: notifs.body });
               stateContext.patchState({ pendingNotifs: receivedNotifs, pendingSize: receivedNotifs.length });
               stateContext.patchState({ readNotifs: rNotifs, readSize: rNotifs.length });
             }, err => {

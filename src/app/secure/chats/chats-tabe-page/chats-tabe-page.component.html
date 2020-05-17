@@ -4,41 +4,48 @@
       <dx-list [dataSource]="(chats$ | async)" [grouped]="false" [searchEnabled]="true" selectionMode="single"
       searchExpr="subject" searchMode="contains" (onSelectionChanged)=chatSelected($event)>
         <div *dxTemplate="let chat of 'item'" class="chat">
-           <div class="chat_block_left"> 
+           <div class="chat_block_left">
              <p class="contact">{{chat.withContact}} </p>
              <p class="subject">{{chat.subject}}</p>
             </div>
            <div class="chat_block_right">
               <p class="timeAgo">{{chat.lastMessage | amTimeAgo}} </p>
-            </div>           
+            </div>
         </div>
       </dx-list>
-    </div> 
+    </div>
     <div class="chatMessages">
-      <dx-toolbar style="background-color: transparent;">
-        <dxi-item location="center" widget="dxButton" locateInMenu="never">
+      <!-- <dx-toolbar style="background-color: transparent;">
+        <dxi-item location="before" widget="dxButton" locateInMenu="never">
             <div *dxTemplate>
-                <div class='toolbar-label'><b>Este soy yo</b></div>
-            </div>        
+              <p class="contact">{{(selectedChat$ | async)?.withContact}} </p>
+              <p class="subject">{{(selectedChat$ | async)?.subject}}</p>
+             </div>
         </dxi-item>
         <dxi-item location="before" widget="dxButton" [options]="backButtonOptions">
         </dxi-item>
         <dxi-item location="before"  widget="dxButton" locateInMenu="auto" [options]="refreshButtonOptions">
         </dxi-item>
-      </dx-toolbar>
-      <dx-list [dataSource]="(selectedChat$ | async)?.messages" [grouped]="false" style="flex-basis: 75%;">
-        <div *dxTemplate="let message of 'item'">
-          <div>
+      </dx-toolbar> -->
+      <!-- <dx-list [dataSource]="(selectedChat$ | async)?.messages" [grouped]="false" class="messages">
+        <div *dxTemplate="let message of 'item'" class="message">
             {{message.body}}
-          </div>
         </div>
-      </dx-list>
-      <div>
-        Hola caracoladfsdd
-        <dx-button stylingMode="contained" text="Contained" 
-                   type="normal" [width]="120" (onClick)="clickNeMwssage($event)">
-        </dx-button>
+      </dx-list> -->
+      <div *ngFor="let message of (selectedChat$ | async)?.messages" class="messages">
+        <div [ngClass]="{ message_1:(selectedUser$ | async)?.username !== message.from,
+                          message_2:(selectedUser$ | async)?.username === message.from}">
+            <p>{{message.body}} </p>
+            <p> {{(selectedUser$ | async)?.username}}</p>
+            <p> {{message.from}}</p>
+        </div>
       </div>
-    </div> 
+      <div class="newMessageContent">
+          Hola caracoladfsdd
+          <dx-button stylingMode="contained" text="Contained"
+                    type="normal" [width]="120" (onClick)="clickNeMwssage($event)">
+          </dx-button>
+      </div>
+    </div>
   </div>
 </div>

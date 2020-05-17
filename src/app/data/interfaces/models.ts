@@ -64,3 +64,11 @@ export interface IChat {
     messages?: IChatMessage[];
   }
   
+export interface IAppointment {
+    id?: number;
+    text?: string;
+    description?: string;
+    startDate?: Moment;
+    endDate?: Moment;
+    allDay?: boolean;
+}

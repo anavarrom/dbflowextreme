@@ -34,7 +34,9 @@ import { ProfileComponent } from './profile/profile.component';
 import { HomeComponent } from './home/home.component';
 import { DisplayDataComponent } from './display-data/display-data.component';
 
-import { DxTileViewModule, DxToolbarModule, DxButtonModule, DxListModule, DxBoxModule, DxResponsiveBoxModule, DxTemplateModule } from 'devextreme-angular';
+import { DxTileViewModule, DxToolbarModule, DxButtonModule, DxListModule, DxBoxModule, 
+         DxResponsiveBoxModule, DxTemplateModule, DxSchedulerModule } from 'devextreme-angular';
+import { AppointmentsTabPageComponent } from './appointments/appointments-tab-page/appointments-tab-page.component';
 
 const devExtremeModule = [
   DxTemplateModule,
@@ -43,7 +45,8 @@ const devExtremeModule = [
   DxListModule,
   DxBoxModule,
   DxResponsiveBoxModule,
-  DxToolbarModule
+  DxToolbarModule,
+  DxSchedulerModule
 ];
 
 const externalModules = [
@@ -64,6 +67,7 @@ const dbFlow6Components = [
   ChatsTabePageComponent,
   ChatDetailComponent,
   DisplayDataComponent,
+  AppointmentsTabPageComponent,
   HomeComponent,
   ProfileComponent
 ];
@@ -79,7 +83,7 @@ const dbFlow6Components = [
     dbFlow6Components
   ],
   declarations: [
-    dbFlow6Components
+    dbFlow6Components,
   ],
 //  providers: [{ provide: Todos, useClass: remotedev(Todos) }],
   providers: [],

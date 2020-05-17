@@ -21,5 +21,15 @@ export const navigation = [
         path: '/chats'
       }
     ]
+  },
+  {
+    text: 'Examples',
+    icon: 'message',
+    path: '/notifications'
+  },
+  {
+    text: 'Examples',
+    icon: 'message',
+    path: '/appointments'
   }
 ];

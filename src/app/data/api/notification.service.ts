@@ -16,7 +16,7 @@ type EntityArrayResponseType = HttpResponse<INotification[]>;
 
 @Injectable()
 export class NotificactionService {
-  public resourceUrl = environment.basePath + '/dbflowchat/api/notifications';
+  public resourceUrl = environment.basePath + '/dbflowserver/api/notifications';
 
   constructor(protected http: HttpClient) {}
 

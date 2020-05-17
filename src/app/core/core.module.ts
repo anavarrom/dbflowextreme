@@ -28,6 +28,8 @@ import { NotificactionService           } from '../data/api/notification.service
 import { ChatService } from '../data/api/chat.service';
 import { MessageService } from '../data/api/message.service';
 import { SessionStore } from './states/session.state';
+import { AppointmentService } from '../data/api/appointment.service';
+import { AppointmentStore } from './states/appointment.state';
 // import { CalendarService           } from './services/calendar.service';
 // import { ProcessMessageComponent} from './messages/process-message/process-message.component';
 // import { SearchComponent } from './search/search.component'
@@ -36,7 +38,8 @@ import { SessionStore } from './states/session.state';
 const dbFlow6Stores = [
   NotificationStore,
   ChatStore,
-  SessionStore
+  SessionStore,
+  AppointmentStore
 ];
 
 const externalModules = [
@@ -51,7 +54,8 @@ const externalModules = [
 const dbFlow6Services = [
     NotificactionService,
     ChatService,
-    MessageService
+    MessageService,
+    AppointmentService
 ];
 
 

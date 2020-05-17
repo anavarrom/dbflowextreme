@@ -1,4 +1,17 @@
 LISTA DE NOTIFICACIONES
+ <dx-scheduler
+    [dataSource]='(notifications$ | async)'
+    [views]='["agenda"]'
+    currentView="agenda"
+    [currentDate]="currentDate"
+    [startDayHour]="9"
+    [height]="600"
+    appointmentTooltipTemplate="tooltipTemplate">
+    <div *dxTemplate="let model of 'tooltipTemplate'">
+      <i>{{model.appointmentData.text}} ({{model.appointmentData.year}})</i>
+  </div>
+  </dx-scheduler>
+
 
 <!-- <ion-segment (ionChange)="segmentChanged($event)" value="javascript">
   <ion-segment-button value='1'>
