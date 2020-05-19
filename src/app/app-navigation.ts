@@ -30,6 +30,6 @@ export const navigation = [
   {
     text: 'Examples',
     icon: 'message',
-    path: '/appointments'
+    path: '/calendar'
   }
 ];

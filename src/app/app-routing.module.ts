@@ -8,7 +8,7 @@ import { DxDataGridModule, DxFormModule } from 'devextreme-angular';
 import { AppAuthGuard } from './shared/guards/AppAuthGuard';
 import { ChatsTabePageComponent } from './secure/chats/chats-tabe-page/chats-tabe-page.component';
 import { NotificationsTabPageComponent } from './secure/notifications/notifications-tab-page/notifications-tab-page.component';
-import { AppointmentsTabPageComponent } from './secure/appointments/appointments-tab-page/appointments-tab-page.component';
+import { CalendarsTabePageComponent } from './secure/calendars/calendars-tabe-page/calendars-tabe-page.component';
 
 const routes: Routes = [
   {
@@ -42,8 +42,8 @@ const routes: Routes = [
     data: { roles: ['ROLE_USER'] }
   },
   {
-    path: 'appointments',
-    component: AppointmentsTabPageComponent,
+    path: 'calendar',
+    component: CalendarsTabePageComponent,
     canActivate: [AppAuthGuard],
     data: { roles: ['ROLE_USER'] }
   },

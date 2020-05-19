@@ -78,7 +78,7 @@ export class AppointmentStore {
 
     @Action(LoadAppointments)
     LoadAppointments(stateContext: StateContext<AppointmentState>) {
-        this.appointmentService.query().subscribe(
+        this.appointmentService.queryAllChatsFromUser().subscribe(
             // (notifs: INotification[]) => {
             (apps: HttpResponse<IAppointment[]>) => {
 

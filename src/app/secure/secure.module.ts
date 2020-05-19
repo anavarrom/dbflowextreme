@@ -36,7 +36,6 @@ import { DisplayDataComponent } from './display-data/display-data.component';
 
 import { DxTileViewModule, DxToolbarModule, DxButtonModule, DxListModule, DxBoxModule, 
          DxResponsiveBoxModule, DxTemplateModule, DxSchedulerModule } from 'devextreme-angular';
-import { AppointmentsTabPageComponent } from './appointments/appointments-tab-page/appointments-tab-page.component';
 
 const devExtremeModule = [
   DxTemplateModule,
@@ -67,7 +66,6 @@ const dbFlow6Components = [
   ChatsTabePageComponent,
   ChatDetailComponent,
   DisplayDataComponent,
-  AppointmentsTabPageComponent,
   HomeComponent,
   ProfileComponent
 ];

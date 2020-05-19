@@ -1,3 +1,11 @@
 <p>
   calendars-tabe-page works!
 </p>
+<dx-scheduler
+    [dataSource]="(appointments$ | async)"
+    [views]='["day", "week", "workWeek", "month"]'
+    currentView="month"
+    [currentDate]="currentDate"
+    [startDayHour]="9"
+    [height]="600">
+</dx-scheduler>

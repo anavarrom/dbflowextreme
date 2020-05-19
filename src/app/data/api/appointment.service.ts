@@ -16,7 +16,10 @@ type AppointmentArrayResponseType = HttpResponse<IAppointment[]>;
 
 @Injectable()
 export class AppointmentService {
-  public resourceUrl = environment.basePath + '/dbflowserver/api/appointments';
+
+  public appointmentURL    : string = environment.basePath + '/dbflowserver/api/';
+  public resourceUrl       : string = this.appointmentURL + 'appointments';
+  public userAppointmentURL: string = this.appointmentURL + 'userappointments';
 
   constructor(protected http: HttpClient) {}
 
@@ -44,6 +47,13 @@ export class AppointmentService {
     const options = createRequestOption(req);
     return this.http
       .get<IAppointment[]>(this.resourceUrl, { params: options, observe: 'response' })
+      .pipe(map((res: AppointmentArrayResponseType) => this.convertDateArrayFromServer(res)));
+  }
+
+  queryAllChatsFromUser(req?: any): Observable<AppointmentArrayResponseType> {
+    const options = createRequestOption(req);
+    return this.http
+      .get<IAppointment[]>(this.userAppointmentURL, { params: options, observe: 'response' })
       .pipe(map((res: AppointmentArrayResponseType) => this.convertDateArrayFromServer(res)));
   }
 

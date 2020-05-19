@@ -10,11 +10,6 @@ import { NgxsRouterPluginModule } from '@ngxs/router-plugin';
 
 // Custom modules
 // Custom Components
-// import { MessageStore  } from './stores/message-store';
-// import { UserStore     } from './stores/user-store';
-// import { CalendarStore     } from './stores/calendar-store';
-// import { NotificationStore     } from './stores/notification-store';
-// import { NotificationState     } from './stores/notification.state';
 import { NotificationStore } from './states/notification.state';
 import { environment } from 'src/environments/environment';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -23,17 +18,12 @@ import { ChatStore } from './states/chat.state';
 import { InjectableRxStompConfig, RxStompService, rxStompServiceFactory, StompService, StompConfig } from '@stomp/ng2-stompjs';
 
 // Project Services
-// import { UsersService           } from './services/users.service';
 import { NotificactionService           } from '../data/api/notification.service';
 import { ChatService } from '../data/api/chat.service';
 import { MessageService } from '../data/api/message.service';
 import { SessionStore } from './states/session.state';
 import { AppointmentService } from '../data/api/appointment.service';
 import { AppointmentStore } from './states/appointment.state';
-// import { CalendarService           } from './services/calendar.service';
-// import { ProcessMessageComponent} from './messages/process-message/process-message.component';
-// import { SearchComponent } from './search/search.component'
-
 
 const dbFlow6Stores = [
   NotificationStore,
