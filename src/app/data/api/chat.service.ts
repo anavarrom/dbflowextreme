@@ -19,9 +19,11 @@ export class ChatService {
   public chatURL: string      = environment.basePath + '/dbflowchat/api/';
   public resourceUrl: string  = this.chatURL + 'chats';
   public userChatsURL: string = this.chatURL + 'userchats';
- 
+
   constructor(protected http: HttpClient) {}
 
+  // TODO: Gestionar ataques CSRF. Para hacer que funcione el crear he 
+  // tenido que desaactivar el CSRF en el SecuirtyConfig del Gateway  
   create(chat: IChat): Observable<ChatResponseType> {
     const copy = this.convertDateFromClient(chat);
     return this.http

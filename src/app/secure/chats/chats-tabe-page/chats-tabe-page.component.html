@@ -1,7 +1,7 @@
 <div class="content-block">
   <div class="chatContainer">
     <div class="chatList">
-      <dx-list [dataSource]="(chats$ | async)" [grouped]="false" [searchEnabled]="true" selectionMode="single"
+      <dx-list #chatList [dataSource]="(chats$ | async)" [grouped]="false" [searchEnabled]="true" selectionMode="single"
       searchExpr="subject" searchMode="contains" (onSelectionChanged)=chatSelected($event)>
         <div *dxTemplate="let chat of 'item'" class="chat">
            <div class="chat_block_left">

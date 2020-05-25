@@ -3,10 +3,11 @@ import { patch, updateItem, insertItem } from '@ngxs/store/operators';
 
 import * as R from 'ramda';
 import { Chat } from '../models/chat';
-import { LoadChats, SelectChat, NewMessage } from '../actions/chat.action';
+import { IDbFlowAction, LoadChats, SelectChat, NewMessage, 
+         GoToChatFromAppointmentAttempt, FoundChatToGoToChatFromAppointment, GoToChatFromAppointmentFailure, IDbFlowFailureAction, GoToChatFromAppointmentSucces } from '../actions/chat.action';
 import { ChatService } from 'src/app/data/api/chat.service';
 import { HttpResponse } from '@angular/common/http';
-import { IChat, IChatMessage } from 'src/app/data/interfaces/models';
+import { IChat, IChatMessage, IAppointment, ChatType } from 'src/app/data/interfaces/models';
 import { MessageService } from 'src/app/data/api/message.service';
 import { ChatMessage } from '../models/message';
 import { RxStompService, StompService, StompState } from '@stomp/ng2-stompjs';
@@ -16,7 +17,6 @@ import { Observable } from 'rxjs';
 import 'rxjs/add/operator/map';
 import { InjectSetupWrapper } from '@angular/core/testing';
 import { Injectable } from '@angular/core';
-//import 'rxjs/Rx';
 
 // Create an interface for
 export interface ChatState {
@@ -140,5 +140,71 @@ export class ChatStore {
     // const event = new SendWebSocketMessage({ type: 'message', msg });
     // this.store.dispatch(event);
     this._stompService.publish('/chat/newMessage',  JSON.stringify(msg));
+  }
+
+  @Action(GoToChatFromAppointmentAttempt)
+  GoToChatFromAppointmentAttempt(stateContext: StateContext<ChatState>,
+                                 action: GoToChatFromAppointmentAttempt) {
+    // Partimos de la base que tenemos chats cargados
+    if (stateContext.getState().size > 0) {
+      // Tenemos chats por lo que tenemos datos
+      this.store.dispatch(new FoundChatToGoToChatFromAppointment(action.selectedAppointment));
+    } else {
+      this.refreshChats( stateContext,
+                         new FoundChatToGoToChatFromAppointment(action.selectedAppointment),
+                         new GoToChatFromAppointmentFailure({}));
+    }
+  }
+
+  @Action(FoundChatToGoToChatFromAppointment)
+  FoundChatToGoToChatFromAppointment(stateContext: StateContext<ChatState>,
+                                     action: FoundChatToGoToChatFromAppointment) {
+    // Sabemos que tenemos chats. Lo comprobamos en cualquier caso
+    if (stateContext.getState().size === 0) {
+      return;
+    }
+    let selectedChat: Chat = R.find((chat: Chat) => (chat.appointmentId  === action.selectedAppointment.id), stateContext.getState().chats);
+    if (selectedChat) {
+      // Lo hemos encontrado
+      this.store.dispatch( new GoToChatFromAppointmentSucces(selectedChat));
+    } else {
+      const app: IAppointment = action.selectedAppointment;
+      let chat: Chat = { to: app.to, subject: app.text, type: ChatType.APPOINTMENT, appointmentId: app.id  };
+
+      this.chatService.create(chat).subscribe(
+        (chatCreated: HttpResponse<IChat>) => {
+          // stateContext.patchState({ chats: chatsRead.body , size: chatsRead.body.length });
+
+          this.store.dispatch(new GoToChatFromAppointmentSucces(chatCreated.body));
+        }, err => {
+          // Log errors if any
+          /// actionsFailure.error.text = "No chats found";
+          this.store.dispatch(new GoToChatFromAppointmentFailure({}));
+        }
+      );
+    }
+  }
+
+  @Action(GoToChatFromAppointmentSucces)
+  GoToChatFromAppointmentSucces( stateContext: StateContext<ChatState>, action: GoToChatFromAppointmentSucces) {
+    stateContext.patchState({ selectedId: action.chat.id});
+  }
+
+  private refreshChats( stateContext: StateContext<ChatState>,
+                        actionSuccess: IDbFlowAction,
+                        actionsFailure: IDbFlowFailureAction) {
+    this.chatService.queryAllChatsFromUser().subscribe(
+        // (notifs: INotification[]) => {
+        (chatsRead: HttpResponse<IChat[]>) => {
+          // Actualizamos el estado con pathState({nombre_propiedad: valor}).
+          stateContext.patchState({ chats: chatsRead.body , size: chatsRead.body.length });
+
+          this.store.dispatch(actionSuccess);
+        }, err => {
+          // Log errors if any
+          actionsFailure.error.text = 'No chats found';
+          this.store.dispatch(actionsFailure);
+        }
+    );
   }
 }

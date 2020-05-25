@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Store, Select, ofActionSuccessful, Actions } from '@ngxs/store';
 import { LoadChats, SelectChat } from 'src/app/core/actions/chat.action';
 import { ChatService } from 'src/app/data/api/chat.service';
@@ -9,6 +9,7 @@ import { Navigate } from '@ngxs/router-plugin';
 import { DxTileViewModule, DxButtonModule, DxListModule } from 'devextreme-angular';
 import { Chat } from 'src/app/core/models/chat';
 import { SessionStore } from 'src/app/core/states/session.state';
+import { ActivatedRoute } from '@angular/router';
 
 
 @Component({
@@ -22,11 +23,16 @@ export class ChatsTabePageComponent implements OnInit {
   @Select(ChatStore.selected) public selectedChat$: Observable<IChat>;
   @Select(SessionStore.currentUser) public selectedUser$: Observable<IDbFlowAccount>;
 
+  @ViewChild('chatList') chatList;
+
   backButtonOptions: any;
   refreshButtonOptions: any;
   estado = false;
-  
-  constructor(private store: Store, private actions$: Actions) {
+  private sub: any;
+
+  constructor(private store: Store, private actions$: Actions, private route: ActivatedRoute) {
+
+
     this.backButtonOptions = {
       icon: 'plus',
       onClick: () => {
@@ -44,7 +50,12 @@ export class ChatsTabePageComponent implements OnInit {
   ngOnInit() {
     this.store.dispatch(new LoadChats());
 
-    // this.actions$.pipe(ofActionSuccessful(SelectChat)).subscribe(() => this.store.dispatch(new Navigate(['/ChatDetail'])));
+    this.sub = this.route.params.subscribe(params => {
+      let selectedItems = this.chatList.instance.option('selectedItems');
+       // this.id = +params['id']; 
+
+    });
+        // this.actions$.pipe(ofActionSuccessful(SelectChat)).subscribe(() => this.store.dispatch(new Navigate(['/ChatDetail'])));
   }
 
   chatSelected(event) {

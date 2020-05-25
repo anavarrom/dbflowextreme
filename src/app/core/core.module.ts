@@ -24,6 +24,7 @@ import { MessageService } from '../data/api/message.service';
 import { SessionStore } from './states/session.state';
 import { AppointmentService } from '../data/api/appointment.service';
 import { AppointmentStore } from './states/appointment.state';
+import { SharedModule } from '../shared/shared.module';
 
 const dbFlow6Stores = [
   NotificationStore,
@@ -34,6 +35,7 @@ const dbFlow6Stores = [
 
 const externalModules = [
   CommonModule,
+  SharedModule,
   NgxsModule.forRoot( dbFlow6Stores, { developmentMode: !environment.production }),
   NgxsReduxDevtoolsPluginModule.forRoot(),
   NgxsLoggerPluginModule.forRoot(),

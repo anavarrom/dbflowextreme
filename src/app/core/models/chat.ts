@@ -8,11 +8,13 @@ export class Chat implements IChat {
       public ownerId?: number,
       public to?: string,
       public toId?: number,
-      public withContact?: string,      
+      public withContact?: string,
       public subject?: string,
       public createdDate?: Moment,
       public lastMessage?: Moment,
       public type?: ChatType,
+      public appointmentId?: number,
+      public notificationId?: number,
       public messages?: IChatMessage[]
     ) {}
   }

@@ -8,7 +8,8 @@ export const enum NotificationStatus {
 }
 
 export const enum ChatType {
-    NOTIFICATION = 'NOTIFICATION'
+    NOTIFICATION = 'NOTIFICATION',
+    APPOINTMENT = 'APPOINTMENT'
 }
 
 export interface IDbFlowAccount {
@@ -61,11 +62,15 @@ export interface IChat {
     createdDate?: Moment;
     lastMessage?: Moment;
     type?: ChatType;
+    appointmentId?: number;
+    notificationId?: number;
     messages?: IChatMessage[];
   }
   
 export interface IAppointment {
     id?: number;
+    from?: string;
+    to?: string;
     text?: string;
     description?: string;
     startDate?: Moment;

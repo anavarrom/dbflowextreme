@@ -45,37 +45,33 @@ export interface AppointmentState {
 })
 @Injectable()
 export class AppointmentStore {
-    // private notificationOptions: PaginateOptions   = null;
 
     constructor(private store: Store,
                 private appointmentService: AppointmentService) {
-        // this.notificationOptions        = new PaginateOptions();
-        // this.notificationOptions.limit  = 50;
-        // this.notificationOptions.page   = 0;
     }
 
     @Selector()
-    // @ImmutableSelector()
     static all(state: AppointmentState): Appointment[] {
       return state.appointments;
     }
 
-    /*@Selector()
-    // @ImmutableSelector()
-    static allAsAppointments(state: NotificationState): Appointment[] {
-      return R.map(toAppointment, state.allNotifs);
-    }*/
 
     @Selector()
     static selected(state: AppointmentState): Appointment | null {
       return R.find((app: Appointment) => (app.id  === state.selectedId), state.appointments);
     }
 
-    /*@Selector()
-    static selectedRead(state: NotificationState): Notification | null {
-      return R.find((n: Notification) => (n.id  === state.selectedReadId), state.readNotifs);
-    }*/
-
+    /**
+     * Load all the appointments of a user
+     *
+     * @remarks
+     * This action is part of the {@link core-library#Statistics | Statistics subsystem}.
+     *
+     * @param stateContext - context
+     * @returns XXXX
+     *
+     * @beta
+     */
     @Action(LoadAppointments)
     LoadAppointments(stateContext: StateContext<AppointmentState>) {
         this.appointmentService.queryAllChatsFromUser().subscribe(

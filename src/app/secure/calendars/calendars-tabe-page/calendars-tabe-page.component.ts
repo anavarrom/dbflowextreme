@@ -1,9 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { Store, Actions, Select } from '@ngxs/store';
-import { LoadAppointments } from 'src/app/core/actions/appointments.actions';
+import { Store, Actions, Select, ofActionDispatched, ofActionSuccessful, ofActionCompleted } from '@ngxs/store';
+import { LoadAppointments, SelectAppointment } from 'src/app/core/actions/appointments.actions';
 import { AppointmentStore } from 'src/app/core/states/appointment.state';
 import { Observable } from 'rxjs';
 import { IAppointment } from 'src/app/data/interfaces/models';
+import { Appointment } from 'src/app/core/models/appointment';
+import { ToastService } from 'src/app/shared/services/toast.service';
+import { GoToChatFromAppointmentAttempt, GoToChatFromAppointmentSucces } from 'src/app/core/actions/chat.action';
+import { Navigate } from '@ngxs/router-plugin';
 
 @Component({
   selector: 'app-calendars-tabe-page',
@@ -12,14 +16,54 @@ import { IAppointment } from 'src/app/data/interfaces/models';
 })
 export class CalendarsTabePageComponent implements OnInit {
 
-  @Select(AppointmentStore.all) public appointments$: Observable<IAppointment[]>;
+  @Select(AppointmentStore.all)       public appointments$: Observable<IAppointment[]>;
+  @Select(AppointmentStore.selected)  public selected$: Observable<IAppointment>;
+
+  addButtonOptions: any;
+  selectedAppointment: IAppointment;
   currentDate: Date = new Date();
 
-  constructor(private store: Store, private actions$: Actions) { }
+  constructor( private store: Store,
+               private actions$: Actions,
+               private toastService: ToastService) {
 
-  ngOnInit() {
-    this.store.dispatch(new LoadAppointments());
 
+    this.actions$
+    .pipe(ofActionCompleted(GoToChatFromAppointmentSucces)).subscribe( chat  => {
+      this.store.dispatch(new Navigate(['/gotochat']));
+    });
+    this.addButtonOptions = {
+      icon: 'plus',
+      // onClick: (e) => {
+        // this.store.dispatch(new GoToChatFromAppointmentAttempt(this.selectedAppointment));
+      // }
+   };
   }
 
+  goToChatFromAppointment(e){
+    this.store.dispatch(new GoToChatFromAppointmentAttempt(this.selectedAppointment));
+  }
+
+  ngOnInit() {
+    // TODO: Debería de haber una forma más inteligente de cargar los appointments
+    this.store.dispatch(new LoadAppointments());
+  }
+
+  /**
+   * Select the appointment
+   *
+   * @remarks
+   * This method throws the select action to the state
+   *
+   * @param e - event
+   */  
+  onAppointmentClicked(e) {
+    const appSelected: Appointment  = e.appointmentData;
+    if (appSelected !== null) {
+      this.store.dispatch(new SelectAppointment(appSelected.id));
+      this.selectedAppointment = appSelected;
+
+      this.toastService.info('Selected ' + appSelected.text);
+    }
+  }
 }

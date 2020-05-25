@@ -36,6 +36,12 @@ const routes: Routes = [
     data: { roles: ['ROLE_USER'] }
   },
   {
+    path: 'gotochat',
+    component: ChatsTabePageComponent,
+    canActivate: [AppAuthGuard],
+    data: { roles: ['ROLE_USER'] }
+  },
+  {
     path: 'notifications',
     component: NotificationsTabPageComponent,
     canActivate: [AppAuthGuard],

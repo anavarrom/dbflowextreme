@@ -23,7 +23,7 @@ function isReceived(notif: INotification) {
 }
 
 function toAppointment(notif: INotification): Appointment{
-  return new Appointment(notif.id, notif.subject, notif.body, moment(), notif.dueDate, true);
+  return new Appointment(notif.id, notif.from, notif.to, notif.subject, notif.body, moment(), notif.dueDate, true);
 }
 
 
