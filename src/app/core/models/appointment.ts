@@ -1,6 +1,7 @@
 import { Moment } from 'moment';
+import { IAppointment } from 'src/app/data/interfaces/models';
 
-export class Appointment {
+export class Appointment implements IAppointment{
     constructor(
         public id?: number,
         public from?: string,

@@ -1,0 +1,55 @@
+ <!--
+appointmentTooltipTemplate="tooltipTemplate"
+(onAppointmentClick)="onAppointmentClicked($event)"
+(onAppointmentFormOpening)="onAppointmentFormOpening($event)"
+
+<div *dxTemplate="let model of 'tooltipTemplate'">
+  <dx-button
+                    stylingMode="contained"
+                    text="Contained"
+                    type="normal"
+                    [width]="120"
+                    (onClick)="goToChatFromAppointment($event)">
+                </dx-button>
+  <dx-toolbar>
+          <dxi-item location="after" widget="dxButton" locateInMenu="auto" 
+                    [options]="addButtonOptions" [onClick]="goToChatFromAppointment">
+          </dxi-item>
+  </dx-toolbar>        
+  <i>{{model.appointmentData.subject}} </i>
+</div>
+<dxo-editing 
+    [allowAdding]="false"
+    [allowDeleting]="false"
+    [allowUpdating]="false"
+    [allowResizing]="false"
+    [allowDragging]="false"
+></dxo-editing>>
+(onAppointmentContextMenu)="onAppointmentContextMenu($event)"
+
+ -->
+ 
+ <dx-scheduler
+[dataSource]="(periods$ | async)"
+[views]='["month"]'
+currentView="month"
+[currentDate]="currentDate"
+[startDayHour]="9"
+[height]="600"
+
+>
+</dx-scheduler>
+<!-- <dx-context-menu #contextMenu
+                 [dataSource]="contextMenuItems"
+                 [disabled]="disabled"
+                 [target]="target"
+                 (onItemClick)="onContextMenuItemClick($event)"
+                 [width]="200"
+                 (onHiding)="onContextMenuHiding($event)">
+</dx-context-menu>  -->
+                 <!-- <div *dxTemplate="let e of 'item'">
+        <div *ngIf="e.color">
+            <div class="item-badge" [ngStyle]="{ backgroundColor: e.color}"></div>
+        </div>
+        <div class="item-text">{{e.text}}</div>
+    </div> -->

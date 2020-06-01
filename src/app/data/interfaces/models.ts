@@ -77,3 +77,15 @@ export interface IAppointment {
     endDate?: Moment;
     allDay?: boolean;
 }
+
+export interface ISafeKeepingPeriod {
+    id?: number;
+    owner?: string;
+    text?: string;
+    description?: string;
+    startDate?: Moment;
+    endDate?: Moment;
+    backgroundColor?: string;
+    textColor?: string;
+    allDay?: boolean;
+}

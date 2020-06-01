@@ -1,5 +1,4 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { IonicModule } from '@ionic/angular';
 
 import { CalendarsTabePageComponent } from './calendars-tabe-page.component';
 
@@ -10,7 +9,7 @@ describe('CalendarsTabePageComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ CalendarsTabePageComponent ],
-      imports: [IonicModule.forRoot()]
+      imports: []
     }).compileComponents();
 
     fixture = TestBed.createComponent(CalendarsTabePageComponent);

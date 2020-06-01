@@ -35,7 +35,9 @@ import { HomeComponent } from './home/home.component';
 import { DisplayDataComponent } from './display-data/display-data.component';
 
 import { DxTileViewModule, DxToolbarModule, DxButtonModule, DxListModule, DxBoxModule, 
-         DxResponsiveBoxModule, DxTemplateModule, DxSchedulerModule } from 'devextreme-angular';
+  DxDrawerModule, DxResponsiveBoxModule, DxTemplateModule, DxSchedulerModule, DxTextBoxModule, DxContextMenuModule } from 'devextreme-angular';
+import { SharedModule } from '../shared/shared.module';
+import { SafeKeepingDetailComponent } from './calendars/safe-keeping-detail/safe-keeping-detail.component';
 
 const devExtremeModule = [
   DxTemplateModule,
@@ -45,7 +47,10 @@ const devExtremeModule = [
   DxBoxModule,
   DxResponsiveBoxModule,
   DxToolbarModule,
-  DxSchedulerModule
+  DxSchedulerModule,
+  DxDrawerModule,
+  DxTextBoxModule,
+  DxContextMenuModule
 ];
 
 const externalModules = [
@@ -67,7 +72,8 @@ const dbFlow6Components = [
   ChatDetailComponent,
   DisplayDataComponent,
   HomeComponent,
-  ProfileComponent
+  ProfileComponent,
+  SafeKeepingDetailComponent
 ];
 
 
@@ -75,13 +81,15 @@ const dbFlow6Components = [
   imports: [
     devExtremeModule,
     externalModules,
-    CoreModule
+    CoreModule,
+    SharedModule
   ],
   entryComponents: [
     dbFlow6Components
   ],
   declarations: [
     dbFlow6Components,
+    SafeKeepingDetailComponent,
   ],
 //  providers: [{ provide: Todos, useClass: remotedev(Todos) }],
   providers: [],

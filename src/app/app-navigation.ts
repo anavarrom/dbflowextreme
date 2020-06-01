@@ -31,5 +31,10 @@ export const navigation = [
     text: 'Examples',
     icon: 'message',
     path: '/calendar'
+  },
+  {
+    text: 'Examples',
+    icon: 'message',
+    path: '/safeKeeping'
   }
 ];

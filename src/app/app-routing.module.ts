@@ -9,6 +9,7 @@ import { AppAuthGuard } from './shared/guards/AppAuthGuard';
 import { ChatsTabePageComponent } from './secure/chats/chats-tabe-page/chats-tabe-page.component';
 import { NotificationsTabPageComponent } from './secure/notifications/notifications-tab-page/notifications-tab-page.component';
 import { CalendarsTabePageComponent } from './secure/calendars/calendars-tabe-page/calendars-tabe-page.component';
+import { SafeKeepingDetailComponent } from './secure/calendars/safe-keeping-detail/safe-keeping-detail.component';
 
 const routes: Routes = [
   {
@@ -32,6 +33,12 @@ const routes: Routes = [
   {
     path: 'chats',
     component: ChatsTabePageComponent,
+    canActivate: [AppAuthGuard],
+    data: { roles: ['ROLE_USER'] }
+  },
+  {
+    path: 'safeKeeping',
+    component: SafeKeepingDetailComponent,
     canActivate: [AppAuthGuard],
     data: { roles: ['ROLE_USER'] }
   },

@@ -1,0 +1,15 @@
+<div class="chat_container">
+    <dx-text-box placeholder="Menjsaitos" stylingMode="filled">
+        <dxi-button name="today" location="after" [options]="textButton"></dxi-button>
+    </dx-text-box>
+    <dx-list [dataSource]="(selectedChat$ | async)?.messages" [grouped]="false">
+        <div *dxTemplate="let message of 'item'">
+            <div class="message_1">
+                {{message.body}}
+            </div>
+        </div>
+    </dx-list>
+</div>
+
+
+

@@ -25,12 +25,15 @@ import { SessionStore } from './states/session.state';
 import { AppointmentService } from '../data/api/appointment.service';
 import { AppointmentStore } from './states/appointment.state';
 import { SharedModule } from '../shared/shared.module';
+import { SafeKeepingPeriodService } from '../data/api/safekeepingperiod.service';
+import { SafekeepingStore } from './states/safekeeping.state';
 
 const dbFlow6Stores = [
   NotificationStore,
   ChatStore,
   SessionStore,
-  AppointmentStore
+  AppointmentStore,
+  SafekeepingStore
 ];
 
 const externalModules = [
@@ -47,7 +50,8 @@ const dbFlow6Services = [
     NotificactionService,
     ChatService,
     MessageService,
-    AppointmentService
+    AppointmentService,
+    SafeKeepingPeriodService
 ];
 
 

@@ -3,11 +3,12 @@ import { Store, Actions, Select, ofActionDispatched, ofActionSuccessful, ofActio
 import { LoadAppointments, SelectAppointment } from 'src/app/core/actions/appointments.actions';
 import { AppointmentStore } from 'src/app/core/states/appointment.state';
 import { Observable } from 'rxjs';
-import { IAppointment } from 'src/app/data/interfaces/models';
+import { IAppointment, IChat } from 'src/app/data/interfaces/models';
 import { Appointment } from 'src/app/core/models/appointment';
 import { ToastService } from 'src/app/shared/services/toast.service';
-import { GoToChatFromAppointmentAttempt, GoToChatFromAppointmentSucces } from 'src/app/core/actions/chat.action';
+import { GoToChatFromAppointmentAttempt, GoToChatFromAppointmentSucces, SelectChat } from 'src/app/core/actions/chat.action';
 import { Navigate } from '@ngxs/router-plugin';
+import { ChatStore } from 'src/app/core/states/chat.state';
 
 @Component({
   selector: 'app-calendars-tabe-page',
@@ -22,6 +23,7 @@ export class CalendarsTabePageComponent implements OnInit {
   addButtonOptions: any;
   selectedAppointment: IAppointment;
   currentDate: Date = new Date();
+  isDrawerOpen = false;
 
   constructor( private store: Store,
                private actions$: Actions,
@@ -30,7 +32,8 @@ export class CalendarsTabePageComponent implements OnInit {
 
     this.actions$
     .pipe(ofActionCompleted(GoToChatFromAppointmentSucces)).subscribe( chat  => {
-      this.store.dispatch(new Navigate(['/gotochat']));
+      this.store.dispatch(new SelectChat(chat.action.chat.id));
+      this.isDrawerOpen = true;
     });
     this.addButtonOptions = {
       icon: 'plus',
@@ -41,7 +44,12 @@ export class CalendarsTabePageComponent implements OnInit {
   }
 
   goToChatFromAppointment(e){
+    // this.isDrawerOpen = true;
+
     this.store.dispatch(new GoToChatFromAppointmentAttempt(this.selectedAppointment));
+    e.event.preventDefault();
+    e.event.stopPropagation();
+    e.cancel = true;
   }
 
   ngOnInit() {
@@ -63,7 +71,13 @@ export class CalendarsTabePageComponent implements OnInit {
       this.store.dispatch(new SelectAppointment(appSelected.id));
       this.selectedAppointment = appSelected;
 
-      this.toastService.info('Selected ' + appSelected.text);
+      // this.toastService.info('Selected ' + appSelected.text);
     }
+  }
+
+  onAppointmentFormOpening(e) {
+    e.event.preventDefault();
+    e.event.stopPropagation();
+    e.cancel = true;
   }
 }

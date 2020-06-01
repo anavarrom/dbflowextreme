@@ -1,0 +1,18 @@
+.chat_container {
+    flex-direction: column-reverse;
+    flex-wrap: nowrap;
+    display: flex;
+    height: 100%;
+    align-items: stretch;
+}
+
+.message_1 { 
+    font-size: 80%; 
+    background: white; 
+    margin: 2px; 
+    padding: 2px; 
+    border-radius: 15px 15px 15px 15px; 
+    -moz-border-radius: 15px 15px 15px 15px; 
+    -webkit-border-radius: 15px 15px 15px 15px;  
+    // border: 2px solid #5878ca;
+}
