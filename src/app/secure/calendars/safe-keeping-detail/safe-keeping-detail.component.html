@@ -36,17 +36,24 @@ currentView="month"
 [currentDate]="currentDate"
 [startDayHour]="9"
 [height]="600"
-
+(onCellContextMenu)="onCellContextMenu($event)"
+(onAppointmentContextMenu)="onAppointmentContextMenu($event)"
 >
 </dx-scheduler>
-<!-- <dx-context-menu #contextMenu
-                 [dataSource]="contextMenuItems"
+<dx-context-menu #contextMenu
+                 [dataSource]="cellContextMenuItems"
                  [disabled]="disabled"
                  [target]="target"
                  (onItemClick)="onContextMenuItemClick($event)"
-                 [width]="200"
+                 [width]="200"                 
                  (onHiding)="onContextMenuHiding($event)">
-</dx-context-menu>  -->
+    <div *dxTemplate="let e of 'item'">
+        <div *ngIf="e.color">
+            <div class="item-badge" [ngStyle]="{ backgroundColor: e.color}"></div>
+        </div>
+        <div class="item-text">{{e.text}}</div>
+    </div>
+</dx-context-menu>
                  <!-- <div *dxTemplate="let e of 'item'">
         <div *ngIf="e.color">
             <div class="item-badge" [ngStyle]="{ backgroundColor: e.color}"></div>

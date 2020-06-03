@@ -5,7 +5,7 @@ import * as moment from 'moment';
 import { map } from 'rxjs/operators';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { DATE_FORMAT } from '../../shared/input.constants';
+import { DATE_FORMAT, DATE_TIME_FORMAT } from '../../shared/input.constants';
 import { createRequestOption } from '../../shared/request-util';
 import { ISafeKeepingPeriod } from '../interfaces/models';
 
@@ -63,8 +63,8 @@ export class SafeKeepingPeriodService {
 
   protected convertDateFromClient(appointment: ISafeKeepingPeriod): ISafeKeepingPeriod {
     const copy: ISafeKeepingPeriod = Object.assign({}, appointment, {
-      startDate: appointment.startDate != null && appointment.startDate.isValid() ? appointment.startDate.format(DATE_FORMAT) : null,
-      endDate: appointment.endDate != null && appointment.endDate.isValid() ? appointment.endDate.format(DATE_FORMAT) : null
+      startDate: appointment.startDate != null && appointment.startDate.isValid() ? appointment.startDate.format(DATE_TIME_FORMAT) : null,
+      endDate: appointment.endDate != null && appointment.endDate.isValid() ? appointment.endDate.format(DATE_TIME_FORMAT) : null
     });
     return copy;
   }

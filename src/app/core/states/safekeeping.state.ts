@@ -10,7 +10,8 @@ import { AppointmentService } from 'src/app/data/api/appointment.service';
 import { IAppointment, ISafeKeepingPeriod } from 'src/app/data/interfaces/models';
 import { SafeKeepingPeriod } from '../models/safekeepingPeriod';
 import { SafeKeepingPeriodService } from 'src/app/data/api/safekeepingperiod.service';
-import { LoadSafeKeepingPeriods } from '../actions/project.actions';
+import { LoadSafeKeepingPeriods, NewSafeKeepingPeriod, UpdateSafeKeepingPeriod } from '../actions/project.actions';
+import { patch, insertItem, updateItem } from '@ngxs/store/operators';
 
 // Create an interface for
 export interface SafekeepingState {
@@ -71,4 +72,67 @@ export class SafekeepingStore {
             }
         );
     }
-  }
+
+    /**
+     * Load all the peridos
+     *
+     * @remarks
+     * This action is part of the {@link core-library#Statistics | Statistics subsystem}.
+     *
+     * @param stateContext - context
+     * @returns XXXX
+     *
+     * @beta
+     */
+    @Action(NewSafeKeepingPeriod)
+    NewSafeKeepingPeriod(stateContext: StateContext<SafekeepingState>, action: NewSafeKeepingPeriod) {
+      const period: SafeKeepingPeriod = action.period;
+      this.safeKeepingService.create(period).subscribe(
+        (periodCreated: HttpResponse<SafeKeepingPeriod>) => {
+          stateContext.setState(
+            patch({
+              safekeepingPeriods: insertItem<ISafeKeepingPeriod>(periodCreated.body)
+            }));
+          }, err => {
+          // Log errors if any
+          // TODO: Lanzar error
+          /// actionsFailure.error.text = "No chats found";
+          // this.store.dispatch(new GoToChatFromAppointmentFailure({}));
+        }
+      );
+    }
+    /**
+     * Load all the peridos
+     *
+     * @remarks
+     * This action is part of the {@link core-library#Statistics | Statistics subsystem}.
+     *
+     * @param stateContext - context
+     * @returns XXXX
+     *
+     * @beta
+     */
+    @Action(UpdateSafeKeepingPeriod)
+    UpdateSafeKeepingPeriod(stateContext: StateContext<SafekeepingState>, action: UpdateSafeKeepingPeriod) {
+      // let selectedPeriod: SafeKeepingPeriod = R.find((p: SafeKeepingPeriod) => (chat.id  === action.id), stateContext.getState().chats);
+      let selectedPeriod: SafeKeepingPeriod =
+        R.find((period: SafeKeepingPeriod) => (period.id  === action.period.id), stateContext.getState().safekeepingPeriods);
+      if (!selectedPeriod) {
+        // TODO: Lanzar error
+        return;
+      }
+      this.safeKeepingService.update(action.period).subscribe(
+        (periodUpdated: HttpResponse<SafeKeepingPeriod>) => {
+          stateContext.setState(
+            patch({
+              safekeepingPeriods: updateItem<ISafeKeepingPeriod>(period => period.id === periodUpdated.body.id, periodUpdated.body)
+            }));
+          }, err => {
+          // Log errors if any
+          // TODO: Lanzar error
+          /// actionsFailure.error.text = "No chats found";
+          // this.store.dispatch(new GoToChatFromAppointmentFailure({}));
+        }
+      );
+    }
+ }
