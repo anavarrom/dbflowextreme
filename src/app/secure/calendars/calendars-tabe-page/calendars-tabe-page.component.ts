@@ -3,12 +3,16 @@ import { Store, Actions, Select, ofActionDispatched, ofActionSuccessful, ofActio
 import { LoadAppointments, SelectAppointment } from 'src/app/core/actions/appointments.actions';
 import { AppointmentStore } from 'src/app/core/states/appointment.state';
 import { Observable } from 'rxjs';
-import { IAppointment, IChat } from 'src/app/data/interfaces/models';
+import { IAppointment, IChat, ISafeKeepingPeriod, IDbFlowAccount } from 'src/app/data/interfaces/models';
 import { Appointment } from 'src/app/core/models/appointment';
 import { ToastService } from 'src/app/shared/services/toast.service';
 import { GoToChatFromAppointmentAttempt, GoToChatFromAppointmentSucces, SelectChat } from 'src/app/core/actions/chat.action';
 import { Navigate } from '@ngxs/router-plugin';
 import { ChatStore } from 'src/app/core/states/chat.state';
+import { SafekeepingStore } from 'src/app/core/states/safekeeping.state';
+import { LoadSafeKeepingPeriods } from 'src/app/core/actions/project.actions';
+import { SessionState, SessionStore } from 'src/app/core/states/session.state';
+import { SelectSnapshot } from '@ngxs-labs/select-snapshot';
 
 @Component({
   selector: 'app-calendars-tabe-page',
@@ -17,8 +21,12 @@ import { ChatStore } from 'src/app/core/states/chat.state';
 })
 export class CalendarsTabePageComponent implements OnInit {
 
+  @Select(SafekeepingStore.allPeriods)       public periods$: Observable<ISafeKeepingPeriod[]>;
+  @Select(SafekeepingStore.allPeriodsByDate) public periodsByDate$: Observable<Map<string, ISafeKeepingPeriod> >;
   @Select(AppointmentStore.all)       public appointments$: Observable<IAppointment[]>;
   @Select(AppointmentStore.selected)  public selected$: Observable<IAppointment>;
+  
+  @SelectSnapshot(SessionStore.currentUser) user: IDbFlowAccount | null;
 
   addButtonOptions: any;
   selectedAppointment: IAppointment;
@@ -28,7 +36,6 @@ export class CalendarsTabePageComponent implements OnInit {
   constructor( private store: Store,
                private actions$: Actions,
                private toastService: ToastService) {
-
 
     this.actions$
     .pipe(ofActionCompleted(GoToChatFromAppointmentSucces)).subscribe( chat  => {
@@ -55,6 +62,7 @@ export class CalendarsTabePageComponent implements OnInit {
   ngOnInit() {
     // TODO: Debería de haber una forma más inteligente de cargar los appointments
     this.store.dispatch(new LoadAppointments());
+    this.store.dispatch(new LoadSafeKeepingPeriods());
   }
 
   /**
@@ -80,4 +88,19 @@ export class CalendarsTabePageComponent implements OnInit {
     e.event.stopPropagation();
     e.cancel = true;
   }
+
+  markWeekEnd(cellData, periodDate: ISafeKeepingPeriod) {
+    if (!periodDate)
+      return;
+
+    // Check the user 
+    var classObject = {};
+    if (periodDate.owner === this.user.username) {
+      classObject["safekeeping_period_me"] = true;
+    } else {
+      classObject["safekeeping_period_other"] = true;
+    }
+    return classObject;
+  }
+
 }

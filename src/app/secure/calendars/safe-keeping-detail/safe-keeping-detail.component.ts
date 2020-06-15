@@ -2,13 +2,15 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Select, Store, Actions } from '@ngxs/store';
 import { SafekeepingStore } from 'src/app/core/states/safekeeping.state';
 import { Observable } from 'rxjs';
-import { ISafeKeepingPeriod, IAppointment } from 'src/app/data/interfaces/models';
+import { ISafeKeepingPeriod, IAppointment, IDbAccountConfiguration } from 'src/app/data/interfaces/models';
 import { ToastService } from 'src/app/shared/services/toast.service';
 import { LoadSafeKeepingPeriods, NewSafeKeepingPeriod } from 'src/app/core/actions/project.actions';
 import { DxContextMenuComponent } from 'devextreme-angular';
 import { AppointmentStore } from 'src/app/core/states/appointment.state';
 import { SafeKeepingPeriod } from 'src/app/core/models/safekeepingPeriod';
 import * as moment from 'moment';
+import { SelectSnapshot } from '@ngxs-labs/select-snapshot';
+import { SessionStore } from 'src/app/core/states/session.state';
 
 @Component({
   selector: 'app-safe-keeping-detail',
@@ -17,15 +19,18 @@ import * as moment from 'moment';
 })
 export class SafeKeepingDetailComponent implements OnInit {
 
-  // @Select(AppointmentStore.all)       public periods$: Observable<IAppointment[]>;
+  @SelectSnapshot(SessionStore.userConfiguration)           userConfig: IDbAccountConfiguration | null;
+  @SelectSnapshot(SessionStore.me)                          me: string | null;
+  @SelectSnapshot(SafekeepingStore.selectedProjectPartner)  partner: string | null;
 
-  @Select(SafekeepingStore.all)       public periods$: Observable<ISafeKeepingPeriod[]>;
+  @Select(SafekeepingStore.allPeriods)       public periods$: Observable<ISafeKeepingPeriod[]>;
 
   @ViewChild('contextMenu', { static: false }) contextMenu: DxContextMenuComponent;
 
   currentDate: Date = new Date();
 
-   contextMenuItems: any[] = [];
+  parents: any[] = [];
+  contextMenuItems: any[] = [];
   disabled: boolean = true;
   target: any;
   onContextMenuItemClick: any;
@@ -35,9 +40,15 @@ export class SafeKeepingDetailComponent implements OnInit {
                private actions$: Actions,
                private toastService: ToastService) {
   
+    // Construimos el menu contextual a traves del proyecto y la configuración
+    this.parents = [
+       { text: this.me, id: this.me, color: this.userConfig.myBackgroundColor },
+       { text: this.partner, id: this.partner, color: this.userConfig.otherBackgoundColor }
+    ];
+
     this.cellContextMenuItems = [
-      { text: 'user 1', username: 'user 1', color: 'lightblue', onItemClick: this.createSafeKeepingPeriod },
-      { text: 'user 2', username: 'user 2', color: 'lightcoral', onItemClick: this.createSafeKeepingPeriod },
+      { text: this.me, username: this.me, color: this.userConfig.myBackgroundColor, onItemClick: this.createSafeKeepingPeriod },
+      { text: this.partner, username: this.partner, color: this.userConfig.otherBackgoundColor, onItemClick: this.createSafeKeepingPeriod },
       // { text: 'Repeat Weekly', beginGroup: true, onItemClick: this.repeatAppointmentWeekly },
       // { text: 'Set Room', beginGroup: true, disabled: true }
    ];
@@ -54,9 +65,7 @@ export class SafeKeepingDetailComponent implements OnInit {
     period.startDate = moment(contextMenuEvent.cellData.startDate);
     period.endDate   = moment(contextMenuEvent.cellData.endDate);
     period.allDay    = true;
-  // e.itemData.username     
-  // contextMenuEvent.startDate
-   // parent.toastService.info("test clicked");
+
     parent.store.dispatch(new NewSafeKeepingPeriod(period));
   }
 

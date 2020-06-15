@@ -5,6 +5,11 @@ export class Login {
     constructor(public loginData: KeycloakProfile) {}
 }
 
+export class Init {
+    static type = '[Session] Init';
+    constructor() {}
+}
+
 export class Logout {
     static type = '[Session] Logout';
     constructor() {}

@@ -1,5 +1,9 @@
 import { SafeKeepingPeriod } from '../models/safekeepingPeriod';
 
+export class LoadSafeKeepingProjects {
+    static readonly type = '[Project] LoadSafeKeepingProjects';
+    constructor() {}
+}
 export class LoadSafeKeepingPeriods {
     static readonly type = '[Project] LoadSafeKeepingPeriods';
     constructor() {}

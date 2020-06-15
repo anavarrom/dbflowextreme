@@ -7,45 +7,112 @@ import { Appointment } from '../models/appointment';
 import { Injectable } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 import { AppointmentService } from 'src/app/data/api/appointment.service';
-import { IAppointment, ISafeKeepingPeriod } from 'src/app/data/interfaces/models';
+import { IAppointment, ISafeKeepingPeriod, ISafeKeepingProject } from 'src/app/data/interfaces/models';
 import { SafeKeepingPeriod } from '../models/safekeepingPeriod';
 import { SafeKeepingPeriodService } from 'src/app/data/api/safekeepingperiod.service';
-import { LoadSafeKeepingPeriods, NewSafeKeepingPeriod, UpdateSafeKeepingPeriod } from '../actions/project.actions';
+import { LoadSafeKeepingPeriods, NewSafeKeepingPeriod, UpdateSafeKeepingPeriod, LoadSafeKeepingProjects } from '../actions/project.actions';
 import { patch, insertItem, updateItem } from '@ngxs/store/operators';
+import { SafeKeepingProjectService } from 'src/app/data/api/safekeepingproject.service';
+import { SafeKeepingProject } from '../models/safeKeepingProject';
+import { SessionStore } from './session.state';
 
 // Create an interface for
 export interface SafekeepingState {
+    safekeepingProjects: SafeKeepingProject[];
     safekeepingPeriods: SafeKeepingPeriod[];
+    safekeepingPeriodsByDate: Map<string, ISafeKeepingPeriod>;
     size: number;
-    selectedId: number;
+    selectedPeriodId: number;
+    selectedProject: SafeKeepingProject;
+    selectedProjectPartner: string;
+    currentYear: string;
 }
 
 // Creamos nuestro estado con la anotación @State
 @State({
     name: 'safekeeping',
     defaults: {
+      safekeepingProjects: [],
       safekeepingPeriods: [],
+      safekeepingPeriodsByDate: {},
       size: 0,
-      selectedId: 0,
+      selectedPeriodId: 0,
+      selectedProject: null,
+      selectedProjectPartner: '',
+      currentYear: '2020'
     }
 })
 @Injectable()
 export class SafekeepingStore {
-
     constructor(private store: Store,
-                private safeKeepingService: SafeKeepingPeriodService) {
+                private safeKeepingService: SafeKeepingPeriodService,
+                private safeKeepingProjectService: SafeKeepingProjectService) {
     }
 
     @Selector()
-    static all(state: SafekeepingState): SafeKeepingPeriod[] {
+    static allPeriods(state: SafekeepingState): SafeKeepingPeriod[] {
       return state.safekeepingPeriods;
     }
 
+    @Selector()
+    static allPeriodsByDate(state: SafekeepingState): Map<string, ISafeKeepingPeriod> {
+      return state.safekeepingPeriodsByDate;
+    }
 
     @Selector()
-    static selected(state: SafekeepingState): SafeKeepingPeriod | null {
-      return R.find((app: SafeKeepingPeriod) => (app.id  === state.selectedId), state.safekeepingPeriods);
+    static selectedPeriod(state: SafekeepingState): SafeKeepingPeriod | null {
+      return R.find((app: SafeKeepingPeriod) => (app.id  === state.selectedPeriodId), state.safekeepingPeriods);
     }
+
+    @Selector()
+    static selectedProject(state: SafekeepingState): SafeKeepingProject | null {
+      return state.selectedProject;
+    }
+
+    @Selector()
+    static selectedProjectPartner(state: SafekeepingState): string | null {
+      return state.selectedProjectPartner;
+    }
+
+
+    @Selector()
+    static currentYear(state: SafekeepingState): string | null {
+      return state.currentYear;
+    }
+
+    /**
+     * Load all the peridos
+     *
+     * @remarks
+     * This action is part of the {@link core-library#Statistics | Statistics subsystem}.
+     *
+     * @param stateContext - context
+     * @returns XXXX
+     *
+     * @beta
+     */
+    @Action(LoadSafeKeepingProjects)
+    LoadSafeKeepingProjects(stateContext: StateContext<SafekeepingState>, action: LoadSafeKeepingProjects) {
+      this.safeKeepingProjectService.queryAllUserProjects().subscribe(
+        // (notifs: INotification[]) => {
+        (projects: HttpResponse<ISafeKeepingProject[]>) => {
+          // Actualizamos el estado con pathState({nombre_propiedad: valor}).
+          const me = this.store.selectSnapshot(SessionStore.me);
+          const selectedProject = projects.body[0];
+          let partner: string = '';
+          if (selectedProject) {
+            partner = (selectedProject.parent1 === me) ? selectedProject.parent2 : selectedProject.parent1;
+          }
+          stateContext.patchState({ safekeepingProjects: projects.body,
+                                    selectedProject: projects.body[0],
+                                    selectedProjectPartner: partner });
+          this.store.dispatch(new LoadSafeKeepingPeriods());
+        }, err => {
+          // Log errors if any
+          console.log(err);
+        }
+    );
+}
 
     /**
      * Load all the peridos
@@ -60,12 +127,26 @@ export class SafekeepingStore {
      */
     @Action(LoadSafeKeepingPeriods)
     LoadSafeKeepingPeriods(stateContext: StateContext<SafekeepingState>) {
-        this.safeKeepingService.query().subscribe(
+        const ctx: SafekeepingState = stateContext.getState();
+        const currentProjectId      = ctx.selectedProject.id;
+        const currentYear           = ctx.currentYear;
+        // TODO:Gestionar peticiones correctas y erores
+        if (ctx.safekeepingPeriods.length > 0) {
+          return;
+        }
+
+        this.safeKeepingService.queryAllYearProjectsSafeKeepingPeriods(currentProjectId, currentYear).subscribe(
             // (notifs: INotification[]) => {
             (periods: HttpResponse<ISafeKeepingPeriod[]>) => {
+              let datePeriods = new Map();
+              periods.body.forEach(period => {
+                datePeriods.set(period.startDate.toDate().toDateString(), period);
+              });
 
               // Actualizamos el estado con pathState({nombre_propiedad: valor}).
-              stateContext.patchState({ safekeepingPeriods: periods.body, size: periods.body.length });
+              stateContext.patchState({ safekeepingPeriods: periods.body, 
+                                        safekeepingPeriodsByDate: datePeriods, 
+                                        size: periods.body.length });
             }, err => {
               // Log errors if any
               console.log(err);
@@ -86,7 +167,10 @@ export class SafekeepingStore {
      */
     @Action(NewSafeKeepingPeriod)
     NewSafeKeepingPeriod(stateContext: StateContext<SafekeepingState>, action: NewSafeKeepingPeriod) {
-      const period: SafeKeepingPeriod = action.period;
+      let period: SafeKeepingPeriod = action.period;
+      period.year = stateContext.getState().currentYear;
+      period.safeKeepingProjectId = stateContext.getState().selectedProject.id;
+       
       this.safeKeepingService.create(period).subscribe(
         (periodCreated: HttpResponse<SafeKeepingPeriod>) => {
           stateContext.setState(
@@ -101,6 +185,7 @@ export class SafekeepingStore {
         }
       );
     }
+
     /**
      * Load all the peridos
      *

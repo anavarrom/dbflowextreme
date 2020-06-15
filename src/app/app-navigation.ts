@@ -2,39 +2,32 @@ export const navigation = [
   {
     text: 'Home',
     path: '/home',
-    icon: 'home'
+    icon: 'fas fa-home'
   },
   {
-    text: 'Examples',
-    icon: 'folder',
+    text: 'Setup',
+    icon: 'fas fa-tools',
     items: [
       {
-        text: 'Profile',
-        path: '/profile'
-      },
-      {
-        text: 'Display Data',
-        path: '/display-data'
-      },
-      {
-        text: 'Chats',
-        path: '/chats'
+        text: 'Periods',
+        icon: 'fas fa-calendar',
+        path: '/safeKeeping'
       }
     ]
   },
   {
-    text: 'Examples',
-    icon: 'message',
-    path: '/notifications'
-  },
-  {
-    text: 'Examples',
-    icon: 'message',
+    text: 'Calendar',
+    icon: 'fas fa-calendar-alt',
     path: '/calendar'
   },
   {
-    text: 'Examples',
-    icon: 'message',
-    path: '/safeKeeping'
+    text: 'Notifications',
+    icon: 'fas fa-bell',
+    path: '/notifications'
+  },
+  {
+    text: 'Chats',
+    icon: 'fas fa-comments',
+    path: '/chats'
   }
 ];

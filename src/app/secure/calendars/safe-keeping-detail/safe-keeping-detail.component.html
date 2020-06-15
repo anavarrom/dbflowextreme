@@ -27,18 +27,24 @@ appointmentTooltipTemplate="tooltipTemplate"
 ></dxo-editing>>
 (onAppointmentContextMenu)="onAppointmentContextMenu($event)"
 
- -->
+[useColorAsDefault]="selectedResource === 'Owner'" 
+-->
  
- <dx-scheduler
-[dataSource]="(periods$ | async)"
-[views]='["month"]'
-currentView="month"
-[currentDate]="currentDate"
-[startDayHour]="9"
-[height]="600"
-(onCellContextMenu)="onCellContextMenu($event)"
-(onAppointmentContextMenu)="onAppointmentContextMenu($event)"
->
+ <dx-scheduler  [dataSource]="(periods$ | async)"
+                [views]='["month"]'
+                currentView="month"
+                [currentDate]="currentDate"
+                [startDayHour]="9"
+                [height]="600"
+                (onCellContextMenu)="onCellContextMenu($event)"
+                (onAppointmentContextMenu)="onAppointmentContextMenu($event)">
+    <dxi-resource
+        fieldExpr="owner"
+        label="parents"
+        [allowMultiple]="true"
+        [dataSource]="parents"
+        >
+    </dxi-resource>
 </dx-scheduler>
 <dx-context-menu #contextMenu
                  [dataSource]="cellContextMenuItems"

@@ -22,6 +22,11 @@ export interface IDbFlowAccount {
     imageUrl: string;
 }
 
+export interface IDbAccountConfiguration {
+    myBackgroundColor: string;
+    otherBackgoundColor: string;
+}
+
 export interface INotification {
     id?: number;
     subject?: string;
@@ -78,8 +83,20 @@ export interface IAppointment {
     allDay?: boolean;
 }
 
+export interface ISafeKeepingProject {
+    id?: number;
+    name?: string;
+    description?: string;
+    parent1?: string;
+    parent2?: string;
+    mediator?: string;
+    start?: Moment;
+    periods?: ISafeKeepingPeriod[];
+}
+
 export interface ISafeKeepingPeriod {
     id?: number;
+    year?: string;
     owner?: string;
     text?: string;
     description?: string;
@@ -88,4 +105,5 @@ export interface ISafeKeepingPeriod {
     backgroundColor?: string;
     textColor?: string;
     allDay?: boolean;
+    safeKeepingProjectId?: number;
 }

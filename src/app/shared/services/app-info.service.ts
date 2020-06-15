@@ -5,6 +5,6 @@ export class AppInfoService {
   constructor() {}
 
   public get title() {
-    return 'Dbflowextreme';
+    return 'Child Managment System';
   }
 }

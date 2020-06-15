@@ -1,4 +1,4 @@
-import { IDbFlowAccount } from 'src/app/data/interfaces/models';
+import { IDbFlowAccount, IDbAccountConfiguration } from 'src/app/data/interfaces/models';
 
 export class DbFlowAccount implements IDbFlowAccount {
     constructor(
@@ -9,5 +9,12 @@ export class DbFlowAccount implements IDbFlowAccount {
       public email: string,
       public authorities: string[],
       public imageUrl: string
+    ) {}
+  }
+
+export class DbAccountConfiguration implements IDbAccountConfiguration {
+    constructor(
+      public myBackgroundColor: string,
+      public otherBackgoundColor: string,
     ) {}
   }

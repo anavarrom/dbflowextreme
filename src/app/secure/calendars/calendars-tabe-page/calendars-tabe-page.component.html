@@ -45,6 +45,7 @@
       appointmentTooltipTemplate="tooltipTemplate"
       (onAppointmentClick)="onAppointmentClicked($event)"
       (onAppointmentFormOpening)="onAppointmentFormOpening($event)"
+      dataCellTemplate="dataCellTemplate"
       >
       <dxo-editing 
           [allowAdding]="false"
@@ -68,6 +69,11 @@
                 </dxi-item>
         </dx-toolbar>        
         <i>{{model.appointmentData.subject}} </i>
+      </div>
+      <div *dxTemplate="let cellData of 'dataCellTemplate'" [ngClass]="markWeekEnd(cellData, (periodsByDate$ | async)?.get(cellData.startDate.toDateString()))">
+        <div>
+          {{cellData.text}} {{ (periodsByDate$ | async)?.get(cellData.startDate.toDateString())?.text }} 
+        </div>
       </div>
   </dx-scheduler>
 </div>

@@ -7,6 +7,7 @@ import { Navigate } from '@ngxs/router-plugin';
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
 import { NgxsRouterPluginModule } from '@ngxs/router-plugin';
+import { NgxsSelectSnapshotModule } from '@ngxs-labs/select-snapshot';
 
 // Custom modules
 // Custom Components
@@ -27,6 +28,7 @@ import { AppointmentStore } from './states/appointment.state';
 import { SharedModule } from '../shared/shared.module';
 import { SafeKeepingPeriodService } from '../data/api/safekeepingperiod.service';
 import { SafekeepingStore } from './states/safekeeping.state';
+import { SafeKeepingProjectService } from '../data/api/safekeepingproject.service';
 
 const dbFlow6Stores = [
   NotificationStore,
@@ -43,6 +45,7 @@ const externalModules = [
   NgxsReduxDevtoolsPluginModule.forRoot(),
   NgxsLoggerPluginModule.forRoot(),
   NgxsRouterPluginModule.forRoot(),
+  NgxsSelectSnapshotModule.forRoot()
 ];
 
 
@@ -51,7 +54,8 @@ const dbFlow6Services = [
     ChatService,
     MessageService,
     AppointmentService,
-    SafeKeepingPeriodService
+    SafeKeepingPeriodService,
+    SafeKeepingProjectService
 ];
 
 

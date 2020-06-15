@@ -19,6 +19,8 @@ export class SafeKeepingPeriodService {
 
   public url               : string = environment.basePath + '/dbflowserver/api/';
   public resourceUrl       : string = this.url + 'safe-keeping-periods';
+  public allProjectsPeriods : string = this.url + 'project-safe-keeping-periods';
+  public allYearProjectsPeriods : string = this.url + 'project-year-safe-keeping-periods';
   // public userAppointmentURL: string = this.appointmentURL + 'userappointments';
 
   constructor(protected http: HttpClient) {}
@@ -50,14 +52,23 @@ export class SafeKeepingPeriodService {
       .pipe(map((res: SafeKeepingPeriodResponseType) => this.convertDateArrayFromServer(res)));
   }
 
-  /*queryAllChatsFromUser(req?: any): Observable<SafeKeepingPeriodResponseType> {
-    const options = createRequestOption(req);
+  queryAllProjectsSafeKeepingPeriods(id: number, req?: any): Observable<SafeKeepingPeriodResponseType> {
+    let options = createRequestOption(req);
+    // options.append('id', id.toString());
     return this.http
-      .get<IAppointment[]>(this.userAppointmentURL, { params: options, observe: 'response' })
+      .get<ISafeKeepingPeriod[]>(`${this.allProjectsPeriods}/${id}`, { params: options, observe: 'response' })
       .pipe(map((res: SafeKeepingPeriodResponseType) => this.convertDateArrayFromServer(res)));
-  }*/
+    }
 
-  delete(id: number): Observable<HttpResponse<any>> {
+    queryAllYearProjectsSafeKeepingPeriods(id: number, year: string, req?: any): Observable<SafeKeepingPeriodResponseType> {
+      let options = createRequestOption(req);
+      // options.append('id', id.toString());
+      return this.http
+        .get<ISafeKeepingPeriod[]>(`${this.allYearProjectsPeriods}/${id}/${year}`, { params: options, observe: 'response' })
+        .pipe(map((res: SafeKeepingPeriodResponseType) => this.convertDateArrayFromServer(res)));
+      }
+
+      delete(id: number): Observable<HttpResponse<any>> {
     return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }
 
