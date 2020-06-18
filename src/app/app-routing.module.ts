@@ -10,6 +10,7 @@ import { ChatsTabePageComponent } from './secure/chats/chats-tabe-page/chats-tab
 import { NotificationsTabPageComponent } from './secure/notifications/notifications-tab-page/notifications-tab-page.component';
 import { CalendarsTabePageComponent } from './secure/calendars/calendars-tabe-page/calendars-tabe-page.component';
 import { SafeKeepingDetailComponent } from './secure/calendars/safe-keeping-detail/safe-keeping-detail.component';
+import { ErrorComponent } from './shared/components/error/error.component';
 
 const routes: Routes = [
   {
@@ -63,6 +64,11 @@ const routes: Routes = [
   {
     path: 'login-form',
     component: LoginFormComponent
+  },
+  {
+    path: 'error',
+    component: ErrorComponent,
+    canActivate: [AppAuthGuard]
   },
   {
     path: '**',

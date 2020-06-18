@@ -50,11 +50,11 @@ export class ChatsTabePageComponent implements OnInit {
   ngOnInit() {
     this.store.dispatch(new LoadChats());
 
-    this.sub = this.route.params.subscribe(params => {
-      let selectedItems = this.chatList.instance.option('selectedItems');
+    // this.sub = this.route.params.subscribe(params => {
+    //  let selectedItems = this.chatList.instance.option('selectedItems');
        // this.id = +params['id']; 
 
-    });
+    // });
         // this.actions$.pipe(ofActionSuccessful(SelectChat)).subscribe(() => this.store.dispatch(new Navigate(['/ChatDetail'])));
   }
 

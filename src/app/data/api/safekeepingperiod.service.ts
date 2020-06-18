@@ -68,9 +68,9 @@ export class SafeKeepingPeriodService {
         .pipe(map((res: SafeKeepingPeriodResponseType) => this.convertDateArrayFromServer(res)));
       }
 
-      delete(id: number): Observable<HttpResponse<any>> {
-    return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response' });
-  }
+    delete(id: number): Observable<HttpResponse<any>> {
+      return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response' });
+    }
 
   protected convertDateFromClient(appointment: ISafeKeepingPeriod): ISafeKeepingPeriod {
     const copy: ISafeKeepingPeriod = Object.assign({}, appointment, {

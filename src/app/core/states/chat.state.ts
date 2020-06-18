@@ -202,7 +202,7 @@ export class ChatStore {
           this.store.dispatch(actionSuccess);
         }, err => {
           // Log errors if any
-          actionsFailure.error.text = 'No chats found';
+          actionsFailure.error.message = 'No chats found';
           this.store.dispatch(actionsFailure);
         }
     );

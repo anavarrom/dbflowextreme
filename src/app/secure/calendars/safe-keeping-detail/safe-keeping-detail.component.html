@@ -18,13 +18,6 @@ appointmentTooltipTemplate="tooltipTemplate"
   </dx-toolbar>        
   <i>{{model.appointmentData.subject}} </i>
 </div>
-<dxo-editing 
-    [allowAdding]="false"
-    [allowDeleting]="false"
-    [allowUpdating]="false"
-    [allowResizing]="false"
-    [allowDragging]="false"
-></dxo-editing>>
 (onAppointmentContextMenu)="onAppointmentContextMenu($event)"
 
 [useColorAsDefault]="selectedResource === 'Owner'" 
@@ -37,14 +30,23 @@ appointmentTooltipTemplate="tooltipTemplate"
                 [startDayHour]="9"
                 [height]="600"
                 (onCellContextMenu)="onCellContextMenu($event)"
-                (onAppointmentContextMenu)="onAppointmentContextMenu($event)">
+                (onAppointmentContextMenu)="onAppointmentContextMenu($event)"
+                (onAppointmentUpdating)="onAppointmentUpdating($event)"
+                (onAppointmentUpdated)="onAppointmentUpdated($event)"
+                (onAppointmentDeleting)="onAppointmentDeleting($event)"
+                (onAppointmentDeleted)="onAppointmentDeleted($event)">
     <dxi-resource
         fieldExpr="owner"
         label="parents"
         [allowMultiple]="true"
-        [dataSource]="parents"
-        >
+        [dataSource]="parents">
     </dxi-resource>
+    <dxo-editing [allowAdding]="true"
+                 [allowDeleting]="true"
+                 [allowUpdating]="true"
+                 [allowResizing]="false"
+                 [allowDragging]="true">
+    </dxo-editing>
 </dx-scheduler>
 <dx-context-menu #contextMenu
                  [dataSource]="cellContextMenuItems"
@@ -60,9 +62,3 @@ appointmentTooltipTemplate="tooltipTemplate"
         <div class="item-text">{{e.text}}</div>
     </div>
 </dx-context-menu>
-                 <!-- <div *dxTemplate="let e of 'item'">
-        <div *ngIf="e.color">
-            <div class="item-badge" [ngStyle]="{ backgroundColor: e.color}"></div>
-        </div>
-        <div class="item-text">{{e.text}}</div>
-    </div> -->

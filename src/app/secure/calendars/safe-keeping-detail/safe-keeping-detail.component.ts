@@ -1,16 +1,17 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Select, Store, Actions } from '@ngxs/store';
+import { Select, Store, Actions, ofActionSuccessful } from '@ngxs/store';
 import { SafekeepingStore } from 'src/app/core/states/safekeeping.state';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { ISafeKeepingPeriod, IAppointment, IDbAccountConfiguration } from 'src/app/data/interfaces/models';
 import { ToastService } from 'src/app/shared/services/toast.service';
-import { LoadSafeKeepingPeriods, NewSafeKeepingPeriod } from 'src/app/core/actions/project.actions';
+import { LoadSafeKeepingPeriods, NewSafeKeepingPeriod, SafeKeepingPeriodActionOK, SafeKeepingPeriodActionError, UpdateSafeKeepingPeriod, DeleteSafeKeepingPeriod } from 'src/app/core/actions/project.actions';
 import { DxContextMenuComponent } from 'devextreme-angular';
 import { AppointmentStore } from 'src/app/core/states/appointment.state';
 import { SafeKeepingPeriod } from 'src/app/core/models/safekeepingPeriod';
 import * as moment from 'moment';
 import { SelectSnapshot } from '@ngxs-labs/select-snapshot';
 import { SessionStore } from 'src/app/core/states/session.state';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-safe-keeping-detail',
@@ -36,6 +37,9 @@ export class SafeKeepingDetailComponent implements OnInit {
   onContextMenuItemClick: any;
   cellContextMenuItems: any[];
 
+  ngUnsubscribeOK = null;
+  ngUnsubscribeError = null;
+
   constructor( private store: Store,
                private actions$: Actions,
                private toastService: ToastService) {
@@ -55,7 +59,28 @@ export class SafeKeepingDetailComponent implements OnInit {
   }
   
   ngOnInit() {
+    this.ngUnsubscribeOK = new Subject();
+    this.ngUnsubscribeError = new Subject();
+
     this.store.dispatch(new LoadSafeKeepingPeriods());
+    const s = this.toastService;
+    this.actions$.pipe(ofActionSuccessful(SafeKeepingPeriodActionOK),
+      takeUntil(this.ngUnsubscribeOK)).subscribe(() => {
+        this.toastService.info("Funciona la acción");
+      });
+
+    this.actions$.pipe(ofActionSuccessful(SafeKeepingPeriodActionError),
+      takeUntil(this.ngUnsubscribeError)).subscribe((err) => {
+        this.toastService.info('Error en el resultado de la acción');
+      });
+  }
+
+  ngOnDestroy() {
+    this.ngUnsubscribeOK.next();
+    this.ngUnsubscribeOK.complete();
+
+    this.ngUnsubscribeError.next();
+    this.ngUnsubscribeError.complete();
   }
 
   createSafeKeepingPeriod(contextMenuEvent, e, parent){
@@ -68,7 +93,6 @@ export class SafeKeepingDetailComponent implements OnInit {
 
     parent.store.dispatch(new NewSafeKeepingPeriod(period));
   }
-
 
   onItemClick(contextMenuEvent) {
     return function (e) {
@@ -97,5 +121,29 @@ export class SafeKeepingDetailComponent implements OnInit {
   onContextMenuHiding(e) {
       this.disabled = true;
       //this.dataSource = [];
+  }
+
+  onAppointmentUpdating(e) {
+    let period = e.newData;
+
+    period.startDate = moment(e.newData.startDate);
+    period.endDate   = moment(e.newData.endDate);
+
+    this.store.dispatch(new UpdateSafeKeepingPeriod(e.newData));
+  }
+
+
+  onAppointmentUpdated(e) {
+    this.toastService.info("Updated clicked");
+  }
+
+  onAppointmentDeleting(e) {
+    this.toastService.info("Deleting clicked");
+
+    this.store.dispatch(new DeleteSafeKeepingPeriod(e.appointmentData));
+  }
+
+  onAppointmentDeleted(e) {
+    this.toastService.info("Deleted clicked");
   }
 }

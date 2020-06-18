@@ -1,13 +1,19 @@
 import { Injectable } from '@angular/core';
 import { State, Selector, Action, StateContext, Store } from '@ngxs/store';
-import { Logout, Login, Init } from '../actions/session.actions';
+import { Logout, Login, Init, NotifyError } from '../actions/session.actions';
 import { DbFlowAccount, DbAccountConfiguration } from '../models/account';
 import { IDbFlowAccount, IDbAccountConfiguration } from 'src/app/data/interfaces/models';
 import { LoadSafeKeepingProjects } from '../actions/project.actions';
+import { DbFlowError, ErrorSeverity } from '../models/error';
+import { patch, insertItem } from '@ngxs/store/operators';
+import { Navigate } from '@ngxs/router-plugin';
 
 export interface SessionState {
     userAccount: IDbFlowAccount;
     userConfig: IDbAccountConfiguration;
+    errors: DbFlowError [];
+    lastError: DbFlowError;
+    
 }
 
 // 
@@ -15,7 +21,9 @@ export interface SessionState {
     name: 'session_store',
     defaults: {
         userAccount : null,
-        userConfig: null
+        userConfig: null,
+        errors: [],
+        lastError: null
     }
 })
 @Injectable()
@@ -42,6 +50,11 @@ export class SessionStore {
     @Selector()
     static isLoggedIn(state: SessionState): boolean {
       return (state.userAccount != null);
+    }
+
+    @Selector()
+    static lastError(state: SessionState): DbFlowError | null{
+      return state.lastError;
     }
 
     @Action(Login)
@@ -75,4 +88,23 @@ export class SessionStore {
     @Action(Logout)
     Logout(stateContext: StateContext<SessionState>) {
     }
-}
+
+    @Action(NotifyError)
+    NotifyError(stateContext: StateContext<SessionState>, action: NotifyError) {
+      stateContext.setState(
+        patch({
+          errors: insertItem<DbFlowError>(action.error),
+          lastError: action.error
+        }));
+      switch (action.error.severity)  {
+        case ErrorSeverity.CRITICAL:
+          this.store.dispatch( new Navigate(['/error'] ));
+          break;
+        case ErrorSeverity.HIGH:
+           break;
+        default:
+           break;
+      }
+    }
+
+  }

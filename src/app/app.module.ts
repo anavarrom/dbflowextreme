@@ -15,6 +15,8 @@ import { SharedModule } from './shared/shared.module';
 import { DataModule } from './data/data.module';
 import { AppAuthGuard } from './shared/guards/AppAuthGuard';
 import { initializer } from './shared/guards/app-init';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { ErrorHandlerInterceptor } from './core/interceptors/errorhandler.interceptor';
 
 
 /*export function initializer(keycloak: KeycloakService): () => Promise<any> {
@@ -85,12 +87,8 @@ const customModules = [
     ScreenService,
     AppInfoService,
     AppAuthGuard,
-    {
-      provide: APP_INITIALIZER,
-      useFactory: initializer,
-      multi: true,
-      deps: [KeycloakService]
-    }
+    { provide: APP_INITIALIZER, useFactory: initializer, multi: true, deps: [KeycloakService] },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorHandlerInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]
 })

@@ -1,4 +1,5 @@
 import { KeycloakProfile } from 'keycloak-js';
+import { DbFlowError } from '../models/error';
 
 export class Login {
     static type = '[Session] Login';
@@ -13,4 +14,9 @@ export class Init {
 export class Logout {
     static type = '[Session] Logout';
     constructor() {}
+}
+
+export class NotifyError {
+    static type = '[Session] NotifyError';
+    constructor(public error: DbFlowError) {}
 }

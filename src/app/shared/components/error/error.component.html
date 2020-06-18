@@ -1,0 +1,8 @@
+<h2 class="content-block">Error {{ (error$ | async)?.code }}</h2>
+
+<div class="content-block dx-card responsive-paddings">
+    <h3>{{ (error$ | async)?.message }}</h3>
+    <br/> 
+    <br/> 
+    <h4>Resource: {{ (error$ | async)?.url }}</h4>
+</div>

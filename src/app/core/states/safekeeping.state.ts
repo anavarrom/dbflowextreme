@@ -10,8 +10,8 @@ import { AppointmentService } from 'src/app/data/api/appointment.service';
 import { IAppointment, ISafeKeepingPeriod, ISafeKeepingProject } from 'src/app/data/interfaces/models';
 import { SafeKeepingPeriod } from '../models/safekeepingPeriod';
 import { SafeKeepingPeriodService } from 'src/app/data/api/safekeepingperiod.service';
-import { LoadSafeKeepingPeriods, NewSafeKeepingPeriod, UpdateSafeKeepingPeriod, LoadSafeKeepingProjects } from '../actions/project.actions';
-import { patch, insertItem, updateItem } from '@ngxs/store/operators';
+import { LoadSafeKeepingPeriods, NewSafeKeepingPeriod, UpdateSafeKeepingPeriod, LoadSafeKeepingProjects, SafeKeepingPeriodActionOK, SafeKeepingPeriodActionError, DeleteSafeKeepingPeriod } from '../actions/project.actions';
+import { patch, insertItem, updateItem, removeItem } from '@ngxs/store/operators';
 import { SafeKeepingProjectService } from 'src/app/data/api/safekeepingproject.service';
 import { SafeKeepingProject } from '../models/safeKeepingProject';
 import { SessionStore } from './session.state';
@@ -177,12 +177,10 @@ export class SafekeepingStore {
             patch({
               safekeepingPeriods: insertItem<ISafeKeepingPeriod>(periodCreated.body)
             }));
+          this.store.dispatch(new SafeKeepingPeriodActionOK());
           }, err => {
-          // Log errors if any
-          // TODO: Lanzar error
-          /// actionsFailure.error.text = "No chats found";
-          // this.store.dispatch(new GoToChatFromAppointmentFailure({}));
-        }
+            this.store.dispatch(new SafeKeepingPeriodActionError('Error creating new period'));
+          }
       );
     }
 
@@ -203,7 +201,7 @@ export class SafekeepingStore {
       let selectedPeriod: SafeKeepingPeriod =
         R.find((period: SafeKeepingPeriod) => (period.id  === action.period.id), stateContext.getState().safekeepingPeriods);
       if (!selectedPeriod) {
-        // TODO: Lanzar error
+        this.store.dispatch(new SafeKeepingPeriodActionError("No period selected to update"));
         return;
       }
       this.safeKeepingService.update(action.period).subscribe(
@@ -212,12 +210,41 @@ export class SafekeepingStore {
             patch({
               safekeepingPeriods: updateItem<ISafeKeepingPeriod>(period => period.id === periodUpdated.body.id, periodUpdated.body)
             }));
+          this.store.dispatch(new SafeKeepingPeriodActionOK());
           }, err => {
-          // Log errors if any
-          // TODO: Lanzar error
-          /// actionsFailure.error.text = "No chats found";
-          // this.store.dispatch(new GoToChatFromAppointmentFailure({}));
+            this.store.dispatch(new SafeKeepingPeriodActionError('Error updating period'));
         }
       );
+    }
+
+    @Action(DeleteSafeKeepingPeriod)
+    DeleteSafeKeepingPeriod(stateContext: StateContext<SafekeepingState>, action: DeleteSafeKeepingPeriod) {
+      // let selectedPeriod: SafeKeepingPeriod = R.find((p: SafeKeepingPeriod) => (chat.id  === action.id), stateContext.getState().chats);
+      let selectedPeriod: SafeKeepingPeriod =
+        R.find((period: SafeKeepingPeriod) => (period.id  === action.period.id), stateContext.getState().safekeepingPeriods);
+      if (!selectedPeriod) {
+        this.store.dispatch(new SafeKeepingPeriodActionError("No period selected to update"));
+        return;
+      }
+
+      this.safeKeepingService.delete(action.period.id).subscribe(
+        (periodDeleted: HttpResponse<any>) => {
+          stateContext.setState(
+            patch({
+              safekeepingPeriods: removeItem<ISafeKeepingPeriod>(period => period.id === action.period.id)
+            }));
+          this.store.dispatch(new SafeKeepingPeriodActionOK());
+          }, err => {
+            this.store.dispatch(new SafeKeepingPeriodActionError('Error deleteing period'));
+        }
+      );
+    }
+
+    @Action(SafeKeepingPeriodActionOK)
+    SafeKeepingPeriodActionOK(stateContext: StateContext<SafekeepingState>, action: SafeKeepingPeriodActionOK) {
+    }
+
+    @Action(SafeKeepingPeriodActionError)
+    SafeKeepingPeriodActionError(stateContext: StateContext<SafekeepingState>, action: SafeKeepingPeriodActionError) {
     }
  }
