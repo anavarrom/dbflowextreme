@@ -1,10 +1,10 @@
 import { Component, NgModule, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { AuthService } from '../../services';
 import { UserPanelModule } from '../user-panel/user-panel.component';
 import { DxButtonModule } from 'devextreme-angular/ui/button';
 import { DxToolbarModule } from 'devextreme-angular/ui/toolbar';
+import { OktaAuthService } from '@okta/okta-angular';
 
 @Component({
   selector: 'app-header',
@@ -29,11 +29,11 @@ export class HeaderComponent {
     text: 'Logout',
     icon: 'runner',
     onClick: () => {
-      this.authService.logOut();
+      this.authService.logout();
     }
   }];
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: OktaAuthService) { }
 
   toggleMenu = () => {
     this.menuToggle.emit();

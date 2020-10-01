@@ -1,9 +1,8 @@
-import { KeycloakProfile } from 'keycloak-js';
 import { DbFlowError } from '../models/error';
 
 export class Login {
     static type = '[Session] Login';
-    constructor(public loginData: KeycloakProfile) {}
+    constructor(/*public loginData: KeycloakProfile*/) {}
 }
 
 export class Init {

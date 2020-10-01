@@ -14,7 +14,6 @@ import { NgxsSelectSnapshotModule } from '@ngxs-labs/select-snapshot';
 import { NotificationStore } from './states/notification.state';
 import { environment } from 'src/environments/environment';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { KeycloakBearerInterceptor } from 'keycloak-angular';
 import { ChatStore } from './states/chat.state';
 import { InjectableRxStompConfig, RxStompService, rxStompServiceFactory, StompService, StompConfig } from '@stomp/ng2-stompjs';
 

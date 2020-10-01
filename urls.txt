@@ -30,7 +30,13 @@ Google API Key
 --------------
 AIzaSyA7eF726_gERt7nK_CFdgjusVD1Njp4lQ4
 
+OKTA
+----
+ user: user1@my.com
+ pass: dbFlow01
 
+ user: user2@my.com
+ pass: dbFlow02
 
 
 testGateway

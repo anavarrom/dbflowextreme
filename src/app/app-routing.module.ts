@@ -1,3 +1,4 @@
+import { LandingComponent } from './public/landing/landing.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { LoginFormComponent } from './shared/components';
@@ -5,60 +6,69 @@ import { HomeComponent } from './secure/home/home.component';
 import { ProfileComponent } from './secure/profile/profile.component';
 import { DisplayDataComponent } from './secure/display-data/display-data.component';
 import { DxDataGridModule, DxFormModule } from 'devextreme-angular';
-import { AppAuthGuard } from './shared/guards/AppAuthGuard';
 import { ChatsTabePageComponent } from './secure/chats/chats-tabe-page/chats-tabe-page.component';
 import { NotificationsTabPageComponent } from './secure/notifications/notifications-tab-page/notifications-tab-page.component';
 import { CalendarsTabePageComponent } from './secure/calendars/calendars-tabe-page/calendars-tabe-page.component';
 import { SafeKeepingDetailComponent } from './secure/calendars/safe-keeping-detail/safe-keeping-detail.component';
 import { ErrorComponent } from './shared/components/error/error.component';
+import { CallbackComponent } from './callback.component';
+import { OktaAuthGuard, OktaCallbackComponent} from '@okta/okta-angular';
 
 const routes: Routes = [
   {
+    path: 'callback',
+    component: OktaCallbackComponent
+  },
+  {
+    path: 'landing',
+    component: LandingComponent
+  },
+  {
+    path: 'home',
+    component: HomeComponent,
+    canActivate: [OktaAuthGuard],
+    data: { roles: ['ROLE_USER'] }
+  },
+  {
     path: 'display-data',
     component: DisplayDataComponent,
-    canActivate: [AppAuthGuard],
+    canActivate: [OktaAuthGuard],
     data: { roles: ['ROLE_USER'] }
   },
   {
     path: 'profile',
     component: ProfileComponent,
-    canActivate: [AppAuthGuard],
-    data: { roles: ['ROLE_USER'] }
-  },
-  {
-    path: 'home',
-    component: HomeComponent,
-    canActivate: [AppAuthGuard],
+    canActivate: [OktaAuthGuard],
     data: { roles: ['ROLE_USER'] }
   },
   {
     path: 'chats',
     component: ChatsTabePageComponent,
-    canActivate: [AppAuthGuard],
+    canActivate: [OktaAuthGuard],
     data: { roles: ['ROLE_USER'] }
   },
   {
     path: 'safeKeeping',
     component: SafeKeepingDetailComponent,
-    canActivate: [AppAuthGuard],
+    canActivate: [OktaAuthGuard],
     data: { roles: ['ROLE_USER'] }
   },
   {
     path: 'gotochat',
     component: ChatsTabePageComponent,
-    canActivate: [AppAuthGuard],
+    canActivate: [OktaAuthGuard],
     data: { roles: ['ROLE_USER'] }
   },
   {
     path: 'notifications',
     component: NotificationsTabPageComponent,
-    canActivate: [AppAuthGuard],
+    canActivate: [OktaAuthGuard],
     data: { roles: ['ROLE_USER'] }
   },
   {
     path: 'calendar',
     component: CalendarsTabePageComponent,
-    canActivate: [AppAuthGuard],
+    canActivate: [OktaAuthGuard],
     data: { roles: ['ROLE_USER'] }
   },
   {
@@ -68,12 +78,12 @@ const routes: Routes = [
   {
     path: 'error',
     component: ErrorComponent,
-    canActivate: [AppAuthGuard]
+    canActivate: [OktaAuthGuard]
   },
   {
     path: '**',
-    redirectTo: 'home',
-    canActivate: [AppAuthGuard]
+    redirectTo: 'landing',
+    // canActivate: [OktaAuthGuard]
   }
 ];
 

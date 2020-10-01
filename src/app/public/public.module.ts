@@ -1,3 +1,4 @@
+import { LandingComponent } from './landing/landing.component';
 // External Modules
 import { NgModule          } from '@angular/core';
 import { CommonModule      } from '@angular/common';
@@ -18,6 +19,7 @@ const externalModules = [
 ];
 
 const dbFlow6Components = [
+   LandingComponent,
    PublicComponent,
 ];
 

@@ -6,7 +6,6 @@
  * on performance if an error is thrown.
  */
 // import 'zone.js/dist/zone-error';  // Included with Angular CLI.
-import { KeycloakConfig } from 'keycloak-angular';
 // import { InjectableRxStompConfig, StompConfig } from '@stomp/ng2-stompjs';
 
 import * as SockJS from 'sockjs-client';
@@ -19,16 +18,6 @@ export function socketProvider() {
 
 
 // Add here your keycloak setup infos
-let keycloakConfig: KeycloakConfig = {
-  url: 'http://localhost:9080/auth',
-  // url: '/auth',
-  realm: 'jhipster',
-  clientId: 'dbFlow',
-   credentials: {
-     secret: "12fdc4d9-997f-43e2-aa28-ce4df1dc1448"
-   }
-};
-
 const stompConfig: StompConfig = {
   // Which server?
   url: socketProvider,
@@ -63,8 +52,7 @@ export const environment = {
   // basePath: 'http://localhost:8091',
   basePath: 'http://localhost:8080/services',
   wsURL: 'localhost:4200',
-  stompConfig,
-  keycloakConfig
+  stompConfig
 };
 
 /*

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { State, Selector, Action, StateContext, Store } from '@ngxs/store';
+import { State, Selector, Action, StateContext, Store, NgxsOnInit } from '@ngxs/store';
 import { Logout, Login, Init, NotifyError } from '../actions/session.actions';
 import { DbFlowAccount, DbAccountConfiguration } from '../models/account';
 import { IDbFlowAccount, IDbAccountConfiguration } from 'src/app/data/interfaces/models';
@@ -7,13 +7,14 @@ import { LoadSafeKeepingProjects } from '../actions/project.actions';
 import { DbFlowError, ErrorSeverity } from '../models/error';
 import { patch, insertItem } from '@ngxs/store/operators';
 import { Navigate } from '@ngxs/router-plugin';
+import { state } from '@angular/animations';
 
 export interface SessionState {
     userAccount: IDbFlowAccount;
     userConfig: IDbAccountConfiguration;
     errors: DbFlowError [];
     lastError: DbFlowError;
-    
+    isAuthenticated: boolean;
 }
 
 // 
@@ -23,14 +24,16 @@ export interface SessionState {
         userAccount : null,
         userConfig: null,
         errors: [],
-        lastError: null
+        lastError: null,
+        isAuthenticated:false
     }
 })
 @Injectable()
-export class SessionStore {
+export class SessionStore implements NgxsOnInit {
 
     constructor(private store: Store) {
     }
+
 
     @Selector()
     static currentUser(state: SessionState): IDbFlowAccount | null {
@@ -49,7 +52,7 @@ export class SessionStore {
 
     @Selector()
     static isLoggedIn(state: SessionState): boolean {
-      return (state.userAccount != null);
+      return (state.isAuthenticated);
     }
 
     @Selector()
@@ -59,7 +62,7 @@ export class SessionStore {
 
     @Action(Login)
     Login(stateContext: StateContext<SessionState>, action: Login) {
-        const account: DbFlowAccount = {
+        /*const account: DbFlowAccount = {
             username: action.loginData.username,
             firstName: action.loginData.firstName,
             lastName: action.loginData.lastName,
@@ -76,7 +79,7 @@ export class SessionStore {
 
         stateContext.patchState({ userAccount: account, userConfig: config});
 
-        this.store.dispatch( new Init());
+        this.store.dispatch( new Init());*/
       }
 
     @Action(Init)
@@ -87,6 +90,7 @@ export class SessionStore {
 
     @Action(Logout)
     Logout(stateContext: StateContext<SessionState>) {
+      
     }
 
     @Action(NotifyError)
@@ -105,6 +109,13 @@ export class SessionStore {
         default:
            break;
       }
+    }
+
+    ngxsOnInit(stateContext: StateContext<SessionState>) {
+     /* this.oktaAuth.$isAuthenticated.subscribe(
+        val => {
+          stateContext.patchState({ isAuthenticated: val});
+        });*/
     }
 
   }

@@ -4,18 +4,17 @@ import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common
 
 
 import { NotificactionService } from './api/notification.service';
-import { KeycloakBearerInterceptor } from 'keycloak-angular';
 
 @NgModule({
   imports:      [HttpClientModule],
   declarations: [],
   exports:      [],
   providers: [
-    {
+/*    {
         provide: HTTP_INTERCEPTORS,
         useClass: KeycloakBearerInterceptor,
         multi: true
-      }
+      }*/
   ]
 })
 export class DataModule {

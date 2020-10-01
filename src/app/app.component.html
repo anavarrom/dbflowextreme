@@ -1,4 +1,4 @@
-<ng-container *ngIf="isAutorized(); else notAuthorized">
+<ng-container *ngIf="isAuthenticated; else notAuthorized">
     <app-side-nav-outer-toolbar title="{{appInfo.title}}">
         <router-outlet></router-outlet>
         <app-footer>
@@ -8,9 +8,12 @@
         </app-footer>
     </app-side-nav-outer-toolbar>
 </ng-container>
-
 <ng-template #notAuthorized>
-    <app-single-card>
+    <button routerLink="/"> Home </button>
+    <button *ngIf="!isAuthenticated" (click)="oktaAuth.loginRedirect('/home')"> Login </button>
+    <button *ngIf="isAuthenticated" (click)="oktaAuth.logout()"> Logout </button>
+    <button routerLink="/protected"> Protected </button>
+        <app-single-card>
         <router-outlet></router-outlet>
     </app-single-card>
 </ng-template>

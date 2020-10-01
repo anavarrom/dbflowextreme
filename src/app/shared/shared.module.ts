@@ -1,12 +1,10 @@
 // External modules
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AppAuthGuard } from './guards/AppAuthGuard';
 import { ToastService } from './services/toast.service';
 import { ChatViewComponent } from './components/chat-view/chat-view.component';
 import { DxTemplateModule, DxButtonModule, DxListModule, DxToolbarModule, DxTextBoxModule } from 'devextreme-angular';
 import { ErrorComponent } from './components/error/error.component';
-
 // Custom modules
 // Custom Components
 // import {ErrorDetailComponent} from './error-detail/error-detail.component';

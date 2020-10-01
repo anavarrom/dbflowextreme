@@ -4,28 +4,34 @@ import { NgModule, APP_INITIALIZER, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core
 import { AppComponent } from './app.component';
 import { SideNavOuterToolbarModule, SideNavInnerToolbarModule, SingleCardModule } from './shared/layouts';
 import { FooterModule, LoginFormModule } from './shared/components';
-import { AuthService, ScreenService, AppInfoService } from './shared/services';
+import { ScreenService, AppInfoService } from './shared/services';
 import { AppRoutingModule } from './app-routing.module';
-import { KeycloakService, CoreModule, KeycloakAngularModule } from 'keycloak-angular';
 import { Configuration, ConfigurationParameters } from './data/configuration';
 import { environment } from 'src/environments/environment';
 import { SecureModule } from './secure/secure.module';
 import { PublicModule } from './public/public.module';
 import { SharedModule } from './shared/shared.module';
 import { DataModule } from './data/data.module';
-import { AppAuthGuard } from './shared/guards/AppAuthGuard';
-import { initializer } from './shared/guards/app-init';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ErrorHandlerInterceptor } from './core/interceptors/errorhandler.interceptor';
-
+import { CallbackComponent } from './callback.component';
+import {
+  OKTA_CONFIG,
+  OktaAuthModule
+} from '@okta/okta-angular';
 
 /*export function initializer(keycloak: KeycloakService): () => Promise<any> {
   return (): Promise<any> => keycloak.init();
 }*/
 
 // DoBootstrap
-
-const keycloakService = new KeycloakService();
+const oktaConfig = {
+  issuer: 'https://dev-811107.okta.com/oauth2/default',
+  clientId: '0oa12gdpqqgriw7474x7',
+  redirectUri: 'http://localhost:4200/callback',
+  postLogoutRedirectUri: 'http://localhost:4200',
+  pkce: true
+}
 
 
 export function apiConfigFactory(): Configuration {
@@ -39,11 +45,12 @@ export function apiConfigFactory(): Configuration {
 }
 
 const dbFlow6Components = [
- // LoginComponent,
+  CallbackComponent,
  // PublicComponent
 ];
 
 const externalModules = [
+  OktaAuthModule
   // KeycloakAngularModule
   // AppRoutingModule,
   // ReactiveFormsModule,
@@ -59,7 +66,6 @@ const customModules = [
   AppRoutingModule,
   SecureModule,
   PublicModule,
-  CoreModule,
   SharedModule,
   DataModule.forRoot(apiConfigFactory)
 ];
@@ -76,18 +82,16 @@ const customModules = [
     dbFlow6Components
   ],
   imports: [
-    KeycloakAngularModule,
     BrowserModule,
     externalModules,
     customModules
   ],
 
   providers: [
-    AuthService,
     ScreenService,
     AppInfoService,
-    AppAuthGuard,
-    { provide: APP_INITIALIZER, useFactory: initializer, multi: true, deps: [KeycloakService] },
+    { provide: OKTA_CONFIG, useValue: oktaConfig },
+    // { provide: APP_INITIALIZER, useFactory: initializer, multi: true, deps: [KeycloakService] },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorHandlerInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]

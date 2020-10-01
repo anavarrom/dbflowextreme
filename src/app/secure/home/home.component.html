@@ -2,3 +2,7 @@
 <div class="content-block">
     ESTE ES EL HOME
 </div>
+
+<div *ngIf="(isLoggedIn$ | async)">
+    Usuario  conectado
+</div>

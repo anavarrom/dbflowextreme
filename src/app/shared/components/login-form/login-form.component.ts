@@ -2,7 +2,7 @@ import { Component, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
-import { AuthService, AppInfoService } from '../../services';
+// import { AuthService, AppInfoService } from '../../services';
 import { DxButtonModule } from 'devextreme-angular/ui/button';
 import { DxCheckBoxModule } from 'devextreme-angular/ui/check-box';
 import { DxTextBoxModule } from 'devextreme-angular/ui/text-box';
@@ -18,14 +18,14 @@ export class LoginFormComponent {
   login = '';
   password = '';
 
-  constructor(private authService: AuthService, public appInfo: AppInfoService) { }
+  constructor(/*private authService: AuthService, public appInfo: AppInfoService*/) { }
 
   onLoginClick(args) {
     if (!args.validationGroup.validate().isValid) {
       return;
     }
 
-    this.authService.logIn(this.login, this.password);
+    // this.authService.logIn(this.login, this.password);
 
     args.validationGroup.reset();
   }
