@@ -46,13 +46,14 @@ const stompConfig: StompConfig = {
 // This file can be replaced during build by using the `fileReplacements` array.
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
-
 export const environment = {
   production: false,
   // basePath: 'http://localhost:8091',
   basePath: 'http://localhost:8080/services',
+  gatewayServer: 'http://localhost:8080/services',
+  serverAPI: '/dbflowserver2/api/',
   wsURL: 'localhost:4200',
-  stompConfig
+  stompConfig,
 };
 
 /*

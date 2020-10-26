@@ -1,3 +1,4 @@
+import { LoadSafeKeepingProjects } from './../../../core/actions/project.actions';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Select, Store, Actions, ofActionSuccessful } from '@ngxs/store';
 import { SafekeepingStore } from 'src/app/core/states/safekeeping.state';
@@ -62,6 +63,7 @@ export class SafeKeepingDetailComponent implements OnInit {
     this.ngUnsubscribeOK = new Subject();
     this.ngUnsubscribeError = new Subject();
 
+    this.store.dispatch(new LoadSafeKeepingProjects());
     this.store.dispatch(new LoadSafeKeepingPeriods());
     const s = this.toastService;
     this.actions$.pipe(ofActionSuccessful(SafeKeepingPeriodActionOK),

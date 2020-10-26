@@ -19,6 +19,7 @@ import {
   OKTA_CONFIG,
   OktaAuthModule
 } from '@okta/okta-angular';
+import { AuthInterceptor } from './core/interceptors/auth.interceptor';
 
 /*export function initializer(keycloak: KeycloakService): () => Promise<any> {
   return (): Promise<any> => keycloak.init();
@@ -92,7 +93,12 @@ const customModules = [
     AppInfoService,
     { provide: OKTA_CONFIG, useValue: oktaConfig },
     // { provide: APP_INITIALIZER, useFactory: initializer, multi: true, deps: [KeycloakService] },
-    { provide: HTTP_INTERCEPTORS, useClass: ErrorHandlerInterceptor, multi: true }
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true,
+    }/*,
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorHandlerInterceptor, multi: true }*/
   ],
   bootstrap: [AppComponent]
 })

@@ -10,57 +10,54 @@ import { createRequestOption } from '../../shared/request-util';
 import { ISafeKeepingProject } from '../interfaces/models';
 
 import {environment} from '../../../environments/environment';
+import { SERVER_ENDPOINT } from '../variables';
 
 type SafeKeepingProjectType         = HttpResponse<ISafeKeepingProject>;
 type SafeKeepingProjectResponseType = HttpResponse<ISafeKeepingProject[]>;
 
 @Injectable()
 export class SafeKeepingProjectService {
-
-  public url               : string = environment.basePath + '/dbflowserver/api/';
-  public resourceUrl       : string = this.url + 'safe-keeping-projects';
-  public userProjectsURL       : string = this.url + 'user-safe-keeping-projects';
-  
-  // public userAppointmentURL: string = this.appointmentURL + 'userappointments';
+  public projectEndpoint = SERVER_ENDPOINT + 'project';
+  public findAllByUserEndpoint = this.projectEndpoint + '/findByUser';
 
   constructor(protected http: HttpClient) {}
 
   create(notification: ISafeKeepingProject): Observable<SafeKeepingProjectType> {
     const copy = this.convertDateFromClient(notification);
     return this.http
-      .post<ISafeKeepingProject>(this.resourceUrl, copy, { observe: 'response' })
+      .post<ISafeKeepingProject>(this.projectEndpoint, copy, { observe: 'response' })
       .pipe(map((res: SafeKeepingProjectType) => this.convertDateFromServer(res)));
   }
 
   update(chat: ISafeKeepingProject): Observable<SafeKeepingProjectType> {
     const copy = this.convertDateFromClient(chat);
     return this.http
-      .put<ISafeKeepingProject>(this.resourceUrl, copy, { observe: 'response' })
+      .put<ISafeKeepingProject>(this.projectEndpoint, copy, { observe: 'response' })
       .pipe(map((res: SafeKeepingProjectType) => this.convertDateFromServer(res)));
   }
 
   find(id: number): Observable<SafeKeepingProjectType> {
     return this.http
-      .get<ISafeKeepingProject>(`${this.resourceUrl}/${id}`, { observe: 'response' })
+      .get<ISafeKeepingProject>(`${this.projectEndpoint}/${id}`, { observe: 'response' })
       .pipe(map((res: SafeKeepingProjectType) => this.convertDateFromServer(res)));
   }
 
   query(req?: any): Observable<SafeKeepingProjectResponseType> {
     const options = createRequestOption(req);
     return this.http
-      .get<ISafeKeepingProject[]>(this.resourceUrl, { params: options, observe: 'response' })
+      .get<ISafeKeepingProject[]>(this.projectEndpoint, { params: options, observe: 'response' })
       .pipe(map((res: SafeKeepingProjectResponseType) => this.convertDateArrayFromServer(res)));
   }
 
-  queryAllUserProjects(req?: any): Observable<SafeKeepingProjectResponseType> {
+  findAllByUser(req?: any): Observable<SafeKeepingProjectResponseType> {
     const options = createRequestOption(req);
     return this.http
-      .get<ISafeKeepingProject[]>(this.userProjectsURL, { params: options, observe: 'response' })
+      .get<ISafeKeepingProject[]>(this.findAllByUserEndpoint, { params: options, observe: 'response' })
       .pipe(map((res: SafeKeepingProjectResponseType) => this.convertDateArrayFromServer(res)));
   }
 
   delete(id: number): Observable<HttpResponse<any>> {
-    return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response' });
+    return this.http.delete<any>(`${this.projectEndpoint}/${id}`, { observe: 'response' });
   }
 
   protected convertDateFromClient(appointment: ISafeKeepingProject): ISafeKeepingProject {

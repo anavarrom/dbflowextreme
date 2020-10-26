@@ -1,7 +1,7 @@
 import { Component, HostBinding } from '@angular/core';
 import {  ScreenService, AppInfoService } from './shared/services';
 import { Store } from '@ngxs/store';
-import { Login } from './core/actions/session.actions';
+import { Login, Logout } from './core/actions/session.actions';
 import { OktaAuthService } from '@okta/okta-angular';
 
 @Component({
@@ -39,8 +39,14 @@ export class AppComponent  {
   async ngOnInit() {
     this.isAuthenticated = await this.oktaAuth.isAuthenticated();
     this.oktaAuth.$authenticationState.subscribe(
-      (isAuthenticated: boolean)  => this.isAuthenticated = isAuthenticated
-    );
+      (isAuthenticated: boolean)  => { 
+        this.isAuthenticated = isAuthenticated;
+        if (this.isAuthenticated) {
+          this.store.dispatch(new Login());
+        } else {
+          this.store.dispatch(new Logout());
+        }
+    });
   }
 
   async doLogout() {

@@ -93,7 +93,7 @@ export class SafekeepingStore {
      */
     @Action(LoadSafeKeepingProjects)
     LoadSafeKeepingProjects(stateContext: StateContext<SafekeepingState>, action: LoadSafeKeepingProjects) {
-      this.safeKeepingProjectService.queryAllUserProjects().subscribe(
+      this.safeKeepingProjectService.findAllByUser().subscribe(
         // (notifs: INotification[]) => {
         (projects: HttpResponse<ISafeKeepingProject[]>) => {
           // Actualizamos el estado con pathState({nombre_propiedad: valor}).

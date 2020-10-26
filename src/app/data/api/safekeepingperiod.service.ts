@@ -17,7 +17,7 @@ type SafeKeepingPeriodResponseType = HttpResponse<ISafeKeepingPeriod[]>;
 @Injectable()
 export class SafeKeepingPeriodService {
 
-  public url               : string = environment.basePath + '/dbflowserver/api/';
+  public url               : string = environment.basePath + '/dbflowserver2/api/';
   public resourceUrl       : string = this.url + 'safe-keeping-periods';
   public allProjectsPeriods : string = this.url + 'project-safe-keeping-periods';
   public allYearProjectsPeriods : string = this.url + 'project-year-safe-keeping-periods';

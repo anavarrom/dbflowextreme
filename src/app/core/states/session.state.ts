@@ -78,8 +78,8 @@ export class SessionStore implements NgxsOnInit {
         };
 
         stateContext.patchState({ userAccount: account, userConfig: config});
-
-        this.store.dispatch( new Init());*/
+        */
+        this.store.dispatch( new Init());
       }
 
     @Action(Init)
@@ -89,8 +89,7 @@ export class SessionStore implements NgxsOnInit {
     }
 
     @Action(Logout)
-    Logout(stateContext: StateContext<SessionState>) {
-      
+      Logout(stateContext: StateContext<SessionState>) {
     }
 
     @Action(NotifyError)

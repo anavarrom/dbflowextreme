@@ -17,7 +17,7 @@ type AppointmentArrayResponseType = HttpResponse<IAppointment[]>;
 @Injectable()
 export class AppointmentService {
 
-  public appointmentURL    : string = environment.basePath + '/dbflowserver/api/';
+  public appointmentURL    : string = environment.basePath + '/dbflowserver2/api/';
   public resourceUrl       : string = this.appointmentURL + 'appointments';
   public userAppointmentURL: string = this.appointmentURL + 'userappointments';
 
