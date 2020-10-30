@@ -1,3 +1,4 @@
+import { dbFlowAuthService } from './auth/auth.service';
 // External Modules
 import { NgModule          } from '@angular/core';
 import { CommonModule      } from '@angular/common';
@@ -54,7 +55,8 @@ const dbFlow6Services = [
     MessageService,
     AppointmentService,
     SafeKeepingPeriodService,
-    SafeKeepingProjectService
+    SafeKeepingProjectService,
+    dbFlowAuthService
 ];
 
 

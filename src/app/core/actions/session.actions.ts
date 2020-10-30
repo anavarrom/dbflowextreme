@@ -1,8 +1,9 @@
+import { IDbFlowAccount } from 'src/app/data/interfaces/models';
 import { DbFlowError } from '../models/error';
 
 export class Login {
     static type = '[Session] Login';
-    constructor(/*public loginData: KeycloakProfile*/) {}
+    constructor(public account: IDbFlowAccount) {}
 }
 
 export class Init {

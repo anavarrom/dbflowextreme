@@ -1,3 +1,4 @@
+import { dbFlowAuthService } from './../../../core/auth/auth.service';
 import { Component, NgModule, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -5,6 +6,9 @@ import { UserPanelModule } from '../user-panel/user-panel.component';
 import { DxButtonModule } from 'devextreme-angular/ui/button';
 import { DxToolbarModule } from 'devextreme-angular/ui/toolbar';
 import { OktaAuthService } from '@okta/okta-angular';
+import { Select } from '@ngxs/store';
+import { Observable } from 'rxjs';
+import { SessionStore } from 'src/app/core/states/session.state';
 
 @Component({
   selector: 'app-header',
@@ -13,6 +17,9 @@ import { OktaAuthService } from '@okta/okta-angular';
 })
 
 export class HeaderComponent {
+  @Select(SessionStore.isLoggedIn) public isLoggedIn$: Observable<boolean>;
+
+
   @Output()
   menuToggle = new EventEmitter<boolean>();
 
@@ -33,7 +40,15 @@ export class HeaderComponent {
     }
   }];
 
-  constructor(private authService: OktaAuthService) { }
+  loginItems = {
+    text: 'Login',
+    icon: 'runner',
+    onClick: () => {
+      this.authService.login();
+    }
+  };
+
+  constructor(private authService: dbFlowAuthService) { }
 
   toggleMenu = () => {
     this.menuToggle.emit();

@@ -19,7 +19,7 @@ import {
   OKTA_CONFIG,
   OktaAuthModule
 } from '@okta/okta-angular';
-import { AuthInterceptor } from './core/interceptors/auth.interceptor';
+import { AuthInterceptor } from './core/auth/auth.interceptor';
 
 /*export function initializer(keycloak: KeycloakService): () => Promise<any> {
   return (): Promise<any> => keycloak.init();

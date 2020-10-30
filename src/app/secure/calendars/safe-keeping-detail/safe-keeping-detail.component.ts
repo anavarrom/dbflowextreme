@@ -63,7 +63,6 @@ export class SafeKeepingDetailComponent implements OnInit {
     this.ngUnsubscribeOK = new Subject();
     this.ngUnsubscribeError = new Subject();
 
-    this.store.dispatch(new LoadSafeKeepingProjects());
     this.store.dispatch(new LoadSafeKeepingPeriods());
     const s = this.toastService;
     this.actions$.pipe(ofActionSuccessful(SafeKeepingPeriodActionOK),

@@ -135,7 +135,7 @@ export class SafekeepingStore {
           return;
         }
 
-        this.safeKeepingService.queryAllYearProjectsSafeKeepingPeriods(currentProjectId, currentYear).subscribe(
+        this.safeKeepingService.findAllByProjectAndYear(currentProjectId, currentYear).subscribe(
             // (notifs: INotification[]) => {
             (periods: HttpResponse<ISafeKeepingPeriod[]>) => {
               let datePeriods = new Map();

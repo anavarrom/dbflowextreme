@@ -1,3 +1,4 @@
+import { ToastService } from './shared/services/toast.service';
 import { Component, HostBinding } from '@angular/core';
 import {  ScreenService, AppInfoService } from './shared/services';
 import { Store } from '@ngxs/store';
@@ -11,7 +12,6 @@ import { OktaAuthService } from '@okta/okta-angular';
 })
 export class AppComponent  {
   title = 'okta-app';
-  isAuthenticated: boolean;
 
   @HostBinding('class') get getClass() {
     return Object.keys(this.screen.sizes).filter(cl => this.screen.sizes[cl]).join(' ');
@@ -19,9 +19,7 @@ export class AppComponent  {
 
   constructor(
               private screen: ScreenService,
-              public appInfo: AppInfoService,
-              private store: Store,
-              public oktaAuth: OktaAuthService) { 
+              public appInfo: AppInfoService) { 
     // get authentication state for immediate use
     // await this.isAuthenticated = this.oktaAuth.isAuthenticated();
 
@@ -37,16 +35,7 @@ export class AppComponent  {
   }
 
   async ngOnInit() {
-    this.isAuthenticated = await this.oktaAuth.isAuthenticated();
-    this.oktaAuth.$authenticationState.subscribe(
-      (isAuthenticated: boolean)  => { 
-        this.isAuthenticated = isAuthenticated;
-        if (this.isAuthenticated) {
-          this.store.dispatch(new Login());
-        } else {
-          this.store.dispatch(new Logout());
-        }
-    });
+
   }
 
   async doLogout() {

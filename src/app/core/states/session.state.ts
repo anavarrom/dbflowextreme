@@ -62,25 +62,18 @@ export class SessionStore implements NgxsOnInit {
 
     @Action(Login)
     Login(stateContext: StateContext<SessionState>, action: Login) {
-        /*const account: DbFlowAccount = {
-            username: action.loginData.username,
-            firstName: action.loginData.firstName,
-            lastName: action.loginData.lastName,
-            enabled: action.loginData.enabled,
-            email: action.loginData.email,
-            authorities: [],
-            imageUrl: ''
-        };
-
-        const config: DbAccountConfiguration = {
-          myBackgroundColor: 'lightblue',
-          otherBackgoundColor: 'lightcoral'
-        };
-
-        stateContext.patchState({ userAccount: account, userConfig: config});
-        */
-        this.store.dispatch( new Init());
+      if (stateContext.getState().isAuthenticated) {
+        return;
       }
+      const config: DbAccountConfiguration = {
+        myBackgroundColor: 'lightblue',
+        otherBackgoundColor: 'lightcoral'
+      };
+
+      stateContext.patchState({ userAccount: action.account, userConfig: config, isAuthenticated: true});
+
+      this.store.dispatch( new Init());
+    }
 
     @Action(Init)
     Init(stateContext: StateContext<SessionState>, action: Init) {
@@ -89,7 +82,8 @@ export class SessionStore implements NgxsOnInit {
     }
 
     @Action(Logout)
-      Logout(stateContext: StateContext<SessionState>) {
+    Logout(stateContext: StateContext<SessionState>) {
+      stateContext.patchState({ userAccount: null, userConfig: null, isAuthenticated: false});
     }
 
     @Action(NotifyError)

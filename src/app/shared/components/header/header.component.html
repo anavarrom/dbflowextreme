@@ -1,7 +1,7 @@
 <header>
+    <!-- !(isLoggedIn$ | async) &&  -->
     <dx-toolbar class="header-toolbar">
-        <dxi-item
-            *ngIf="menuToggleEnabled"
+        <dxi-item *ngIf="menuToggleEnabled"
             location="before"
             widget="dxButton"
             cssClass="menu-button"
@@ -16,6 +16,11 @@
             cssClass="header-title"
             *ngIf="title"
             [text]="title">
+        </dxi-item>
+        <dxi-item location="after" 
+              widget="dxButton" 
+              locateInMenu="auto" 
+              [options]="loginItems">
         </dxi-item>
         <dxi-item
             location="after"

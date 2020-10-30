@@ -7,6 +7,9 @@ import { CommonModule } from '@angular/common';
 
 import { navigation } from '../../../app-navigation';
 import { Router, NavigationEnd } from '@angular/router';
+import { SessionStore } from 'src/app/core/states/session.state';
+import { Select } from '@ngxs/store';
+import { Observable } from 'rxjs-compat';
 
 @Component({
   selector: 'app-side-nav-outer-toolbar',
@@ -14,6 +17,8 @@ import { Router, NavigationEnd } from '@angular/router';
   styleUrls: ['./side-nav-outer-toolbar.component.scss']
 })
 export class SideNavOuterToolbarComponent implements OnInit {
+  @Select(SessionStore.isLoggedIn) public isLoggedIn$: Observable<boolean>;
+
   @ViewChild(DxScrollViewComponent, { static: true }) scrollView: DxScrollViewComponent;
   menuItems = navigation;
   selectedRoute = '';
