@@ -4,6 +4,7 @@ import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common
 
 
 import { NotificactionService } from './api/notification.service';
+import { RestTestService } from './api/test.service';
 
 @NgModule({
   imports:      [HttpClientModule],

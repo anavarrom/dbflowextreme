@@ -8,6 +8,8 @@ import { DbFlowError, ErrorSeverity } from '../models/error';
 import { patch, insertItem } from '@ngxs/store/operators';
 import { Navigate } from '@ngxs/router-plugin';
 import { state } from '@angular/animations';
+import { RestTestService } from 'src/app/data/api/test.service';
+import { HttpResponse } from '@angular/common/http';
 
 export interface SessionState {
     userAccount: IDbFlowAccount;
@@ -31,7 +33,7 @@ export interface SessionState {
 @Injectable()
 export class SessionStore implements NgxsOnInit {
 
-    constructor(private store: Store) {
+    constructor(private store: Store, private testService: RestTestService) {
     }
 
 
@@ -77,6 +79,27 @@ export class SessionStore implements NgxsOnInit {
 
     @Action(Init)
     Init(stateContext: StateContext<SessionState>, action: Init) {
+      this.testService.testServer().subscribe(
+        // (notifs: INotification[]) => {
+        (gateway: HttpResponse<any>) => {
+          // Actualizamos el estado con pathState({nombre_propiedad: valor}).
+          console.log(gateway);
+        }, err => {
+          // Log errors if any
+          console.log(err);
+        }
+      );
+      this.testService.testSecuredServer().subscribe(
+        // (notifs: INotification[]) => {
+        (gateway: HttpResponse<String>) => {
+          // Actualizamos el estado con pathState({nombre_propiedad: valor}).
+          console.log(gateway);
+        }, err => {
+          // Log errors if any
+          console.log(err);
+        }
+      );
+    
       // Cargamos los proyectos
       this.store.dispatch( new LoadSafeKeepingProjects());
     }

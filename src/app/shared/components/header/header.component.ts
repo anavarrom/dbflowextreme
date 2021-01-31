@@ -9,6 +9,8 @@ import { OktaAuthService } from '@okta/okta-angular';
 import { Select } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { SessionStore } from 'src/app/core/states/session.state';
+import { RestTestService } from 'src/app/data/api/test.service';
+import { HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-header',
@@ -47,6 +49,7 @@ export class HeaderComponent {
       this.authService.login();
     }
   };
+
 
   constructor(private authService: dbFlowAuthService) { }
 

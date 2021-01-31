@@ -1,6 +1,12 @@
 Portainer
 ---------
-sudo docker run -d -p 8000:8000 -p 9000:9000 -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer
+sudo docker run -d -p 8000:8000 -p 9001:9000 -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer
+
+kafdrop
+-------
+sudo docker run -d --rm -p 9001:9000 -e KAFKA_BROKERCONNECT="kafka:9092" -e JVM_OPTS="-Xms32M -Xmx64M" -e SERVER_SERVLET_CONTEXTPATH="/" obsidiandynamics/kafdrop
+
+sudo docker run -d -e KAFKA_CLUSTERS_0_NAME="local" -e KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS="kafka:9092" provectuslabs/kafka-ui:latest
 
 Generar docker
 --------------

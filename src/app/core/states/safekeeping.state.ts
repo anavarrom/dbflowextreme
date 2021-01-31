@@ -39,7 +39,7 @@ export interface SafekeepingState {
       selectedPeriodId: 0,
       selectedProject: null,
       selectedProjectPartner: '',
-      currentYear: '2020'
+      currentYear: '2021'
     }
 })
 @Injectable()

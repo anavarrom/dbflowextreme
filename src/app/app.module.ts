@@ -20,6 +20,7 @@ import {
   OktaAuthModule
 } from '@okta/okta-angular';
 import { AuthInterceptor } from './core/auth/auth.interceptor';
+import { RestTestService } from './data/api/test.service';
 
 /*export function initializer(keycloak: KeycloakService): () => Promise<any> {
   return (): Promise<any> => keycloak.init();

@@ -1,3 +1,4 @@
+import { RestTestService } from './../data/api/test.service';
 import { dbFlowAuthService } from './auth/auth.service';
 // External Modules
 import { NgModule          } from '@angular/core';
@@ -56,7 +57,8 @@ const dbFlow6Services = [
     AppointmentService,
     SafeKeepingPeriodService,
     SafeKeepingProjectService,
-    dbFlowAuthService
+    dbFlowAuthService,
+    RestTestService
 ];
 
 
