@@ -2,10 +2,10 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { OktaAuthGuard, OktaCallbackComponent } from '@okta/okta-angular';
-import { HomeComponent } from './home/home.component';
+import { HomeComponent } from './secure/home/home.component';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { OKTA_CONFIG, OktaAuthModule } from '@okta/okta-angular';
-import { AuthInterceptor } from './shared/okta/auth.interceptor';
+import { AuthInterceptor } from './core/auth/auth.interceptor';
 
 const oktaConfig = {
   issuer: 'https://dev-811107.okta.com/oauth2/default',
