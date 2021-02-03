@@ -20,20 +20,7 @@ export class AppComponent implements OnInit {
     this.oktaAuth.$authenticationState.subscribe(
       (isAuthenticated: boolean)  => {
         this.isAuthenticated = isAuthenticated;
-        this.sessionService.login();
-        /*this.oktaAuth.getUser().th
-        en(value => {
-          // const user:UserClaims = value;
-          const account: DbFlowAccount = {
-            username: value.preferred_username,
-            firstName: value.given_name,
-            lastName: value.given_name,
-            enabled: true,
-            email: value.preferred_username,
-            authorities: [],
-            imageUrl: ''
-          };
-        });*/
+        this.sessionService.loginSusccesfull();
       }
     );
   }

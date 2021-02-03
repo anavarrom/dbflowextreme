@@ -1,4 +1,19 @@
 <div>
-    <button *ngIf="!(this.sessionQuery.isLoggedIn$ | async)" (click)="oktaAuth.signInWithRedirect()">Login</button>
-    <button *ngIf="(this.sessionQuery.isLoggedIn$ | async)" (click)="oktaAuth.signOut()">Logout</button>
+    <button *ngIf="!(this.sessionQuery.isLoggedIn$ | async)" (click)="this.login()">Login</button>
+    <button *ngIf="(this.sessionQuery.isLoggedIn$ | async)" (click)="this.logout()">Logout</button>
+</div>
+
+
+<div class="dx-field-value">
+  <dx-drop-down-button
+    [splitButton]="true"
+    [useSelectMode]="false"
+    text="Sandra Johnson"
+    icon="images/gym/coach-woman.png"
+    [items]="profileSettings"
+    displayExpr="name"
+    keyExpr="id"
+    (onButtonClick)="onButtonClick($event)"
+    (onItemClick)="onItemClick($event)"
+  ></dx-drop-down-button>
 </div>

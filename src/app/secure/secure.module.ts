@@ -1,3 +1,4 @@
+import { SharedModule } from './../shared/shared.module';
 // External Modules
 import { NgModule          } from '@angular/core';
 import { CommonModule      } from '@angular/common';
@@ -21,7 +22,9 @@ import { CoreModule } from '../core/core.module';
 // import { SafeKeepingDetailComponent } from './calendars/safe-keeping-detail/safe-keeping-detail.component';
 
 import { DxTileViewModule, DxToolbarModule, DxButtonModule, DxListModule, DxBoxModule,
-         DxDrawerModule, DxResponsiveBoxModule, DxTemplateModule, DxSchedulerModule, DxTextBoxModule, DxContextMenuModule } from 'devextreme-angular';
+         DxDrawerModule, DxResponsiveBoxModule, DxTemplateModule, DxSchedulerModule, DxTextBoxModule, DxContextMenuModule, DxDropDownButtonModule } from 'devextreme-angular';
+import { HomeComponent } from './home/home.component';
+import { OktaAuthGuard } from '@okta/okta-angular';
 // import { SharedModule } from '../shared/shared.module';
 
 const devExtremeModule = [
@@ -35,7 +38,8 @@ const devExtremeModule = [
   DxSchedulerModule,
   DxDrawerModule,
   DxTextBoxModule,
-  DxContextMenuModule
+  DxContextMenuModule,
+  DxDropDownButtonModule
 ];
 
 const externalModules = [
@@ -48,6 +52,7 @@ const externalModules = [
 ];
 
 const dbFlow6Components = [
+  HomeComponent,
   // MainComponent,
   // NotificationsTabPageComponent,
   // NotificationDetailComponent,
@@ -55,16 +60,24 @@ const dbFlow6Components = [
   // ChatsTabePageComponent,
   // ChatDetailComponent,
   // DisplayDataComponent,
-  // HomeComponent,
   // ProfileComponent,
   // SafeKeepingDetailComponent
 ];
-
+/*
+const routes: Routes = [
+  {
+    path: 'home',
+    canActivate: [OktaAuthGuard],
+    component: HomeComponent
+  }
+];*/
 
 @NgModule({
   imports: [
     externalModules,
     CoreModule,
+    SharedModule,
+   // RouterModule.forRoot(routes)
   ],
   entryComponents: [
     dbFlow6Components
