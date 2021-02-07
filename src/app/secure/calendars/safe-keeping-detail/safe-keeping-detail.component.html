@@ -1,0 +1,40 @@
+Safe keeping view works
+ <dx-scheduler  [dataSource]="(periods$ | async)"
+                [views]='["month"]'
+                currentView="month"
+                [currentDate]="currentDate"
+                [startDayHour]="9"
+                [height]="600"
+                (onCellContextMenu)="onCellContextMenu($event)"
+                (onAppointmentContextMenu)="onAppointmentContextMenu($event)"
+                (onAppointmentUpdating)="onAppointmentUpdating($event)"
+                (onAppointmentUpdated)="onAppointmentUpdated($event)"
+                (onAppointmentDeleting)="onAppointmentDeleting($event)"
+                (onAppointmentDeleted)="onAppointmentDeleted($event)">
+    <dxi-resource
+        fieldExpr="owner"
+        label="parents"
+        [allowMultiple]="true"
+        [dataSource]="parents">
+    </dxi-resource>
+    <dxo-editing [allowAdding]="true"
+                 [allowDeleting]="true"
+                 [allowUpdating]="true"
+                 [allowResizing]="false"
+                 [allowDragging]="true">
+    </dxo-editing>
+</dx-scheduler>
+<dx-context-menu #contextMenu
+                 [dataSource]="cellContextMenuItems"
+                 [disabled]="disabled"
+                 [target]="target"
+                 (onItemClick)="onContextMenuItemClick($event)"
+                 [width]="200"
+                 (onHiding)="onContextMenuHiding($event)">
+    <div *dxTemplate="let e of 'item'">
+        <div *ngIf="e.color">
+            <div class="item-badge" [ngStyle]="{ backgroundColor: e.color}"></div>
+        </div>
+        <div class="item-text">{{e.text}}</div>
+    </div>
+</dx-context-menu>

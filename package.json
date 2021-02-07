@@ -24,6 +24,7 @@
     "@datorama/akita-ng-router-store": "^6.0.0",
     "@okta/okta-angular": "3.0.1",
     "@oktadev/schematics": "^3.3.0",
+    "bootstrap": "^4.6.0",
     "devextreme": "^20.2.4",
     "devextreme-angular": "^20.2.4",
     "devextreme-schematics": "^1.2.9",

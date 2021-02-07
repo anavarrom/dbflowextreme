@@ -25,6 +25,7 @@ import { DxTileViewModule, DxToolbarModule, DxButtonModule, DxListModule, DxBoxM
          DxDrawerModule, DxResponsiveBoxModule, DxTemplateModule, DxSchedulerModule, DxTextBoxModule, DxContextMenuModule, DxDropDownButtonModule } from 'devextreme-angular';
 import { HomeComponent } from './home/home.component';
 import { OktaAuthGuard } from '@okta/okta-angular';
+import { SafeKeepingDetailComponent } from './calendars/safe-keeping-detail/safe-keeping-detail.component';
 // import { SharedModule } from '../shared/shared.module';
 
 const devExtremeModule = [
@@ -53,7 +54,8 @@ const externalModules = [
 
 const dbFlow6Components = [
   HomeComponent,
-  // MainComponent,
+  SafeKeepingDetailComponent
+] // MainComponent,
   // NotificationsTabPageComponent,
   // NotificationDetailComponent,
   // CalendarsTabePageComponent,
@@ -61,8 +63,7 @@ const dbFlow6Components = [
   // ChatDetailComponent,
   // DisplayDataComponent,
   // ProfileComponent,
-  // SafeKeepingDetailComponent
-];
+ ;
 /*
 const routes: Routes = [
   {

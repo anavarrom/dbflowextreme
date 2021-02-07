@@ -6,6 +6,7 @@ import { HomeComponent } from './secure/home/home.component';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { OKTA_CONFIG, OktaAuthModule } from '@okta/okta-angular';
 import { AuthInterceptor } from './core/auth/auth.interceptor';
+import { SafeKeepingDetailComponent } from './secure/calendars/safe-keeping-detail/safe-keeping-detail.component';
 
 const oktaConfig = {
   issuer: 'https://dev-811107.okta.com/oauth2/default',
@@ -20,6 +21,11 @@ const routes: Routes = [
     path: 'home',
     canActivate: [OktaAuthGuard],
     component: HomeComponent
+  },{
+    path: 'safeKeeping',
+    component: SafeKeepingDetailComponent,
+    canActivate: [OktaAuthGuard],
+    data: { roles: ['ROLE_USER'] }
   },
   {
     path: 'callback',

@@ -53,7 +53,7 @@ export class SafeKeepingProjectService {
     const options = createRequestOption(req);
     return this.http
       .get<ISafeKeepingProject[]>(this.findAllByUserEndpoint, { params: options, observe: 'response' })
-      .pipe(map((res: SafeKeepingProjectResponseType) => this.convertDateArrayFromServer(res)));
+      .pipe(map((res: SafeKeepingProjectResponseType) => this.convertDateArrayFromServer(res)))
   }
 
   delete(id: number): Observable<HttpResponse<any>> {

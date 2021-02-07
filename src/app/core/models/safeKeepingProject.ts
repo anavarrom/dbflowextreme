@@ -1,5 +1,5 @@
 import { Moment } from 'moment';
-import { ISafeKeepingProject } from 'src/app/data/interfaces/models';
+import { ISafeKeepingPeriod, ISafeKeepingProject } from 'src/app/data/interfaces/models';
 
 export class SafeKeepingProject implements ISafeKeepingProject{
     constructor(
@@ -10,6 +10,8 @@ export class SafeKeepingProject implements ISafeKeepingProject{
         public parent2?: string,
         public mediator?: string,
         public start?: Moment,
+        public periods?: ISafeKeepingPeriod[]
     ) {
+      this.periods = [];
     }
 }

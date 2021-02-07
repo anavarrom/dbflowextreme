@@ -1,14 +1,18 @@
+import { RouterModule } from '@angular/router';
 // External modules
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { ToastService } from './toast.service';
+import { ToastService } from './services/toast.service';
+import { HeaderComponent } from './components/header/header.component';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 // import { ChatViewComponent } from './components/chat-view/chat-view.component';
-// import { DxTemplateModule, DxButtonModule, DxListModule, DxToolbarModule, DxTextBoxModule } from 'devextreme-angular';
+import { DxTemplateModule, DxButtonModule, DxListModule, DxToolbarModule, DxTextBoxModule, DxCheckBoxModule, DxMenuModule } from 'devextreme-angular';
 // import { ErrorComponent } from './components/error/error.component';
 // Custom modules
 // Custom Components
 // import {ErrorDetailComponent} from './error-detail/error-detail.component';
 const dbFlow6Components = [
+  HeaderComponent
   // ChatViewComponent
 ];
 
@@ -17,11 +21,13 @@ const dbFlow6Services = [
 ];
 
 const devExtremeModule = [
+  DxTemplateModule, DxButtonModule, DxListModule, DxToolbarModule, DxTextBoxModule, DxMenuModule, DxCheckBoxModule
 ];
 
 @NgModule({
   imports: [
     CommonModule,
+    RouterModule,
     devExtremeModule
   ],
   declarations: [
@@ -41,5 +47,6 @@ const devExtremeModule = [
   exports: [
     dbFlow6Components
    ],
+   schemas: [CUSTOM_ELEMENTS_SCHEMA]
  })
 export class SharedModule { }

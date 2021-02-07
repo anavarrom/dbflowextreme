@@ -3,12 +3,13 @@ import { Injectable } from '@angular/core';
 import { OktaAuthService } from '@okta/okta-angular';
 import { tap } from 'rxjs/operators';
 import { DbAccountConfiguration, DbFlowAccount } from '../../models/account';
+import { ProjectsService } from '../projects/projects.service';
 import { SessionStore } from './session.store';
 
 @Injectable({ providedIn: 'root' })
 export class SessionService {
 
-  constructor(private sessionStore: SessionStore, private http: HttpClient, public oktaAuth: OktaAuthService ) {
+  constructor(private sessionStore: SessionStore, private http: HttpClient, public oktaAuth: OktaAuthService, public projectsService: ProjectsService ) {
   }
 
   async loginSusccesfull() {
@@ -28,6 +29,7 @@ export class SessionService {
         imageUrl: ''
       };
       this.sessionStore.update({ userAccount: account });
+      this.projectsService.initProjects(account);
     });
 
     const config: DbAccountConfiguration = {
