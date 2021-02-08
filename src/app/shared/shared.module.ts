@@ -7,12 +7,16 @@ import { HeaderComponent } from './components/header/header.component';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 // import { ChatViewComponent } from './components/chat-view/chat-view.component';
 import { DxTemplateModule, DxButtonModule, DxListModule, DxToolbarModule, DxTextBoxModule, DxCheckBoxModule, DxMenuModule } from 'devextreme-angular';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { FooterComponent } from './components/footer/footer.component';
+
 // import { ErrorComponent } from './components/error/error.component';
 // Custom modules
 // Custom Components
 // import {ErrorDetailComponent} from './error-detail/error-detail.component';
 const dbFlow6Components = [
-  HeaderComponent
+  HeaderComponent,
+  FooterComponent
   // ChatViewComponent
 ];
 
@@ -28,7 +32,8 @@ const devExtremeModule = [
   imports: [
     CommonModule,
     RouterModule,
-    devExtremeModule
+    devExtremeModule,
+    FontAwesomeModule
   ],
   declarations: [
     dbFlow6Components

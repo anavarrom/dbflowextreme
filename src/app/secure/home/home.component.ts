@@ -14,18 +14,9 @@ export class HomeComponent implements OnInit {
 
 
 
-  constructor(public sessionQuery: SessionQuery, public sessionService: SessionService, public toast: ToastService) {
+  constructor(public toast: ToastService) {
   }
 
   async ngOnInit() {
   }
-
-  logout() {
-    this.sessionService.logout();
-  }
-
-  login() {
-    this.sessionService.login();
-  }
-
 }

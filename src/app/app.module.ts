@@ -12,6 +12,7 @@ import { environment } from '../environments/environment';
 import { Configuration, ConfigurationParameters } from './data/configuration';
 import { SecureModule } from './secure/secure.module';
 import { DataModule } from './data/data.module';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 export function apiConfigFactory(): Configuration {
   const params: ConfigurationParameters = {
@@ -31,6 +32,7 @@ const externalModules = [
   AuthRoutingModule,
   environment.production ? [] : AkitaNgDevtools.forRoot(),
   AkitaNgRouterStoreModule,
+  FontAwesomeModule
 ];
 
 const customModules = [
@@ -47,7 +49,7 @@ const customModules = [
   imports: [
     BrowserModule,
     externalModules,
-    customModules
+    customModules,
   ],
   providers: [{ provide: NG_ENTITY_SERVICE_CONFIG, useValue: { baseUrl: 'https://jsonplaceholder.typicode.com' }}],
   bootstrap: [AppComponent]

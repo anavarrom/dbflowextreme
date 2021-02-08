@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ToastService } from '../../services/toast.service';
+import { faUser } from '@fortawesome/free-solid-svg-icons';
+import { Router } from '@angular/router';
+import { SessionQuery } from 'src/app/core/state/session/session.query';
+import { SessionService } from 'src/app/core/state/session/session.service';
 
 @Component({
   selector: 'app-header',
@@ -11,38 +15,65 @@ export class HeaderComponent implements OnInit {
     { value: 1, name: "Profile", icon: "user" },
     { value: 4, name: "Messages", icon: "email", badge: "5" },
     { value: 2, name: "Friends", icon: "group" },
-    { value: 3, name: "Exit", icon: "runner" } ];
+    { value: 3, name: "Exit", icon: "runner" }];
 
-    addButtonOptions: any;
-    calendar: any;
-
-    constructor(public toast: ToastService) {
-
-      this.addButtonOptions = {
-        icon: 'plus',
-        text:'patata',
-        onClick: () => {
-            this.toast.info('Add button has been clicked!');
+  userItems = [{
+    icon: 'fas fa-user',
+    items: [
+      { text: 'Your profile', disabled: true },
+      { text: 'Your project', icon: 'fas fa-project-diagram',onClick: () => {
+          this.router.navigate(['/safeKeeping']);
+          }
+      },
+      {
+        beginGroup: true, text: 'Sign out', icon: 'fas fa-sign-out-alt', onClick: () => {
+          this.logout();
         }
-     };
-
-     this.calendar = {
-      icon: 'plus',
-      text:'calendar',
-      onClick: () => {
-          this.toast.info('Add button has been clicked!');
       }
-   };
-    }
+    ]
+  }];
+
+  loginButtonOptions: any;
+  homeButtonOptions: any;
+
+  constructor(private router: Router, public sessionQuery: SessionQuery, public sessionService: SessionService, public toast: ToastService) {
+
+    this.loginButtonOptions = {
+      icon: 'fas fa-sign-in-alt',
+      text: 'Sign in',
+      onClick: () => {
+          this.login();
+      }
+    };
+    this.homeButtonOptions = {
+      icon: 'fas fa-home',
+      text: 'Home',
+      onClick: () => {
+        this.router.navigate(['/home'])
+      }
+    };
+  }
 
   ngOnInit(): void {
   }
 
-  onButtonClick(e) {
-		this.toast.info("Go to " + e.component.option("text") + "'s profile");
-	}
+  /*onClickViewProject() {
+    this.router.navigate(['/safeKeeping']);
+  }*/
 
-	onItemClick(e) {
-		this.toast.info(e.itemData.name || e.itemData, 600);
-	}
+  logout() {
+    this.sessionService.logout();
+  }
+
+  login() {
+    this.sessionService.login();
+  }
+
+  onButtonClick(e) {
+    this.toast.info("Go to " + e.component.option("text") + "'s profile");
+  }
+
+  onItemClick(e) {
+    this.toast.info(e.itemData.name || e.itemData, 600);
+  }
 }
