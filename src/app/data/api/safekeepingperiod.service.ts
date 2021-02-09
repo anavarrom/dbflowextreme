@@ -92,6 +92,7 @@ export class SafeKeepingPeriodService {
       res.body.forEach((appointment: ISafeKeepingPeriod) => {
         appointment.startDate = appointment.startDate != null ? moment(appointment.startDate) : null;
         appointment.endDate = appointment.endDate != null ? moment(appointment.endDate) : null;
+        appointment.allDay = true;
       });
     }
     return res;

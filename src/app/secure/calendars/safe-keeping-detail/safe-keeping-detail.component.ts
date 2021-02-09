@@ -1,3 +1,4 @@
+import { ProjectsService } from './../../../core/state/projects/projects.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { ISafeKeepingPeriod, IAppointment, IDbAccountConfiguration } from 'src/app/data/interfaces/models';
@@ -37,6 +38,7 @@ export class SafeKeepingDetailComponent implements OnInit {
   // ngUnsubscribeError = null;
 
   constructor( private sessionQuery: SessionQuery,
+               private projectsService: ProjectsService,
                private projectsQuery: ProjectsQuery,
                private toastService: ToastService) {
 
@@ -88,14 +90,15 @@ export class SafeKeepingDetailComponent implements OnInit {
   }
 
   createSafeKeepingPeriod(contextMenuEvent, e, parent){
-    // let period: SafeKeepingPeriod = new SafeKeepingPeriod();
-    // period.owner     = e.itemData.username;
-    // period.text      = e.itemData.username;
-    // period.startDate = moment(contextMenuEvent.cellData.startDate);
-    // period.endDate   = moment(contextMenuEvent.cellData.endDate);
-    // period.allDay    = true;
+     let period: SafeKeepingPeriod = new SafeKeepingPeriod();
+     period.owner     = e.itemData.username;
+     period.text      = e.itemData.username;
+     period.startDate = moment(contextMenuEvent.cellData.startDate);
+     period.endDate   = moment(contextMenuEvent.cellData.startDate);
+     //period.endDate   = moment(contextMenuEvent.cellData.endDate);
+     period.allDay    = true;
 
-    // parent.store.dispatch(new NewSafeKeepingPeriod(period));
+     parent.projectsService.addNewSafeKeepingPeriod(period);
   }
 
   onItemClick(contextMenuEvent) {
@@ -133,7 +136,7 @@ export class SafeKeepingDetailComponent implements OnInit {
     period.startDate = moment(e.newData.startDate);
     period.endDate   = moment(e.newData.endDate);
 
-    // this.store.dispatch(new UpdateSafeKeepingPeriod(e.newData));
+    this.projectsService.updateSafeKeepingPeriod(period);
   }
 
 
@@ -144,7 +147,7 @@ export class SafeKeepingDetailComponent implements OnInit {
   onAppointmentDeleting(e) {
     this.toastService.info("Deleting clicked");
 
-    // this.store.dispatch(new DeleteSafeKeepingPeriod(e.appointmentData));
+    this.projectsService.deleteSafeKeepingPeriod(e.appointmentData);
   }
 
   onAppointmentDeleted(e) {
