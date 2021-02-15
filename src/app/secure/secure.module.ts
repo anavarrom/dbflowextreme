@@ -26,6 +26,7 @@ import { DxTileViewModule, DxToolbarModule, DxButtonModule, DxListModule, DxBoxM
 import { HomeComponent } from './home/home.component';
 import { OktaAuthGuard } from '@okta/okta-angular';
 import { SafeKeepingDetailComponent } from './calendars/safe-keeping-detail/safe-keeping-detail.component';
+import { CalendarsTabePageComponent } from './calendars/calendars-tabe-page/calendars-tabe-page.component';
 // import { SharedModule } from '../shared/shared.module';
 
 const devExtremeModule = [
@@ -54,11 +55,11 @@ const externalModules = [
 
 const dbFlow6Components = [
   HomeComponent,
-  SafeKeepingDetailComponent
+  SafeKeepingDetailComponent,
+  CalendarsTabePageComponent,
 ] // MainComponent,
   // NotificationsTabPageComponent,
   // NotificationDetailComponent,
-  // CalendarsTabePageComponent,
   // ChatsTabePageComponent,
   // ChatDetailComponent,
   // DisplayDataComponent,

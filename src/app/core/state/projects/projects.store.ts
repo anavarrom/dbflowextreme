@@ -17,9 +17,20 @@ export class ProjectsStore extends EntityStore<ProjectsState> {
   }
 
   addSafeKeepingPeriods(projectId: number, newPeriods: SafeKeepingPeriod[] ) {
+    // Create periods by Date
+    let datePeriods = new Map();
+    newPeriods.forEach(period => {
+      datePeriods.set(period.startDate.toDate().toDateString(), period);
+    });
+
     this.update(projectId, ({ periods }) => ({
       periods: arrayAdd(periods, newPeriods)
     }));
+
+    this.update(projectId, ({ periodsByDate }) => ({
+      periodsByDate: arrayAdd(periodsByDate, datePeriods)
+    }));
+
   }
 
   updateSafeKeepingPeriods(projectId: number, period: SafeKeepingPeriod ) {

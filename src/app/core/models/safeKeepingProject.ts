@@ -10,8 +10,10 @@ export class SafeKeepingProject implements ISafeKeepingProject{
         public parent2?: string,
         public mediator?: string,
         public start?: Moment,
-        public periods?: ISafeKeepingPeriod[]
+        public periods?: ISafeKeepingPeriod[],
+        public periodsByDate?: ISafeKeepingPeriod[]
     ) {
       this.periods = [];
+      this.periodsByDate = [];
     }
 }

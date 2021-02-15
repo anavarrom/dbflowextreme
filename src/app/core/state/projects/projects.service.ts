@@ -55,10 +55,6 @@ export class ProjectsService {
     this.periodsService.findAllByProjectAndYear(project.id, currentYear).subscribe(
         // (notifs: INotification[]) => {
         (periods: HttpResponse<ISafeKeepingPeriod[]>) => {
-          let datePeriods = new Map();
-          periods.body.forEach(period => {
-            datePeriods.set(period.startDate.toDate().toDateString(), period);
-          });
           this.store.addSafeKeepingPeriods(project.id, periods.body);
         }, err => {
           // Log errors if any

@@ -11,6 +11,10 @@ export class ProjectsQuery extends QueryEntity<ProjectsState> {
     return project.periods;
   });
 
+  allSelectedProjectPeriodsByDate$ = this.select(state => {
+    let project: SafeKeepingProject  = this.getActive() as SafeKeepingProject;
+    return project.periodsByDate;
+  });
 
   constructor(protected store: ProjectsStore) {
     super(store);

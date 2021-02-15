@@ -1,3 +1,6 @@
+
+Calendar view
+
 <!--
 <div *ngIf="(loading$ | async) === false">
   <ul>
@@ -12,16 +15,16 @@
 
 
 -->
-<!-- 
+<!--
     [openedStateMode]="selectedOpenMode"
     [position]="selectedPosition"
     [revealMode]="selectedRevealMode"
     [closeOnOutsideClick]="true"
 
-    
--->
 
-<dx-drawer 
+-->
+<!--
+<dx-drawer
     template="template"
     [(opened)]="isDrawerOpen"
     [closeOnOutsideClick]="true"
@@ -47,14 +50,14 @@
       (onAppointmentFormOpening)="onAppointmentFormOpening($event)"
       dataCellTemplate="dataCellTemplate"
       >
-      <dxo-editing 
+      <dxo-editing
           [allowAdding]="false"
           [allowDeleting]="false"
           [allowUpdating]="false"
           [allowResizing]="false"
           [allowDragging]="false"
       ></dxo-editing>>
-  
+
       <div *dxTemplate="let model of 'tooltipTemplate'">
         <dx-button
                           stylingMode="contained"
@@ -64,20 +67,20 @@
                           (onClick)="goToChatFromAppointment($event)">
                       </dx-button>
         <dx-toolbar>
-                <dxi-item location="after" widget="dxButton" locateInMenu="auto" 
+                <dxi-item location="after" widget="dxButton" locateInMenu="auto"
                           [options]="addButtonOptions" [onClick]="goToChatFromAppointment">
                 </dxi-item>
-        </dx-toolbar>        
+        </dx-toolbar>
         <i>{{model.appointmentData.subject}} </i>
       </div>
       <div *dxTemplate="let cellData of 'dataCellTemplate'" [ngClass]="markWeekEnd(cellData, (periodsByDate$ | async)?.get(cellData.startDate.toDateString()))">
         <div>
-          {{cellData.text}} {{ (periodsByDate$ | async)?.get(cellData.startDate.toDateString())?.text }} 
+          {{cellData.text}} {{ (periodsByDate$ | async)?.get(cellData.startDate.toDateString())?.text }}
         </div>
       </div>
   </dx-scheduler>
 </div>
-   
+
 </dx-drawer>
 
-
+ -->

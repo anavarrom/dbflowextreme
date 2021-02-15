@@ -7,6 +7,7 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { OKTA_CONFIG, OktaAuthModule } from '@okta/okta-angular';
 import { AuthInterceptor } from './core/auth/auth.interceptor';
 import { SafeKeepingDetailComponent } from './secure/calendars/safe-keeping-detail/safe-keeping-detail.component';
+import { CalendarsTabePageComponent } from './secure/calendars/calendars-tabe-page/calendars-tabe-page.component';
 
 const oktaConfig = {
   issuer: 'https://dev-811107.okta.com/oauth2/default',
@@ -21,9 +22,16 @@ const routes: Routes = [
     path: 'home',
     canActivate: [OktaAuthGuard],
     component: HomeComponent
-  },{
+  },
+  {
     path: 'safeKeeping',
     component: SafeKeepingDetailComponent,
+    canActivate: [OktaAuthGuard],
+    data: { roles: ['ROLE_USER'] }
+  },
+  {
+    path: 'calendar',
+    component: CalendarsTabePageComponent,
     canActivate: [OktaAuthGuard],
     data: { roles: ['ROLE_USER'] }
   },

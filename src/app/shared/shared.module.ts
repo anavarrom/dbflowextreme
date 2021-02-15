@@ -6,7 +6,7 @@ import { ToastService } from './services/toast.service';
 import { HeaderComponent } from './components/header/header.component';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 // import { ChatViewComponent } from './components/chat-view/chat-view.component';
-import { DxTemplateModule, DxButtonModule, DxListModule, DxToolbarModule, DxTextBoxModule, DxCheckBoxModule, DxMenuModule } from 'devextreme-angular';
+import { DxTemplateModule, DxButtonModule, DxListModule, DxToolbarModule, DxTextBoxModule, DxCheckBoxModule, DxMenuModule, DxTabsModule} from 'devextreme-angular';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FooterComponent } from './components/footer/footer.component';
 
@@ -25,7 +25,7 @@ const dbFlow6Services = [
 ];
 
 const devExtremeModule = [
-  DxTemplateModule, DxButtonModule, DxListModule, DxToolbarModule, DxTextBoxModule, DxMenuModule, DxCheckBoxModule
+  DxTemplateModule, DxButtonModule, DxListModule, DxToolbarModule, DxTextBoxModule, DxMenuModule, DxCheckBoxModule,  DxTabsModule
 ];
 
 @NgModule({
