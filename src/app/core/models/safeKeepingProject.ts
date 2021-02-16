@@ -1,6 +1,6 @@
+import { HashMap } from '@datorama/akita';
 import { Moment } from 'moment';
 import { ISafeKeepingPeriod, ISafeKeepingProject } from 'src/app/data/interfaces/models';
-
 export class SafeKeepingProject implements ISafeKeepingProject{
     constructor(
         public id?: number,
@@ -11,9 +11,8 @@ export class SafeKeepingProject implements ISafeKeepingProject{
         public mediator?: string,
         public start?: Moment,
         public periods?: ISafeKeepingPeriod[],
-        public periodsByDate?: ISafeKeepingPeriod[]
     ) {
       this.periods = [];
-      this.periodsByDate = [];
+      // this.periodsByDate = [];
     }
 }

@@ -26,11 +26,6 @@ export class ProjectsStore extends EntityStore<ProjectsState> {
     this.update(projectId, ({ periods }) => ({
       periods: arrayAdd(periods, newPeriods)
     }));
-
-    this.update(projectId, ({ periodsByDate }) => ({
-      periodsByDate: arrayAdd(periodsByDate, datePeriods)
-    }));
-
   }
 
   updateSafeKeepingPeriods(projectId: number, period: SafeKeepingPeriod ) {

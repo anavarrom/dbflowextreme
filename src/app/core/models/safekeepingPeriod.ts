@@ -1,6 +1,8 @@
 import { Moment } from 'moment';
 import { ISafeKeepingPeriod } from 'src/app/data/interfaces/models';
 
+export type SafeKeepingPeriodsMap         = Map<String,ISafeKeepingPeriod>;
+
 export class SafeKeepingPeriod implements ISafeKeepingPeriod{
     constructor(
         public id?: number,
