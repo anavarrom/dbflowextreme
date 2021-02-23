@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Store, StoreConfig } from '@datorama/akita';
 import { IDbFlowAccount, IDbAccountConfiguration } from 'src/app/data/interfaces/models';
+import { DbFlowError } from '../../models/error';
 
 export interface SessionState {
   userAccount: IDbFlowAccount;
   userConfig: IDbAccountConfiguration;
+  lastError: DbFlowError;
   isAuthenticated: boolean;
 }
 
@@ -12,6 +14,7 @@ export function createInitialState(): SessionState {
   return {
     userAccount : null,
     userConfig: null,
+    lastError: null,
     isAuthenticated:false
 };
 }

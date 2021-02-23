@@ -11,8 +11,8 @@ export class DbFlowError {
     constructor(
         public severity?: ErrorSeverity,
         public code?: number,
-        public message?: string,
+        public title?: string,
         public detail?: string,
-        public url?: string,
+        public path?: string,
     ) {}
 }

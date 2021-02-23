@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Actions } from '@datorama/akita-ng-effects';
+import { NavigationActions } from 'src/app/core/effects/navigation.actions';
 
 @Component({
   selector: 'app-footer',
@@ -11,6 +13,7 @@ export class FooterComponent implements OnInit {
   footerItems = [
     {
       text: 'Calendar', icon: 'far fa-calendar-alt', onClick: () => {
+        this.actions.dispatch(NavigationActions.calendarClicked());
         this.router.navigate(['/calendar']);
       }
     },
@@ -31,7 +34,7 @@ export class FooterComponent implements OnInit {
     },
   ];
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private actions: Actions) { }
 
   ngOnInit(): void {
   }

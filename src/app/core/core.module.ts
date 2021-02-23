@@ -12,7 +12,7 @@ import { environment } from 'src/environments/environment';
 import { NotificactionService           } from '../data/api/notification.service';
 import { ChatService } from '../data/api/chat.service';
 import { MessageService } from '../data/api/message.service';
-import { AppointmentService } from '../data/api/appointment.service';
+import { RestAppointmentService } from '../data/api/appointment.service';
 import { SafeKeepingPeriodService } from '../data/api/safekeepingperiod.service';
 import { SafeKeepingProjectService } from '../data/api/safekeepingproject.service';
 
@@ -29,7 +29,7 @@ const dbFlow6Services = [
     NotificactionService,
     ChatService,
     MessageService,
-    AppointmentService,
+    RestAppointmentService,
     SafeKeepingPeriodService,
     SafeKeepingProjectService,
     RestTestService

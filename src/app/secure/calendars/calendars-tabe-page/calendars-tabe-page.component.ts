@@ -1,3 +1,5 @@
+import { AppointmentsService } from './../../../core/state/appointments/appointments.service';
+import { AppointmentsQuery } from './../../../core/state/appointments/appointments.query';
 import { Component, OnInit } from '@angular/core';
 import { IAppointment, IChat, ISafeKeepingPeriod, IDbFlowAccount } from 'src/app/data/interfaces/models';
 import { Appointment } from 'src/app/core/models/appointment';
@@ -32,14 +34,17 @@ export class CalendarsTabePageComponent implements OnInit {
   isDrawerOpen = false;
 
   constructor( private sessionQuery: SessionQuery,
-               private projectsService: ProjectsService,
                private projectsQuery: ProjectsQuery,
+               private appointmentsQuery: AppointmentsQuery,
+               private appointmentsService: AppointmentsService,
                private toastService: ToastService) {
   }
 
   ngOnInit() {
+    this.appointmentsService.loadAppointments();
     this.me = this.sessionQuery.Me;
     this.periodsByDate = this.projectsQuery.PeriodsByDate;
+    this.appointments$ = this.appointmentsQuery.selectAll();
 
   // TODO: Debería de haber una forma más inteligente de cargar los appointments
     this.addButtonOptions = {

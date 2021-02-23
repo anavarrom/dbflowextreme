@@ -1,3 +1,5 @@
+import { ErrorPageComponent } from './secure/error/error-page.component';
+import { ErrorHandlerInterceptor } from './core/interceptors/http.interceptor';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
@@ -32,6 +34,12 @@ const routes: Routes = [
   {
     path: 'calendar',
     component: CalendarsTabePageComponent,
+    canActivate: [OktaAuthGuard],
+    data: { roles: ['ROLE_USER'] }
+  },
+  {
+    path: 'error',
+    component: ErrorPageComponent,
     canActivate: [OktaAuthGuard],
     data: { roles: ['ROLE_USER'] }
   },

@@ -27,6 +27,8 @@ import { HomeComponent } from './home/home.component';
 import { OktaAuthGuard } from '@okta/okta-angular';
 import { SafeKeepingDetailComponent } from './calendars/safe-keeping-detail/safe-keeping-detail.component';
 import { CalendarsTabePageComponent } from './calendars/calendars-tabe-page/calendars-tabe-page.component';
+import { ErrorPageComponent } from './error/error-page.component';
+// import { ErrorPageComponent } from './error/error.component';
 // import { SharedModule } from '../shared/shared.module';
 
 const devExtremeModule = [
@@ -57,14 +59,14 @@ const dbFlow6Components = [
   HomeComponent,
   SafeKeepingDetailComponent,
   CalendarsTabePageComponent,
-] // MainComponent,
+  ErrorPageComponent,
   // NotificationsTabPageComponent,
   // NotificationDetailComponent,
   // ChatsTabePageComponent,
   // ChatDetailComponent,
   // DisplayDataComponent,
   // ProfileComponent,
- ;
+];
 /*
 const routes: Routes = [
   {

@@ -1,0 +1,15 @@
+<div class="dx-fieldset">
+  <div class="dx-fieldset-header">Sorry, an unexpected error has been detected.</div>
+  <div class="dx-field">
+    <div class="dx-field-label">Code:</div>
+    <div class="dx-field-value-static">{{(error$ | async).code}}</div>
+  </div>
+  <div class="dx-field">
+    <div class="dx-field-label">Message:</div>
+    <div class="dx-field-value-static">{{(error$ | async).detail}}</div>
+  </div>
+  <div class="dx-field">
+    <div class="dx-field-label">Path:</div>
+    <div class="dx-field-value-static">{{(error$ | async).path}}</div>
+  </div>
+</div>

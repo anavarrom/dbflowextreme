@@ -1,3 +1,4 @@
+import { DbFlowError } from './../../models/error';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { OktaAuthService } from '@okta/okta-angular';
@@ -46,5 +47,9 @@ export class SessionService {
 
   login() {
     this.oktaAuth.signInWithRedirect();
+  }
+
+  registerLastError(error: DbFlowError) {
+    this.sessionStore.update({ lastError: error });
   }
 }

@@ -6,6 +6,7 @@ import { SessionStore, SessionState } from './session.store';
 @Injectable({ providedIn: 'root' })
 export class SessionQuery extends Query<SessionState> {
 
+  lastError$ = this.select(state => state.lastError);
   isLoggedIn$ = this.select(state => state.isAuthenticated);
   me$ = this.select(state => state.userAccount.username);
 

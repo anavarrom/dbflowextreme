@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Actions } from '@datorama/akita-ng-effects';
 import { OktaAuthService} from '@okta/okta-angular';
+import { SessionActions } from './core/effects/session.actions';
 import { DbFlowAccount } from './core/models/account';
 import { SessionService } from './core/state/session/session.service';
 
@@ -12,7 +14,7 @@ export class AppComponent implements OnInit {
   title = 'dbflowextreme';
   isAuthenticated: boolean = false;
 
-  constructor(public oktaAuth: OktaAuthService, public sessionService: SessionService ) {
+  constructor(public oktaAuth: OktaAuthService, public sessionService: SessionService, private actions: Actions ) {
   }
 
   async ngOnInit() {
@@ -20,7 +22,7 @@ export class AppComponent implements OnInit {
     this.oktaAuth.$authenticationState.subscribe(
       (isAuthenticated: boolean)  => {
         this.isAuthenticated = isAuthenticated;
-        this.sessionService.loginSusccesfull();
+        this.actions.dispatch(SessionActions.loginSuccess());
       }
     );
   }
