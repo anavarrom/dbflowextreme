@@ -5,7 +5,7 @@ import { CommonModule      } from '@angular/common';
 import { FormsModule       } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-// import { MomentModule } from 'ngx-moment';
+import { MomentModule } from 'ngx-moment';
 
 
 // Custom modules
@@ -28,6 +28,7 @@ import { OktaAuthGuard } from '@okta/okta-angular';
 import { SafeKeepingDetailComponent } from './calendars/safe-keeping-detail/safe-keeping-detail.component';
 import { CalendarsTabePageComponent } from './calendars/calendars-tabe-page/calendars-tabe-page.component';
 import { ErrorPageComponent } from './error/error-page.component';
+import { ChatsTabePageComponent } from './chats/chats-tabe-page/chats-tabe-page.component';
 // import { ErrorPageComponent } from './error/error.component';
 // import { SharedModule } from '../shared/shared.module';
 
@@ -50,8 +51,8 @@ const externalModules = [
   CommonModule,
   FormsModule,
   RouterModule,
-  devExtremeModule
-  //MomentModule
+  devExtremeModule,
+  MomentModule
   // OnsenModule
 ];
 
@@ -62,7 +63,7 @@ const dbFlow6Components = [
   ErrorPageComponent,
   // NotificationsTabPageComponent,
   // NotificationDetailComponent,
-  // ChatsTabePageComponent,
+  ChatsTabePageComponent,
   // ChatDetailComponent,
   // DisplayDataComponent,
   // ProfileComponent,

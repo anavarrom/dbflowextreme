@@ -1,0 +1,109 @@
+.chatContainer {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    display: flex;
+    height: 100%;
+    align-items: stretch;
+    // border: 5px solid red;
+}
+
+.chatList {
+    flex-basis: 35%;
+    height: 100%;
+    background-color: white;
+}
+
+.chatMessages {
+    flex-basis: 65%;
+    height: 100%;
+}
+
+.chat {
+    border-bottom: solid lightgrey;
+    border-bottom-width: 1px;
+    display: flex; 
+    flex-direction: row;
+    flex-wrap: nowrap;
+    height: 100%;
+    align-items: stretch;
+} 
+
+.chat_block_left {
+    flex-basis: 35%;
+    display: flex; 
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    width: 100%;
+    height: 100%;
+}
+
+.chat_block_right {
+    display: flex; 
+    flex-basis: 65%;
+    justify-content: flex-end;
+    width: 100%;
+    height: 100%;    
+}
+
+.timeAgo {
+    font-size: small;
+    color: gray;
+}
+
+.contact {
+    font-size: 85%;
+}
+
+.subject {
+    font-size: small;
+    color: gray;
+}
+.newMessageContent {
+    display: flex; 
+    flex-direction: column-reverse;
+    flex-wrap: nowrap;
+    justify-content: flex-end;
+    align-items: flex-start;
+    align-content: flex-start;
+    height: 100%;
+}
+
+.messages {
+    display: flex; 
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: flex-end;
+    align-items: flex-start;
+    align-content: flex-start;
+    height: 100%;
+} 
+
+// .dx-list-item {
+//     display: flex; 
+// }
+
+.message_1 { 
+    display: flex; 
+    flex-direction: row;
+    font-size: 80%; 
+    background: white; 
+    margin: 10px; 
+    padding: 5px; 
+    border-radius: 15px 15px 15px 15px; 
+    -moz-border-radius: 15px 15px 15px 15px; 
+    -webkit-border-radius: 15px 15px 15px 15px;  
+    // border: 2px solid #5878ca;
+}
+
+.message_2 { 
+    display: flex; 
+    flex-direction: row-reverse;
+    font-size: 80%; 
+    background: lightgreen; 
+    margin: 10px; 
+    padding: 5px; 
+    border-radius: 15px 15px 15px 15px; 
+    -moz-border-radius: 15px 15px 15px 15px; 
+    -webkit-border-radius: 15px 15px 15px 15px;  
+    // border: 2px solid #5878ca;
+}

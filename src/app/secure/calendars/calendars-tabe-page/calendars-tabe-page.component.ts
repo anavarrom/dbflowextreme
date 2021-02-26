@@ -10,6 +10,9 @@ import { ProjectsService } from 'src/app/core/state/projects/projects.service';
 import { SessionQuery } from 'src/app/core/state/session/session.query';
 import { SessionStore } from 'src/app/core/state/session/session.store';
 import { SafeKeepingPeriodsMap } from 'src/app/core/models/safekeepingPeriod';
+import { SessionActions } from 'src/app/core/effects/session.actions';
+import { Actions } from '@datorama/akita-ng-effects';
+import { NavigationActions } from 'src/app/core/effects/navigation.actions';
 
 @Component({
   selector: 'app-calendars-tabe-page',
@@ -37,11 +40,14 @@ export class CalendarsTabePageComponent implements OnInit {
                private projectsQuery: ProjectsQuery,
                private appointmentsQuery: AppointmentsQuery,
                private appointmentsService: AppointmentsService,
-               private toastService: ToastService) {
+               private toastService: ToastService,
+               private actions: Actions) {
   }
 
   ngOnInit() {
-    this.appointmentsService.loadAppointments();
+    // this.appointmentsService.loadAppointments();
+    // this.actions.dispatch(NavigationActions.calendarClicked());
+
     this.me = this.sessionQuery.Me;
     this.periodsByDate = this.projectsQuery.PeriodsByDate;
     this.appointments$ = this.appointmentsQuery.selectAll();

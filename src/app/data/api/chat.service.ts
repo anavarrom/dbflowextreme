@@ -10,56 +10,57 @@ import { createRequestOption } from '../../shared/request-util';
 import { IChat, IChatMessage } from '../../data/interfaces/models';
 
 import {environment} from '../../../environments/environment';
+import { CHAT_ENDPOINT } from '../variables';
 
 type ChatResponseType = HttpResponse<IChat>;
 type ChatArrayResponseType = HttpResponse<IChat[]>;
 
 @Injectable()
 export class ChatService {
-  public chatURL: string      = environment.basePath + '/dbflowchat/api/';
-  public resourceUrl: string  = this.chatURL + 'chats';
-  public userChatsURL: string = this.chatURL + 'userchats';
+
+  public chatEndpoint              = CHAT_ENDPOINT + 'chat';
+  public findAllByUserChatEndpoint  = this.chatEndpoint + '/findByUser';
 
   constructor(protected http: HttpClient) {}
 
-  // TODO: Gestionar ataques CSRF. Para hacer que funcione el crear he 
-  // tenido que desaactivar el CSRF en el SecuirtyConfig del Gateway  
+  // TODO: Gestionar ataques CSRF. Para hacer que funcione el crear he
+  // tenido que desaactivar el CSRF en el SecuirtyConfig del Gateway
   create(chat: IChat): Observable<ChatResponseType> {
     const copy = this.convertDateFromClient(chat);
     return this.http
-      .post<IChat>(this.resourceUrl, copy, { observe: 'response' })
+      .post<IChat>(this.chatEndpoint, copy, { observe: 'response' })
       .pipe(map((res: ChatResponseType) => this.convertDateFromServer(res)));
   }
 
   update(chat: IChat): Observable<ChatResponseType> {
     const copy = this.convertDateFromClient(chat);
     return this.http
-      .put<IChat>(this.resourceUrl, copy, { observe: 'response' })
+      .put<IChat>(this.chatEndpoint, copy, { observe: 'response' })
       .pipe(map((res: ChatResponseType) => this.convertDateFromServer(res)));
   }
 
   find(id: number): Observable<ChatResponseType> {
     return this.http
-      .get<IChat>(`${this.resourceUrl}/${id}`, { observe: 'response' })
+      .get<IChat>(`${this.chatEndpoint}/${id}`, { observe: 'response' })
       .pipe(map((res: ChatResponseType) => this.convertDateFromServer(res)));
   }
 
   query(req?: any): Observable<ChatArrayResponseType> {
     const options = createRequestOption(req);
     return this.http
-      .get<IChat[]>(this.resourceUrl, { params: options, observe: 'response' })
+      .get<IChat[]>(this.chatEndpoint, { params: options, observe: 'response' })
       .pipe(map((res: ChatArrayResponseType) => this.convertDateArrayFromServer(res)));
   }
 
-  queryAllChatsFromUser(req?: any): Observable<ChatArrayResponseType> {
+  findAllByUser(req?: any): Observable<ChatArrayResponseType> {
     const options = createRequestOption(req);
     return this.http
-      .get<IChatMessage[]>(this.userChatsURL, { params: options, observe: 'response' })
+      .get<IChatMessage[]>(this.findAllByUserChatEndpoint, { params: options, observe: 'response' })
       .pipe(map((res: ChatArrayResponseType) => this.convertDateArrayFromServer(res)));
   }
 
   delete(id: number): Observable<HttpResponse<any>> {
-    return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response' });
+    return this.http.delete<any>(`${this.chatEndpoint}/${id}`, { observe: 'response' });
   }
 
   protected convertDateFromClient(chat: IChat): IChat {

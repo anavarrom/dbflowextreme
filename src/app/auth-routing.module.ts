@@ -1,3 +1,4 @@
+import { ChatsTabePageComponent } from './secure/chats/chats-tabe-page/chats-tabe-page.component';
 import { ErrorPageComponent } from './secure/error/error-page.component';
 import { ErrorHandlerInterceptor } from './core/interceptors/http.interceptor';
 import { CommonModule } from '@angular/common';
@@ -34,6 +35,12 @@ const routes: Routes = [
   {
     path: 'calendar',
     component: CalendarsTabePageComponent,
+    canActivate: [OktaAuthGuard],
+    data: { roles: ['ROLE_USER'] }
+  },
+  {
+    path: 'chats',
+    component: ChatsTabePageComponent,
     canActivate: [OktaAuthGuard],
     data: { roles: ['ROLE_USER'] }
   },

@@ -59,9 +59,7 @@ export interface IChatMessage {
 export interface IChat {
     id?: number;
     owner?: string;
-    ownerId?: number;
     to?: string;
-    toId?: number;
     withContact?: string;
     subject?: string;
     createdDate?: Moment;
@@ -71,7 +69,7 @@ export interface IChat {
     notificationId?: number;
     messages?: IChatMessage[];
   }
-  
+
 export interface IAppointment {
     id?: number;
     from?: string;

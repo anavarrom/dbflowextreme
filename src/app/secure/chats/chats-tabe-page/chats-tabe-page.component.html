@@ -1,0 +1,34 @@
+<div class="content-block">
+  <div class="chatContainer">
+    <div class="chatList">
+      <dx-list #chatList [dataSource]="(chats$ | async)" [grouped]="false" [searchEnabled]="true" selectionMode="single"
+      searchExpr="subject" searchMode="contains" (onSelectionChanged)=chatSelected($event)>
+        <div *dxTemplate="let chat of 'item'" class="chat">
+           <div class="chat_block_left">
+             <p class="contact">{{chat.withContact}} </p>
+             <p class="subject">{{chat.subject}}</p>
+            </div>
+           <div class="chat_block_right">
+              <p class="timeAgo">{{chat.lastMessage | amTimeAgo}} </p>
+            </div>
+        </div>
+      </dx-list>
+    </div>
+    <div class="chatMessages">
+      <!-- <div *ngFor="let message of (selectedChat$ | async)?.messages" class="messages">
+        <div [ngClass]="{ message_1:(selectedUser$ | async)?.username !== message.from,
+                          message_2:(selectedUser$ | async)?.username === message.from}">
+            <p>{{message.body}} </p>
+            <p> {{(selectedUser$ | async)?.username}}</p>
+            <p> {{message.from}}</p>
+        </div>
+      </div>
+      <div class="newMessageContent">
+          Hola caracoladfsdd
+          <dx-button stylingMode="contained" text="Contained"
+                    type="normal" [width]="120" (onClick)="clickNeMwssage($event)">
+          </dx-button>
+      </div> -->
+    </div>
+  </div>
+</div>

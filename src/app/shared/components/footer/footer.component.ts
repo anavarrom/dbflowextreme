@@ -23,8 +23,9 @@ export class FooterComponent implements OnInit {
       }
     },
     {
-      disabled: true, text: 'Chats', icon: 'far fa-comments', onClick: () => {
-        // this.router.navigate(['/safeKeeping']);
+      text: 'Chats', icon: 'far fa-comments', onClick: () => {
+        this.actions.dispatch(NavigationActions.chatClicked());
+        this.router.navigate(['/chats']);
       }
     },
     {

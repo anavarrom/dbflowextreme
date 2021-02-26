@@ -1,3 +1,4 @@
+import { ChatsService } from './../state/chats/chats.service';
 import { ProjectsService } from './../state/projects/projects.service';
 import { SessionService } from './../state/session/session.service';
 import { AppointmentsService } from './../state/appointments/appointments.service';
@@ -12,6 +13,7 @@ export class NavigationEffects {
   constructor(
     private actions$: Actions,
     private appointmentsService: AppointmentsService,
+    private chatsService: ChatsService,
     private sessionService: SessionService,
     private projectsService: ProjectsService,
   ) {}
@@ -40,6 +42,14 @@ export class NavigationEffects {
     ofType(NavigationActions.calendarClicked),
     map((_) => {
       this.appointmentsService.loadAppointments();
+    }
+  ));
+
+  @Effect()
+  chatClickedSuccess$ = this.actions$.pipe(
+    ofType(NavigationActions.chatClicked),
+    map((_) => {
+      this.chatsService.loadChats();
     }
   ));
 }

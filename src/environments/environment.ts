@@ -42,6 +42,8 @@ export const environment = {
   basePath: 'http://localhost:8080/services',
   gatewayServer: 'http://localhost:8080/services',
   serverAPI: '/dbflowserver3/api/',
+  chatAPI: '/dbflowchat2/api/',
+  auditAPI: '/dbflowaudit/api/',
   wsURL: 'localhost:4200',
   // stompConfig,
 };
