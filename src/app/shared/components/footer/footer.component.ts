@@ -13,7 +13,7 @@ export class FooterComponent implements OnInit {
   footerItems = [
     {
       text: 'Calendar', icon: 'far fa-calendar-alt', onClick: () => {
-        this.actions.dispatch(NavigationActions.calendarClicked());
+        this.actions.dispatch(NavigationActions.calendarsClicked());
         this.router.navigate(['/calendar']);
       }
     },
@@ -24,7 +24,7 @@ export class FooterComponent implements OnInit {
     },
     {
       text: 'Chats', icon: 'far fa-comments', onClick: () => {
-        this.actions.dispatch(NavigationActions.chatClicked());
+        this.actions.dispatch(NavigationActions.chatsClicked());
         this.router.navigate(['/chats']);
       }
     },

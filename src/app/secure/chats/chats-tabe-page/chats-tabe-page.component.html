@@ -15,11 +15,11 @@
       </dx-list>
     </div>
     <div class="chatMessages">
-      <!-- <div *ngFor="let message of (selectedChat$ | async)?.messages" class="messages">
-        <div [ngClass]="{ message_1:(selectedUser$ | async)?.username !== message.from,
-                          message_2:(selectedUser$ | async)?.username === message.from}">
+       <div *ngFor="let message of (selectedChat$ | async)?.messages" class="messages">
+        <div [ngClass]="{ message_1:me !== message.from,
+                          message_2:me === message.from}">
             <p>{{message.body}} </p>
-            <p> {{(selectedUser$ | async)?.username}}</p>
+            <p> {{me}}</p>
             <p> {{message.from}}</p>
         </div>
       </div>
@@ -28,7 +28,7 @@
           <dx-button stylingMode="contained" text="Contained"
                     type="normal" [width]="120" (onClick)="clickNeMwssage($event)">
           </dx-button>
-      </div> -->
+      </div>
     </div>
   </div>
 </div>

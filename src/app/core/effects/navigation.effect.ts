@@ -7,6 +7,7 @@ import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@datorama/akita-ng-effects';
 import { map, switchMap, tap } from 'rxjs/operators';
 import { NavigationActions } from './navigation.actions';
+import { Chat } from '../models/chat';
 
 @Injectable()
 export class NavigationEffects {
@@ -39,17 +40,25 @@ export class NavigationEffects {
 
   @Effect()
   calendarClickedSuccess$ = this.actions$.pipe(
-    ofType(NavigationActions.calendarClicked),
+    ofType(NavigationActions.calendarsClicked),
     map((_) => {
       this.appointmentsService.loadAppointments();
     }
   ));
 
   @Effect()
-  chatClickedSuccess$ = this.actions$.pipe(
-    ofType(NavigationActions.chatClicked),
+  chatsClickedSuccess$ = this.actions$.pipe(
+    ofType(NavigationActions.chatsClicked),
     map((_) => {
-      this.chatsService.loadChats();
+      this.chatsService.initChats();
     }
   ));
+
+  @Effect()
+  chatClickedSuccess = this.actions$.pipe(
+    ofType(NavigationActions.chatClicked),
+    map((chat:Chat) => {
+      this.chatsService.selectChat(chat.id);
+    }
+   ));
 }

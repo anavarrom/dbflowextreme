@@ -1,5 +1,6 @@
+import { IChatMessage } from './../../../data/interfaces/models';
 import { Injectable } from '@angular/core';
-import { EntityState, EntityStore, StoreConfig } from '@datorama/akita';
+import { arrayAdd, arrayRemove, arrayUpdate, EntityState, EntityStore, StoreConfig } from '@datorama/akita';
 import { Chat } from '../../models/chat';
 
 export interface ChatsState extends EntityState<Chat> {}
@@ -12,4 +13,21 @@ export class ChatsStore extends EntityStore<ChatsState> {
     super();
   }
 
+  addMessages(chatId: number, newMessages: IChatMessage[] ) {
+    this.update(chatId, ({ messages }) => ({
+      messages: arrayAdd(messages, newMessages)
+    }));
+  }
+
+  updateMessage(chatId: number, newMessage: IChatMessage ) {
+    this.update(chatId, ({ messages }) => ({
+      messages: arrayUpdate(messages, newMessage.id, newMessage)
+    }));
+  }
+
+  deleteMessage(chatId: number, newMessage: IChatMessage ) {
+    this.update(chatId, ({ messages }) => ({
+      messages: arrayRemove(messages, newMessage.id)
+    }));
+  }
 }

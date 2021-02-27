@@ -20,9 +20,8 @@ import { Actions } from '@datorama/akita-ng-effects';
 })
 export class ChatsTabePageComponent implements OnInit {
 
-  //@Select(ChatStore.selected) public selectedChat$: Observable<IChat>;
-
   chats$: Observable<IChat[]>;
+  selectedChat$: Observable<Chat>;
   protected me: string | null;
 
   @ViewChild('chatList') chatList;
@@ -54,20 +53,20 @@ export class ChatsTabePageComponent implements OnInit {
    }
 
   ngOnInit() {
-    //this.actions.dispatch(NavigationActions.chatClicked());
 
     this.me = this.sessionQuery.Me;
     this.chats$ = this.chatsQuery.selectAll();
-
-    // this.store.dispatch(new LoadChats());
-
+    this.selectedChat$ = this.chatsQuery.selectActive() as Observable<Chat>;
   }
 
   chatSelected(event) {
-    /*const chatSelected: Chat  = event.addedItems[0];
+    const chatSelected: Chat  = event.addedItems[0];
     if (chatSelected !== null) {
-      this.store.dispatch(new SelectChat(chatSelected.id));
-    }*/
+      let chat: Chat = new Chat();
+      chat.id = chatSelected.id;
+      this.actions.dispatch(NavigationActions.chatClicked(chat));
+    }
+
   }
 
   clickNeMwssage(event) {

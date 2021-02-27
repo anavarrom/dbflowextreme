@@ -10,53 +10,54 @@ import { createRequestOption } from '../../shared/request-util';
 import { IChatMessage } from '../../data/interfaces/models';
 
 import {environment} from '../../../environments/environment';
+import { CHAT_ENDPOINT } from '../variables';
 
 type MessageResponseType = HttpResponse<IChatMessage>;
 type MessageArrayResponseType = HttpResponse<IChatMessage[]>;
 
 @Injectable()
 export class MessageService {
-  public resourceUrl = environment.basePath + '/dbflowchat/api/messages';
-  public resourceUrlTEMP = environment.basePath + '/dbflowchat/api/messagesChat';
+  public messageEndpoint              = CHAT_ENDPOINT + 'message';
+  public findAllByChatEndpoint        = this.messageEndpoint + '/findByChat';
 
   constructor(protected http: HttpClient) {}
 
   create(message: IChatMessage): Observable<MessageResponseType> {
     const copy = this.convertDateFromClient(message);
     return this.http
-      .post<IChatMessage>(this.resourceUrl, copy, { observe: 'response' })
+      .post<IChatMessage>(this.messageEndpoint, copy, { observe: 'response' })
       .pipe(map((res: MessageResponseType) => this.convertDateFromServer(res)));
   }
 
   update(message: IChatMessage): Observable<MessageResponseType> {
     const copy = this.convertDateFromClient(message);
     return this.http
-      .put<IChatMessage>(this.resourceUrl, copy, { observe: 'response' })
+      .put<IChatMessage>(this.messageEndpoint, copy, { observe: 'response' })
       .pipe(map((res: MessageResponseType) => this.convertDateFromServer(res)));
   }
 
   find(id: number): Observable<MessageResponseType> {
     return this.http
-      .get<IChatMessage>(`${this.resourceUrl}/${id}`, { observe: 'response' })
+      .get<IChatMessage>(`${this.messageEndpoint}/${id}`, { observe: 'response' })
       .pipe(map((res: MessageResponseType) => this.convertDateFromServer(res)));
   }
 
   query(req?: any): Observable<MessageArrayResponseType> {
     const options = createRequestOption(req);
     return this.http
-      .get<IChatMessage[]>(this.resourceUrl, { params: options, observe: 'response' })
+      .get<IChatMessage[]>(this.messageEndpoint, { params: options, observe: 'response' })
       .pipe(map((res: MessageArrayResponseType) => this.convertDateArrayFromServer(res)));
   }
 
-  queryAllMessagesFrom(id: number, req?: any): Observable<MessageArrayResponseType> {
+  findAllByChat(id: number, req?: any): Observable<MessageArrayResponseType> {
     const options = createRequestOption(req);
     return this.http
-      .get<IChatMessage[]>(`${this.resourceUrlTEMP}/${id}`, { params: options, observe: 'response' })
+      .get<IChatMessage[]>(`${this.findAllByChatEndpoint}/${id}`, { params: options, observe: 'response' })
       .pipe(map((res: MessageArrayResponseType) => this.convertDateArrayFromServer(res)));
   }
 
   delete(id: number): Observable<HttpResponse<any>> {
-    return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response' });
+    return this.http.delete<any>(`${this.messageEndpoint}/${id}`, { observe: 'response' });
   }
 
   protected convertDateFromClient(message: IChatMessage): IChatMessage {
