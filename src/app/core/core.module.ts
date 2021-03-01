@@ -6,7 +6,6 @@ import { CommonModule      } from '@angular/common';
 // Custom modules
 // Custom Components
 import { environment } from 'src/environments/environment';
-// import { InjectableRxStompConfig, RxStompService, rxStompServiceFactory, StompService, StompConfig } from '@stomp/ng2-stompjs';
 
 // Project Services
 import { NotificactionService           } from '../data/api/notification.service';
@@ -15,6 +14,7 @@ import { MessageService } from '../data/api/message.service';
 import { RestAppointmentService } from '../data/api/appointment.service';
 import { SafeKeepingPeriodService } from '../data/api/safekeepingperiod.service';
 import { SafeKeepingProjectService } from '../data/api/safekeepingproject.service';
+import { StompConfig, StompService } from '@stomp/ng2-stompjs';
 
 const dbFlow6Stores = [
 ];
@@ -47,11 +47,11 @@ const dbFlow6Services = [
   providers:  [
     dbFlow6Stores,
     dbFlow6Services,
-    /*StompService,
+    StompService,
     {
       provide: StompConfig,
       useValue: environment.stompConfig
-    }
+    }/*
     {
       provide: HTTP_INTERCEPTORS,
       useClass: KeycloakBearerInterceptor,

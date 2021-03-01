@@ -1,6 +1,5 @@
 import { NavigationActions } from './../../../core/effects/navigation.actions';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ChatService } from 'src/app/data/api/chat.service';
 import { Observable } from 'rxjs';
 import { IChat, IDbFlowAccount } from 'src/app/data/interfaces/models';
 import { DxTileViewModule, DxButtonModule, DxListModule } from 'devextreme-angular';
@@ -9,6 +8,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ChatsQuery } from 'src/app/core/state/chats/chats.query';
 import { SessionQuery } from 'src/app/core/state/session/session.query';
 import { SessionStore } from 'src/app/core/state/session/session.store';
+import { ChatsService } from 'src/app/core/state/chats/chats.service';
 import { ToastService } from 'src/app/shared/services/toast.service';
 import { Actions } from '@datorama/akita-ng-effects';
 
@@ -33,7 +33,7 @@ export class ChatsTabePageComponent implements OnInit {
 
   constructor(private sessionQuery: SessionQuery,
               private chatsQuery: ChatsQuery,
-              private chatsService: ChatService,
+              private chatsService: ChatsService,
               private toastService: ToastService,
               private actions: Actions) {
 
@@ -70,5 +70,6 @@ export class ChatsTabePageComponent implements OnInit {
   }
 
   clickNeMwssage(event) {
+    this.chatsService.newMessage("Test message");
   }
 }

@@ -1,9 +1,9 @@
-/*import * as SockJS from 'sockjs-client';
+import * as SockJS from 'sockjs-client';
 import { StompConfig } from '@stomp/ng2-stompjs';
 
 // TODO: Hay que conseguir que los websockets funcionen con ZUUL
 export function socketProvider() {
-  return new SockJS('http://localhost:8092/websocket/dbFlowChat');
+  return new SockJS('http://localhost:8083/websocket/dbflow');
 }
 
 
@@ -31,7 +31,7 @@ const stompConfig: StompConfig = {
 
   // Will log diagnostics on console
   debug: true
-};*/
+};
 
 // This file can be replaced during build by using the `fileReplacements` array.
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
@@ -42,10 +42,10 @@ export const environment = {
   basePath: 'http://localhost:8080/services',
   gatewayServer: 'http://localhost:8080/services',
   serverAPI: '/dbflowserver3/api/',
-  chatAPI: '/dbflowchat2/api/',
+  chatAPI: '/dbflowchat/api/',
   auditAPI: '/dbflowaudit/api/',
   wsURL: 'localhost:4200',
-  // stompConfig,
+  stompConfig,
 };
 /*
  * For easier debugging in development mode, you can import the following file
