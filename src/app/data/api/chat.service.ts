@@ -15,7 +15,7 @@ import { CHAT_ENDPOINT } from '../variables';
 type ChatResponseType = HttpResponse<IChat>;
 type ChatArrayResponseType = HttpResponse<IChat[]>;
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class ChatService {
 
   public chatEndpoint              = CHAT_ENDPOINT + 'chat';

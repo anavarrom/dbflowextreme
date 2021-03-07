@@ -37,6 +37,7 @@ const stompConfig: StompConfig = {
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 export const environment = {
+  INTRANET: true,
   production: false,
   // basePath: 'http://localhost:8091',
   basePath: 'http://localhost:8080/services',

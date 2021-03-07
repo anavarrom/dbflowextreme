@@ -15,7 +15,7 @@ import { SERVER_ENDPOINT } from '../variables';
 type AppointmentResponseType = HttpResponse<IAppointment>;
 type AppointmentArrayResponseType = HttpResponse<IAppointment[]>;
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class RestAppointmentService {
 
   public appointmentEndpoint              = SERVER_ENDPOINT + 'appointment';

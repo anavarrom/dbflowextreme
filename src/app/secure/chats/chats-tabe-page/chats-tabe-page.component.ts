@@ -1,6 +1,7 @@
+import { IChatMessage } from './../../../data/interfaces/models';
 import { NavigationActions } from './../../../core/effects/navigation.actions';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { IChat, IDbFlowAccount } from 'src/app/data/interfaces/models';
 import { DxTileViewModule, DxButtonModule, DxListModule } from 'devextreme-angular';
 import { Chat } from 'src/app/core/models/chat';
@@ -11,6 +12,8 @@ import { SessionStore } from 'src/app/core/state/session/session.store';
 import { ChatsService } from 'src/app/core/state/chats/chats.service';
 import { ToastService } from 'src/app/shared/services/toast.service';
 import { Actions } from '@datorama/akita-ng-effects';
+import { StompService } from '@stomp/ng2-stompjs';
+import { map } from 'rxjs/operators';
 
 
 @Component({
@@ -30,12 +33,14 @@ export class ChatsTabePageComponent implements OnInit {
   refreshButtonOptions: any;
   estado = false;
   private sub: any;
+  public topicSubscription: Subscription;
 
   constructor(private sessionQuery: SessionQuery,
               private chatsQuery: ChatsQuery,
               private chatsService: ChatsService,
               private toastService: ToastService,
-              private actions: Actions) {
+              private actions: Actions,
+              private _stompService: StompService) {
 
 
     this.backButtonOptions = {
@@ -54,9 +59,21 @@ export class ChatsTabePageComponent implements OnInit {
 
   ngOnInit() {
 
-    this.me = this.sessionQuery.Me;
-    this.chats$ = this.chatsQuery.selectAll();
-    this.selectedChat$ = this.chatsQuery.selectActive() as Observable<Chat>;
+    this.me             = this.sessionQuery.Me;
+    this.chats$         = this.chatsQuery.selectAll();
+    this.selectedChat$  = this.chatsQuery.selectActive() as Observable<Chat>;
+
+    const topic = '/chat'; //' + this.sessionQuery.Me; this.topicSubscription =
+    /*this.topicSubscription = this._stompService.watch(topic).pipe(map(function (message) {
+      //  this.topicSubscription = this._stompService.watch('/user/queue/specific-user').pipe(map(function (message) {
+      return JSON.parse(message.body);
+    })).subscribe(function (payload) {
+      this.toastService.info("Yujuuuuu");
+    });*/
+
+    /*this.topicSubscription = this._stompService.subscribe(topic).subscribe((message) => {
+      this.toastService.info("Yujuuuuu");
+    });*/
   }
 
   chatSelected(event) {
@@ -72,4 +89,8 @@ export class ChatsTabePageComponent implements OnInit {
   clickNeMwssage(event) {
     this.chatsService.newMessage("Test message");
   }
+
+  ngOnDestroy() {
+    this.topicSubscription.unsubscribe();
+}
 }
