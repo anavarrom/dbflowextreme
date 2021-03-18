@@ -39,8 +39,7 @@ export class ChatsTabePageComponent implements OnInit {
               private chatsQuery: ChatsQuery,
               private chatsService: ChatsService,
               private toastService: ToastService,
-              private actions: Actions,
-              private _stompService: StompService) {
+              private actions: Actions) {
 
 
     this.backButtonOptions = {
@@ -91,6 +90,6 @@ export class ChatsTabePageComponent implements OnInit {
   }
 
   ngOnDestroy() {
-    this.topicSubscription.unsubscribe();
+    // this.topicSubscription.unsubscribe();
 }
 }

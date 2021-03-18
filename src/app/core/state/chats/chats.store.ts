@@ -13,6 +13,12 @@ export class ChatsStore extends EntityStore<ChatsState> {
     super();
   }
 
+  fillMessages(chatId: number, newMessages: IChatMessage[] ) {
+    this.update(chatId, ({ messages }) => ({
+      messages: newMessages
+    }));
+  }
+
   addMessages(chatId: number, newMessages: IChatMessage[] ) {
     this.update(chatId, ({ messages }) => ({
       messages: arrayAdd(messages, newMessages)

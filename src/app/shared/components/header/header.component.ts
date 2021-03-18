@@ -35,8 +35,35 @@ export class HeaderComponent implements OnInit {
 
   loginButtonOptions: any;
   homeButtonOptions: any;
+  drawerButtonOptions: any;
+
+    navigation = [
+      { id: 1, text: "Products", icon: "product" },
+      { id: 2, text: "Sales", icon: "money" },
+      { id: 3, text: "Customers", icon: "group" },
+      { id: 4, text: "Employees", icon: "card" },
+      { id: 5, text: "Reports", icon: "chart" }
+  ];
+
+    showSubmenuModes: string[] = ['slide', 'expand'];
+    positionModes: string[] = ['left', 'right'];
+    showModes: string[] = ['push', 'shrink', 'overlap'];
+    text: string;
+    selectedOpenMode: string = 'overlap';
+    selectedPosition: string = 'left';
+    selectedRevealMode: string = 'slide';
+    isDrawerOpen: Boolean = false;
+    elementAttr: any;
+
 
   constructor(private router: Router, public sessionQuery: SessionQuery, public sessionService: SessionService, public toast: ToastService) {
+
+
+    this.drawerButtonOptions = {
+      icon: 'fas fa-bars',
+      onClick: () => {
+        this.isDrawerOpen = !this.isDrawerOpen;      }
+    };
 
     this.loginButtonOptions = {
       icon: 'fas fa-sign-in-alt',
@@ -45,6 +72,7 @@ export class HeaderComponent implements OnInit {
           this.login();
       }
     };
+
     this.homeButtonOptions = {
       icon: 'fas fa-home',
       text: 'Home',

@@ -1,34 +1,56 @@
 <div class="content-block">
-  <div class="chatContainer">
-    <div class="chatList">
+  <div class="row">
+    <div class="col-3">
       <dx-list #chatList [dataSource]="(chats$ | async)" [grouped]="false" [searchEnabled]="true" selectionMode="single"
       searchExpr="subject" searchMode="contains" (onSelectionChanged)=chatSelected($event)>
         <div *dxTemplate="let chat of 'item'" class="chat">
-           <div class="chat_block_left">
-             <p class="contact">{{chat.withContact}} </p>
-             <p class="subject">{{chat.subject}}</p>
-            </div>
-           <div class="chat_block_right">
+          <div class="row">
+            <div class="col-6">
+              <p class="contact">{{chat.withContact}} </p>
+              <p class="subject">{{chat.subject}}</p>
+             </div>
+            <div class="col-6">
               <p class="timeAgo">{{chat.lastMessage | amTimeAgo}} </p>
             </div>
+          </div>
         </div>
       </dx-list>
     </div>
-    <div class="chatMessages">
-       <div *ngFor="let message of (selectedChat$ | async)?.messages" class="messages">
-        <div [ngClass]="{ message_1:me !== message.from,
-                          message_2:me === message.from}">
-            <p>{{message.body}} </p>
-            <p> {{me}}</p>
-            <p> {{message.from}}</p>
+    <div class="col-9">
+        <div *ngFor="let message of (selectedChat$ | async)?.messages"
+                [ngClass]="{ 'row justify-content-start':me !== message.from,
+                             'row justify-content-end':me === message.from}">
+          <div [ngClass]="{ 'col-6':me !== message.from,
+                       'col-6':me === message.from}">
+              <p>{{message.body}} </p>
+              <p> {{me}}</p>
+              <p> {{message.from}}</p>
+          </div>
         </div>
-      </div>
-      <div class="newMessageContent">
-          Hola caracoladfsdd
-          <dx-button stylingMode="contained" text="Contained"
-                    type="normal" [width]="120" (onClick)="clickNeMwssage($event)">
-          </dx-button>
-      </div>
+        <div class="newMessageContent">
+            <dx-button stylingMode="contained" text="Contained"
+                      type="normal" [width]="120" (onClick)="clickNeMwssage($event)">
+            </dx-button>
+        </div>
     </div>
   </div>
 </div>
+  <!-- <div class="chatContainer">
+    <div class="chatList">
+    </div>
+    <div class="chatMessages">
+
+    </div>
+  </div>
+
+        <div *ngFor="let message of (selectedChat$ | async)?.messages" class="messages">
+          <div [ngClass]="{ 'message_1 col-xl-12 align-self-start':me !== message.from,
+                            'message_2 col-xl-12 align-self-end':me === message.from}">
+              <p>{{message.body}} </p>
+              <p> {{me}}</p>
+              <p> {{message.from}}</p>
+          </div>
+        </div>
+
+-->
+

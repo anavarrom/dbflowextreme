@@ -1,6 +1,9 @@
 <header>
-  <dx-toolbar>
-    <dxi-item location="before" widget="dxButton" locateInMenu="never" [options]="homeButtonOptions">
+  <dx-toolbar class="dbflow-toolbar">
+      <dxi-item location="before" widget="dxButton" locateInMenu="never" [options]="drawerButtonOptions">
+      </dxi-item>
+
+      <dxi-item location="before" widget="dxButton" locateInMenu="never" [options]="homeButtonOptions">
     </dxi-item>
 
     <dxi-item location="center" widget="dxButton" locateInMenu="never">
@@ -25,7 +28,26 @@
       </div>
     </dxi-item>
   </dx-toolbar>
+
+   <dx-drawer
+    [openedStateMode]="selectedOpenMode"
+    [position]="selectedPosition"
+    [revealMode]="selectedRevealMode"
+    template="template"
+    [(opened)]="isDrawerOpen"
+    [height]="900"
+    [closeOnOutsideClick]="true">
+    <div *dxTemplate="let data of 'template'" class="drawer">
+      <app-drawer >
+      </app-drawer>
+    </div>
+    <div id="content" class="container-md dbflow-content">
+      <router-outlet></router-outlet>
+    </div>
+</dx-drawer>
+
   <!--
+    [height]="400"
 
 <div>
     <button *ngIf="!(this.sessionQuery.isLoggedIn$ | async)" (click)="this.login()">Login</button>

@@ -5,12 +5,23 @@ import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common
 
 import { NotificactionService } from './api/notification.service';
 import { RestTestService } from './api/test.service';
+import { environment } from '../../environments/environment';
+import { InjectableRxStompConfig, RxStompService, rxStompServiceFactory } from '@stomp/ng2-stompjs';
 
 @NgModule({
   imports:      [HttpClientModule],
   declarations: [],
   exports:      [],
   providers: [
+    {
+      provide: InjectableRxStompConfig,
+      useValue: environment.myRxStompConfig,
+    },
+    {
+      provide: RxStompService,
+      useFactory: rxStompServiceFactory,
+      deps: [InjectableRxStompConfig],
+    }
 /*    {
         provide: HTTP_INTERCEPTORS,
         useClass: KeycloakBearerInterceptor,

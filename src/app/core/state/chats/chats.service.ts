@@ -9,23 +9,23 @@ import { ChatsQuery } from './chats.query';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable, OnInit } from '@angular/core';
 import { ID } from '@datorama/akita';
-import { map, tap } from 'rxjs/operators';
+import { map, takeUntil, tap } from 'rxjs/operators';
 import { ChatsStore } from './chats.store';
 import { MessageService } from 'src/app/data/api/message.service';
 import { Chat } from '../../models/chat';
 import { StompService } from '@stomp/ng2-stompjs';
-import { Subscription } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 import { Message } from '@stomp/stompjs'
 
 @Injectable({ providedIn: 'root' })
 export class ChatsService{
 
   private topicSubscription: Subscription;
+  ngDestroy$ = new Subject();
 
   constructor(private chatsStore: ChatsStore, private chatsQuery: ChatsQuery,
               private chatService: ChatService, private apiProvider: APIProvider,
-              private sessionQuery: SessionQuery, private  toastService: ToastService,
-              private _stompService: StompService)
+              private sessionQuery: SessionQuery, private  toastService: ToastService)
   {
 /*      const topic = '/chat'; //' + this.sessionQuery.Me;
       this.topicSubscription = this._stompService.watch(topic).pipe(map(function (message) {
@@ -66,9 +66,11 @@ export class ChatsService{
   selectChat(chatId: number)
   {
     // Cargamos los mensajes y seleccionamos
-        this.apiProvider.messageProvider.findAllMessagesByChat(chatId).subscribe(
+    this.apiProvider.messageProvider.findAllMessagesByChat(chatId)
+    .pipe(takeUntil(this.ngDestroy$))
+    .subscribe(
         (messages: IChatMessage[]) => {
-          this.chatsStore.addMessages(chatId, messages);
+          this.chatsStore.fillMessages(chatId, messages);
           this.chatsStore.setActive(chatId);
         }, err => {
           // Log errors if any
@@ -94,5 +96,10 @@ export class ChatsService{
           console.log(err);
         }
     );
+  }
+
+  ngOnDestroy(){
+    this.ngDestroy$.next(true);
+    this.ngDestroy$.complete();
   }
 }

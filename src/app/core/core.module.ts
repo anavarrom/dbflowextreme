@@ -14,7 +14,7 @@ import { MessageService } from '../data/api/message.service';
 import { RestAppointmentService } from '../data/api/appointment.service';
 import { SafeKeepingPeriodService } from '../data/api/safekeepingperiod.service';
 import { SafeKeepingProjectService } from '../data/api/safekeepingproject.service';
-import { StompConfig, StompService } from '@stomp/ng2-stompjs';
+import { InjectableRxStompConfig, RxStompService, rxStompServiceFactory } from '@stomp/ng2-stompjs';
 
 const dbFlow6Stores = [
 ];
@@ -46,12 +46,21 @@ const dbFlow6Services = [
   ],
   providers:  [
     dbFlow6Stores,
-    dbFlow6Services,
+    dbFlow6Services/*,
+    {
+      provide: InjectableRxStompConfig,
+      useValue: environment.myRxStompConfig,
+    },
+    {
+      provide: RxStompService,
+      useFactory: rxStompServiceFactory,
+      deps: [InjectableRxStompConfig],
+    }*//*,
     StompService,
     {
       provide: StompConfig,
       useValue: environment.stompConfig
-    }/*
+    }*//*
     {
       provide: HTTP_INTERCEPTORS,
       useClass: KeycloakBearerInterceptor,
