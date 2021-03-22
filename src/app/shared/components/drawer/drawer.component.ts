@@ -40,8 +40,23 @@ export class DrawerComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  doneClick() {
+  calendarClick() {
+    this.actions.dispatch(NavigationActions.calendarsClicked());
+    this.router.navigate(['/calendar']);
+}
+
+  notificationsClick() {
+    // this.actions.dispatch(NavigationActions.chatsClicked());
+    // this.router.navigate(['/chats']);
+  }
+
+  chatsClick() {
     this.actions.dispatch(NavigationActions.chatsClicked());
     this.router.navigate(['/chats']);
+}
+
+  auditClick() {
+    // this.actions.dispatch(NavigationActions.chatsClicked());
+    // this.router.navigate(['/chats']);
   }
 }

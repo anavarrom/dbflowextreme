@@ -4,14 +4,13 @@
   border-radius: 2px;
   background-color: #fff;
   margin: 8px 2px 3px 3px;
-  /*height: 900px;*/
+  padding: 3px 3px 3px 3px;
+  height: 720px;
 }
-
-.chat {
-  border-bottom: solid lightgrey;
-  border-bottom-width: 1px;
+.dbflow-chat-container {
+  border-right: solid lightgrey;
+  border-right-width: 1px;
   height: 100%;
-  align-items: stretch;
 }
 
 .timeAgo {
@@ -27,6 +26,15 @@
   font-size: small;
   color: gray;
 }
+
+/*
+.chat {
+  border-bottom: solid lightgrey;
+  border-bottom-width: 1px;
+  height: 100%;
+  align-items: stretch;
+}
+
 
 .message_1 {
   font-size: 80%;
@@ -48,95 +56,5 @@
   -moz-border-radius: 15px 15px 15px 15px;
   -webkit-border-radius: 15px 15px 15px 15px;
 }
-
-/*
-  margin: 25px 25px 25px 25px;
-  border-radius: 15px;
-  border-color: black;
-
-
-.chatContainer {
-    flex-direction: row;
-    flex-wrap: nowrap;
-    display: flex;
-    height: 100%;
-    align-items: stretch;
-}
-
-.chatList {
-    flex-basis: 35%;
-    height: 100%;
-    background-color: white;
-}
-
-.chatMessages {
-    flex-basis: 65%;
-    height: 100%;
-}
-
-.chat {
-    border-bottom: solid lightgrey;
-    border-bottom-width: 1px;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    height: 100%;
-    align-items: stretch;
-}
-
-.chat_block_left {
-    flex-basis: 35%;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    width: 100%;
-    height: 100%;
-}
-
-.chat_block_right {
-    display: flex;
-    flex-basis: 65%;
-    justify-content: flex-end;
-    width: 100%;
-    height: 100%;
-}
-
-.timeAgo {
-    font-size: small;
-    color: gray;
-}
-
-.contact {
-    font-size: 85%;
-}
-
-.subject {
-    font-size: small;
-    color: gray;
-}
-.newMessageContent {
-    display: flex;
-    flex-direction: column-reverse;
-    flex-wrap: nowrap;
-    justify-content: flex-end;
-    align-items: flex-start;
-    align-content: flex-start;
-    height: 100%;
-}
-
-.messages {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: nowrap;
-    justify-content: flex-end;
-    align-items: flex-start;
-    align-content: flex-start;
-    height: 100%;
-}
-
-// .dx-list-item {
-//     display: flex;
-// }
-
 
 */

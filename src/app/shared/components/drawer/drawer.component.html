@@ -1,25 +1,27 @@
 <h6>Tools</h6>
 
 <div class="row justify-content-center">
-  <div class="col-4">
-    <dx-button
-    stylingMode="text"
-    text="Text"
-    type="normal"
-    [width]="120"
-        (onClick)="doneClick()">
-  </dx-button>
-    </div>
-  <div class="col-4">
-    <dx-button
-    stylingMode="text"
-    text="Text"
-    type="normal"
-    [width]="120"
-        (onClick)="doneClick()">
-  </dx-button>
-    </div>
+  <div class="col-5">
+    <dx-button icon="far fa-calendar-alt" stylingMode="text" text="Calendar" type="normal" (onClick)="calendarClick()">
+    </dx-button>
+  </div>
+  <div class="col-5">
+    <dx-button icon="fas fa-exclamation" stylingMode="text" text="Notifications" type="normal" (onClick)="notificationsClick()">
+    </dx-button>
+  </div>
 </div>
+<div class="row justify-content-center">
+  <div class="col-5">
+    <dx-button icon="far fa-comments" stylingMode="text" text="Chats" type="normal" (onClick)="chatsClick()">
+    </dx-button>
+  </div>
+  <div class="col-5">
+    <dx-button icon="far fa-eye" stylingMode="text" text="Audit" type="normal" (onClick)="auditClick()">
+    </dx-button>
+  </div>
+</div>
+
+
 <div>
 
 </div>

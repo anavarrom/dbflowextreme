@@ -15,7 +15,7 @@ import { CoreModule } from '../core/core.module';
 // import { NotificationDetailComponent } from './notifications/notification-detail/notification-detail.component';
 // import { CalendarsTabePageComponent } from './calendars/calendars-tabe-page/calendars-tabe-page.component';
 // import { ChatsTabePageComponent } from './chats/chats-tabe-page/chats-tabe-page.component';
-// import { ChatDetailComponent } from './chats/chat-detail/chat-detail.component';
+import { ChatDetailComponent } from './chats/chat-detail/chat-detail.component';
 // import { ProfileComponent } from './profile/profile.component';
 // import { HomeComponent } from './home/home.component';
 // import { DisplayDataComponent } from './display-data/display-data.component';
@@ -64,7 +64,7 @@ const dbFlow6Components = [
   // NotificationsTabPageComponent,
   // NotificationDetailComponent,
   ChatsTabePageComponent,
-  // ChatDetailComponent,
+  ChatDetailComponent,
   // DisplayDataComponent,
   // ProfileComponent,
 ];

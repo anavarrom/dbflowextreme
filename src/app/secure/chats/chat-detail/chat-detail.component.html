@@ -1,12 +1,76 @@
-<p>
-  chat-detail works!  in
-</p>
+<!-- <div class="container h-100" style="background-color:black;">
+  <div class="row h-100" style="background-color:black;">
+    <div class="col-12" style="background-color:red;height:10%;">
+      Esto es la cabecera
+    </div>
+    <div class="col-12" style="background-color:yellow;height:80%;">
+      Esto BOSY
+    </div>
+    <div class="col-12" style="background-color:blue;height:10%;">
+      Esto es FOOTR
+    </div>
+  </div>
+</div> -->
 
-<!-- {{(selected$ | async)?.id}}
-  <ion-item *ngFor="let message of (selected$ | async)?.messages">
-  <ion-label>{{message.body}}</ion-label>
-</ion-item>
+<div class="container h-100" style="background-color:black;">
+  <div class="row" style="background-color:red;height:10%;">
+    <div class="col-12">
+      Esto es la cabecera
+    </div>
+  </div>
+  <div class="row" style="background-color:yellow;height:80%;">
+    <div class="col-12">
+      <div *ngFor="let message of (selectedChat$ | async)?.messages" [ngClass]="{ 'row align-items-start justify-content-start':me !== message.from,
+      'row align-items-start justify-content-end':me === message.from}" style="background-color:yellow;">
+        <div [ngClass]="{ 'col-6':me !== message.from,
+'col-6':me === message.from}">
+          <p>{{message.body}} </p>
+          <p> {{me}}</p>
+          <p> {{message.from}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row" style="background-color:blue;height:10%;">
+    <div class="col-12">
+      Esto es el footer
+    </div>
+  </div>
+  <!-- <div *ngFor="let message of (selectedChat$ | async)?.messages" [ngClass]="{ 'row align-items-start justify-content-start':me !== message.from,
+                       'row align-items-start justify-content-end':me === message.from}" style="background-color:yellow;">
+    <div [ngClass]="{ 'col-6':me !== message.from,
+                 'col-6':me === message.from}">
+      <p>{{message.body}} </p>
+      <p> {{me}}</p>
+      <p> {{message.from}}</p>
+    </div>
+  </div> -->
+  <!-- <dx-button stylingMode="contained" text="Contained" type="normal" [width]="120"
+    (onClick)="clickNeMwssage($event)">
+  </dx-button> -->
+</div>
 
-<ion-input placeholder="Enter Message" name="newMessageText" [(ngModel)]='newMessageText'  ngDefaultControl>
-
-</ion-input><button item-right (click)='sendMessage();' >Hello</button> -->
+<!-- <div class="container" style="background-color:black;height: 100%;">
+  <div class="row align-items-start">
+    <div class="col-12" style="background-color:red;height:100px;">
+      Esto es la cabecera
+    </div>
+  </div>
+  <div *ngFor="let message of (selectedChat$ | async)?.messages" [ngClass]="{ 'row align-items-start justify-content-start':me !== message.from,
+                       'row align-items-start justify-content-end':me === message.from}" style="background-color:yellow;">
+    <div [ngClass]="{ 'col-6':me !== message.from,
+                 'col-6':me === message.from}">
+      <p>{{message.body}} </p>
+      <p> {{me}}</p>
+      <p> {{message.from}}</p>
+    </div>
+  </div>
+  <div class="float-end" style="background-color:blue;height:100px;">
+    <div class="col-12">
+      ESTO ES EL FOOTR
+    </div>
+    <dx-button stylingMode="contained" text="Contained" type="normal" [width]="120"
+    (onClick)="clickNeMwssage($event)">
+  </dx-button>
+  </div>
+</div> -->

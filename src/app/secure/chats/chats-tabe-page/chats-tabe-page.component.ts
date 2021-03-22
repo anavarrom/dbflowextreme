@@ -24,7 +24,7 @@ import { map } from 'rxjs/operators';
 export class ChatsTabePageComponent implements OnInit {
 
   chats$: Observable<IChat[]>;
-  selectedChat$: Observable<Chat>;
+  // selectedChat$: Observable<Chat>;
   protected me: string | null;
 
   @ViewChild('chatList') chatList;
@@ -60,7 +60,7 @@ export class ChatsTabePageComponent implements OnInit {
 
     this.me             = this.sessionQuery.Me;
     this.chats$         = this.chatsQuery.selectAll();
-    this.selectedChat$  = this.chatsQuery.selectActive() as Observable<Chat>;
+    // this.selectedChat$  = this.chatsQuery.selectActive() as Observable<Chat>;
 
     const topic = '/chat'; //' + this.sessionQuery.Me; this.topicSubscription =
     /*this.topicSubscription = this._stompService.watch(topic).pipe(map(function (message) {
@@ -76,13 +76,14 @@ export class ChatsTabePageComponent implements OnInit {
   }
 
   chatSelected(event) {
-    const chatSelected: Chat  = event.addedItems[0];
-    if (chatSelected !== null) {
-      let chat: Chat = new Chat();
-      chat.id = chatSelected.id;
-      this.actions.dispatch(NavigationActions.chatClicked(chat));
+    if (event.addedItems.length > 0 ) {
+      const chatSelected: Chat  = event.addedItems[0];
+      if (chatSelected !== null) {
+        let chat: Chat = new Chat();
+        chat.id = chatSelected.id;
+        this.actions.dispatch(NavigationActions.chatClicked(chat));
+      }
     }
-
   }
 
   clickNeMwssage(event) {
