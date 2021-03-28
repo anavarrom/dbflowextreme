@@ -9,12 +9,18 @@ import { RxStompService, StompService } from '@stomp/ng2-stompjs';
 export class MessageWebSocketService implements IMessageProvider, OnDestroy {
 
   private topicSubscription: Subscription;
+  private messageSentSubscription: Subscription;
   // private messageObs: Observable<IChatMessage[]> = null;
-  //private messageObs$ = new Subject<IChatMessage[]>();
+  // private messageObs$ = new Subject<IChatMessage[]>();
   private messageObs$ : Subject<IChatMessage[]>;
+  private messageSentObs$ : Subject<IChatMessage>;
 
   private FINDALL_MESSAGES: string = '/messages/findAllByChat';
   private FINDALL_MESSAGES_ACK: string = '/messages/findAllByChatAck';
+
+  private NEW_MESSAGE: string = '/messages/new';
+  private NEW_MESSAGE_ACK: string = '/messages/newAck';
+
   ngDestroy$ = new Subject();
 
   // constructor(private _stompService: StompService) {
@@ -25,11 +31,19 @@ export class MessageWebSocketService implements IMessageProvider, OnDestroy {
       this.messageObs$.next(xx.content);
       this.messageObs$.complete();
       }, (error) => {
-        //observer.error(error);
+        // observer.error(error);
       });
+
+    this.messageSentSubscription = this.rxStompService.watch(this.NEW_MESSAGE_ACK).subscribe((message) => {
+        const realMessage = JSON.parse(message.body);
+        this.messageSentObs$.next(realMessage);
+        this.messageSentObs$.complete();
+        }, (error) => {
+          // observer.error(error);
+        });
   }
 
-    findAllMessagesByChat(chatId: number): Observable<IChatMessage[]> {
+findAllMessagesByChat(chatId: number): Observable<IChatMessage[]> {
 
       // this._stompService.publish(this.FINDALL_MESSAGES, chatId.toString());
       this.rxStompService.publish({destination: this.FINDALL_MESSAGES, body: chatId.toString()});
@@ -41,10 +55,13 @@ export class MessageWebSocketService implements IMessageProvider, OnDestroy {
       }));*/
     }
 
-  newMessage(message: IChatMessage): Observable<IChatMessage> {
-    throw new Error("Method not implemented.");
-  }
-  ngOnDestroy() {
+newMessage(message: IChatMessage): Observable<IChatMessage> {
+    this.rxStompService.publish({destination: this.NEW_MESSAGE, body: JSON.stringify(message)});
+    this.messageSentObs$ = new Subject<IChatMessage>();
+    return this.messageSentObs$.asObservable();
+}
+
+ngOnDestroy() {
     this.topicSubscription.unsubscribe();
     this.ngDestroy$.next(true);
     this.ngDestroy$.complete();

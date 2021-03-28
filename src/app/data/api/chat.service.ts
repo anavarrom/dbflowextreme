@@ -66,7 +66,7 @@ export class ChatService {
   protected convertDateFromClient(chat: IChat): IChat {
     const copy: IChat = Object.assign({}, chat, {
       createdDate: chat.createdDate != null && chat.createdDate.isValid() ? chat.createdDate.format(DATE_FORMAT) : null,
-      lastMessage: chat.lastMessage != null && chat.lastMessage.isValid() ? chat.lastMessage.format(DATE_FORMAT) : null
+      lastMessage: chat.lastMessageDate != null && chat.lastMessageDate.isValid() ? chat.lastMessageDate.format(DATE_FORMAT) : null
     });
     return copy;
   }
@@ -74,7 +74,7 @@ export class ChatService {
   protected convertDateFromServer(res: ChatResponseType): ChatResponseType {
     if (res.body) {
       res.body.createdDate = res.body.createdDate != null ? moment(res.body.createdDate) : null;
-      res.body.lastMessage = res.body.lastMessage != null ? moment(res.body.lastMessage) : null;
+      res.body.lastMessageDate = res.body.lastMessageDate != null ? moment(res.body.lastMessageDate) : null;
     }
     return res;
   }
@@ -83,7 +83,7 @@ export class ChatService {
     if (res.body) {
       res.body.forEach((chat: IChat) => {
         chat.createdDate = chat.createdDate != null ? moment(chat.createdDate) : null;
-        chat.lastMessage = chat.lastMessage != null ? moment(chat.lastMessage) : null;
+        chat.lastMessageDate = chat.lastMessageDate != null ? moment(chat.lastMessageDate) : null;
       });
     }
     return res;

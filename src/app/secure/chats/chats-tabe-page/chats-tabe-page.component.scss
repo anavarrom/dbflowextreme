@@ -5,12 +5,16 @@
   background-color: #fff;
   margin: 8px 2px 3px 3px;
   padding: 3px 3px 3px 3px;
-  height: 720px;
+  height: 700px;
 }
 .dbflow-chat-container {
   border-right: solid lightgrey;
   border-right-width: 1px;
   height: 100%;
+}
+
+.dbflow-chat-messages {
+  padding-left: 0px;
 }
 
 .timeAgo {

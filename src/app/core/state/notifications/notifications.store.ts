@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { EntityState, EntityStore, StoreConfig } from '@datorama/akita';
-import { Notification } from './notification.model';
+import { Notification } from '../../models/notification';
 
 export interface NotificationsState extends EntityState<Notification> {}
 

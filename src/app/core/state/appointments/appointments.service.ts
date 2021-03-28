@@ -13,7 +13,7 @@ export class AppointmentsService {
 
   constructor(private appointmentsStore: AppointmentsStore,
               protected appointmentService: RestAppointmentService,
-              protected projectsQuery: ProjectsQuery,) {
+              protected projectsQuery: ProjectsQuery) {
   }
 
   // loadAppointments(idProject: number, force: boolean = true)

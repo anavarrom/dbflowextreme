@@ -1,33 +1,33 @@
-import { HttpClient } from '@angular/common/http';
+import { INotification } from 'src/app/data/interfaces/models';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { RestNotificactionService } from '../../../data/api/notification.service';
 import { ID } from '@datorama/akita';
 import { tap } from 'rxjs/operators';
-import { Notification } from './notification.model';
+import { ProjectsQuery } from '../projects/projects.query';
 import { NotificationsStore } from './notifications.store';
 
 @Injectable({ providedIn: 'root' })
 export class NotificationsService {
 
-  constructor(private notificationsStore: NotificationsStore, private http: HttpClient) {
+  constructor(private notificationsStore: NotificationsStore,
+              protected notificationService: RestNotificactionService,
+              private projectsQuery: ProjectsQuery) {
   }
 
 
-  get() {
-    return this.http.get<Notification[]>('https://api.com').pipe(tap(entities => {
-      this.notificationsStore.set(entities);
-    }));
-  }
+  loadNotifications() {
+    const projectId = this.projectsQuery.getActiveId() as number;
 
-  add(notification: Notification) {
-    this.notificationsStore.add(notification);
-  }
-
-  update(id, notification: Partial<Notification>) {
-    this.notificationsStore.update(id, notification);
-  }
-
-  remove(id: ID) {
-    this.notificationsStore.remove(id);
+    this.notificationService.findAllByProjectId(projectId).subscribe(
+        // (notifs: INotification[]) => {
+        (notifications: HttpResponse<INotification[]>) => {
+          this.notificationsStore.set(notifications.body);
+        }, err => {
+          // Log errors if any
+          console.log(err);
+        }
+    );
   }
 
 }

@@ -8,15 +8,16 @@
             <div class="col-6">
               <p class="contact">{{chat.withContact}} </p>
               <p class="subject">{{chat.subject}}</p>
+              {{chat.lastMessage}}
             </div>
             <div class="col-6">
-              <p class="timeAgo">{{chat.lastMessage | amTimeAgo}} </p>
+              <p class="timeAgo">{{chat.lastMessageDate | amTimeAgo}} </p>
             </div>
           </div>
         </div>
       </dx-list>
     </div>
-    <div class="col-9 h-100">
+    <div class="col-9 h-100 dbflow-chat-messages">
       <app-chat-detail></app-chat-detail>
 
     </div>

@@ -18,8 +18,9 @@ export class FooterComponent implements OnInit {
       }
     },
     {
-      disabled: true, text: 'Notifications', icon: 'fas fa-exclamation', onClick: () => {
-        // this.router.navigate(['/safeKeeping']);
+      text: 'Notifications', icon: 'fas fa-exclamation', onClick: () => {
+        this.actions.dispatch(NavigationActions.notificationsClicked());
+        this.router.navigate(['/notifications']);
       }
     },
     {

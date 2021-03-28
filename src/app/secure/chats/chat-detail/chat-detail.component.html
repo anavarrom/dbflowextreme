@@ -1,42 +1,44 @@
-<!-- <div class="container h-100" style="background-color:black;">
-  <div class="row h-100" style="background-color:black;">
-    <div class="col-12" style="background-color:red;height:10%;">
-      Esto es la cabecera
-    </div>
-    <div class="col-12" style="background-color:yellow;height:80%;">
-      Esto BOSY
-    </div>
-    <div class="col-12" style="background-color:blue;height:10%;">
-      Esto es FOOTR
+<div class="container h-100">
+  <div class="row dbflow-chat-header align-items-center">
+    <div class="col-12">
+      <dx-toolbar class="dbflow-chat-toolbar">
+        <dxi-item location="center" widget="dxButton" locateInMenu="never">
+          <div *dxTemplate>
+            <div class='toolbar-chat-label'>THIS IS the chat toolbar</div>
+          </div>
+        </dxi-item>
+      </dx-toolbar>
     </div>
   </div>
-</div> -->
-
-<div class="container h-100" style="background-color:black;">
-  <div class="row" style="background-color:red;height:10%;">
+  <div class="row dbflow-chat-body">
     <div class="col-12">
-      Esto es la cabecera
-    </div>
-  </div>
-  <div class="row" style="background-color:yellow;height:80%;">
-    <div class="col-12">
-      <div *ngFor="let message of (selectedChat$ | async)?.messages" [ngClass]="{ 'row align-items-start justify-content-start':me !== message.from,
-      'row align-items-start justify-content-end':me === message.from}" style="background-color:yellow;">
-        <div [ngClass]="{ 'col-6':me !== message.from,
-'col-6':me === message.from}">
-          <p>{{message.body}} </p>
-          <p> {{me}}</p>
-          <p> {{message.from}}</p>
+      <!-- [bounceEnabled]="pullDown"
+        (onPullDown)="updateTopContent($event)"
+        (onReachBottom)="updateBottomContent($event)" -->
+      <dx-scroll-view scrollByContent="true" scrollByThumb="true" showScrollbar="true" height="60%"   showScrollbar= "always"
+        reachBottomText="Updating...">
+        <div *ngFor="let message of (selectedChat$ | async)?.messages" [ngClass]="{
+                     'row':true,
+                     'justify-content-start':me.localeCompare(message.from) != 0,
+                     'justify-content-end':me === message.from}">
+          <div [ngClass]="{ 'col-6': true,
+                            'message_other':me.localeCompare(message.from) != 0,
+                            'message_me':me === message.from}">
+            <p class="align-items-center">{{message.body}} </p>
+          </div>
         </div>
-      </div>
+      </dx-scroll-view>
     </div>
   </div>
-  <div class="row" style="background-color:blue;height:10%;">
+  <div class="row dbflow-chat-footer align-items-center">
     <div class="col-12">
-      Esto es el footer
+      <dx-text-box [(value)]="newMessageText" stylingMode="filled" class="dbflow-send-txtfield">
+        <dxi-button name="sendMessage" location="after" [options]="sendButtonOptions"></dxi-button>
+      </dx-text-box>
     </div>
   </div>
-  <!-- <div *ngFor="let message of (selectedChat$ | async)?.messages" [ngClass]="{ 'row align-items-start justify-content-start':me !== message.from,
+</div>
+<!-- <div *ngFor="let message of (selectedChat$ | async)?.messages" [ngClass]="{ 'row align-items-start justify-content-start':me !== message.from,
                        'row align-items-start justify-content-end':me === message.from}" style="background-color:yellow;">
     <div [ngClass]="{ 'col-6':me !== message.from,
                  'col-6':me === message.from}">
@@ -45,11 +47,9 @@
       <p> {{message.from}}</p>
     </div>
   </div> -->
-  <!-- <dx-button stylingMode="contained" text="Contained" type="normal" [width]="120"
+<!-- <dx-button stylingMode="contained" text="Contained" type="normal" [width]="120"
     (onClick)="clickNeMwssage($event)">
   </dx-button> -->
-</div>
-
 <!-- <div class="container" style="background-color:black;height: 100%;">
   <div class="row align-items-start">
     <div class="col-12" style="background-color:red;height:100px;">
@@ -72,5 +72,18 @@
     <dx-button stylingMode="contained" text="Contained" type="normal" [width]="120"
     (onClick)="clickNeMwssage($event)">
   </dx-button>
+  </div>
+</div> -->
+<!-- <div class="container h-100" style="background-color:black;">
+  <div class="row h-100" style="background-color:black;">
+    <div class="col-12" style="background-color:red;height:10%;">
+      Esto es la cabecera
+    </div>
+    <div class="col-12" style="background-color:yellow;height:80%;">
+      Esto BOSY
+    </div>
+    <div class="col-12" style="background-color:blue;height:10%;">
+      Esto es FOOTR
+    </div>
   </div>
 </div> -->

@@ -10,58 +10,66 @@ import { createRequestOption } from '../../shared/request-util';
 import { INotification } from '../../data/interfaces/models';
 
 import {environment} from '../../../environments/environment';
+import { SERVER_ENDPOINT } from '../variables';
 
-type EntityResponseType = HttpResponse<INotification>;
-type EntityArrayResponseType = HttpResponse<INotification[]>;
+type NotificationResponseType = HttpResponse<INotification>;
+type NotificationArrayResponseType = HttpResponse<INotification[]>;
 
 @Injectable()
-export class NotificactionService {
-  public resourceUrl = environment.basePath + '/dbflowserver2/api/notifications';
+export class RestNotificactionService {
+  public notificationEndpoint   = SERVER_ENDPOINT + 'notification';
+  public findByProjectEndpoint  = this.notificationEndpoint + '/findByProject';
 
   constructor(protected http: HttpClient) {}
 
-  create(notification: INotification): Observable<EntityResponseType> {
+  create(notification: INotification): Observable<NotificationResponseType> {
     const copy = this.convertDateFromClient(notification);
     return this.http
-      .post<INotification>(this.resourceUrl, copy, { observe: 'response' })
-      .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
+      .post<INotification>(this.notificationEndpoint, copy, { observe: 'response' })
+      .pipe(map((res: NotificationResponseType) => this.convertDateFromServer(res)));
   }
 
-  update(chat: INotification): Observable<EntityResponseType> {
+  update(chat: INotification): Observable<NotificationResponseType> {
     const copy = this.convertDateFromClient(chat);
     return this.http
-      .put<INotification>(this.resourceUrl, copy, { observe: 'response' })
-      .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
+      .put<INotification>(this.notificationEndpoint, copy, { observe: 'response' })
+      .pipe(map((res: NotificationResponseType) => this.convertDateFromServer(res)));
   }
 
-  find(id: number): Observable<EntityResponseType> {
+  find(id: number): Observable<NotificationResponseType> {
     return this.http
-      .get<INotification>(`${this.resourceUrl}/${id}`, { observe: 'response' })
-      .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
+      .get<INotification>(`${this.notificationEndpoint}/${id}`, { observe: 'response' })
+      .pipe(map((res: NotificationResponseType) => this.convertDateFromServer(res)));
   }
 
-  query(req?: any): Observable<EntityArrayResponseType> {
+  query(req?: any): Observable<NotificationArrayResponseType> {
     const options = createRequestOption(req);
     return this.http
-      .get<INotification[]>(this.resourceUrl, { params: options, observe: 'response' })
-      .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
+      .get<INotification[]>(this.notificationEndpoint, { params: options, observe: 'response' })
+      .pipe(map((res: NotificationArrayResponseType) => this.convertDateArrayFromServer(res)));
   }
 
+ findAllByProjectId(id: number, req?: any): Observable<NotificationArrayResponseType> {
+    let options = createRequestOption(req);
+    return this.http
+      .get<INotification[]>(`${this.findByProjectEndpoint}/${id}`, { params: options, observe: 'response' })
+      .pipe(map((res: NotificationArrayResponseType) => this.convertDateArrayFromServer(res)));
+  }
   delete(id: number): Observable<HttpResponse<any>> {
-    return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response' });
+    return this.http.delete<any>(`${this.notificationEndpoint}/${id}`, { observe: 'response' });
   }
 
   protected convertDateFromClient(notification: INotification): INotification {
     const copy: INotification = Object.assign({}, notification, {
       dueDate: notification.dueDate != null && notification.dueDate.isValid() ? notification.dueDate.format(DATE_FORMAT) : null,
-      emittedDate: notification.emittedDate != null && notification.emittedDate.isValid() ? 
+      emittedDate: notification.emittedDate != null && notification.emittedDate.isValid() ?
                    notification.emittedDate.format(DATE_FORMAT) : null,
       readDate: notification.readDate != null && notification.readDate.isValid() ? notification.readDate.format(DATE_FORMAT) : null
     });
     return copy;
   }
 
-  protected convertDateFromServer(res: EntityResponseType): EntityResponseType {
+  protected convertDateFromServer(res: NotificationResponseType): NotificationResponseType {
     if (res.body) {
       res.body.dueDate      = res.body.dueDate != null ? moment(res.body.dueDate) : null;
       res.body.emittedDate  = res.body.emittedDate != null ? moment(res.body.emittedDate) : null;
@@ -70,7 +78,7 @@ export class NotificactionService {
     return res;
   }
 
-  protected convertDateArrayFromServer(res: EntityArrayResponseType): EntityArrayResponseType {
+  protected convertDateArrayFromServer(res: NotificationArrayResponseType): NotificationArrayResponseType {
     if (res.body) {
       res.body.forEach((notification: INotification) => {
         notification.dueDate = notification.dueDate != null ? moment(notification.dueDate) : null;

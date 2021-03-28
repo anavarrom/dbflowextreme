@@ -63,7 +63,7 @@ export interface IChat {
     withContact?: string;
     subject?: string;
     createdDate?: Moment;
-    lastMessage?: Moment;
+    lastMessageDate?: Moment;
     type?: ChatType;
     appointmentId?: number;
     notificationId?: number;

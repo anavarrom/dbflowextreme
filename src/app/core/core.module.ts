@@ -8,7 +8,7 @@ import { CommonModule      } from '@angular/common';
 import { environment } from 'src/environments/environment';
 
 // Project Services
-import { NotificactionService           } from '../data/api/notification.service';
+import { RestNotificactionService           } from '../data/api/notification.service';
 import { ChatService } from '../data/api/chat.service';
 import { MessageService } from '../data/api/message.service';
 import { RestAppointmentService } from '../data/api/appointment.service';
@@ -26,7 +26,7 @@ const externalModules = [
 
 
 const dbFlow6Services = [
-    NotificactionService,
+    RestNotificactionService,
     ChatService,
     MessageService,
     RestAppointmentService,

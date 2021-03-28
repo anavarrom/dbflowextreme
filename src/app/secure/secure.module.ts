@@ -22,13 +22,14 @@ import { ChatDetailComponent } from './chats/chat-detail/chat-detail.component';
 // import { SafeKeepingDetailComponent } from './calendars/safe-keeping-detail/safe-keeping-detail.component';
 
 import { DxTileViewModule, DxToolbarModule, DxButtonModule, DxListModule, DxBoxModule,
-         DxDrawerModule, DxResponsiveBoxModule, DxTemplateModule, DxSchedulerModule, DxTextBoxModule, DxContextMenuModule, DxDropDownButtonModule } from 'devextreme-angular';
+         DxDrawerModule, DxResponsiveBoxModule, DxTemplateModule, DxSchedulerModule, DxTextBoxModule, DxContextMenuModule, DxDropDownButtonModule, DxScrollViewModule } from 'devextreme-angular';
 import { HomeComponent } from './home/home.component';
 import { OktaAuthGuard } from '@okta/okta-angular';
 import { SafeKeepingDetailComponent } from './calendars/safe-keeping-detail/safe-keeping-detail.component';
 import { CalendarsTabePageComponent } from './calendars/calendars-tabe-page/calendars-tabe-page.component';
 import { ErrorPageComponent } from './error/error-page.component';
 import { ChatsTabePageComponent } from './chats/chats-tabe-page/chats-tabe-page.component';
+import { NotificationsListComponent } from './notifications/notifications-list/notifications-list.component';
 // import { ErrorPageComponent } from './error/error.component';
 // import { SharedModule } from '../shared/shared.module';
 
@@ -44,7 +45,8 @@ const devExtremeModule = [
   DxDrawerModule,
   DxTextBoxModule,
   DxContextMenuModule,
-  DxDropDownButtonModule
+  DxDropDownButtonModule,
+  DxScrollViewModule
 ];
 
 const externalModules = [
@@ -61,6 +63,7 @@ const dbFlow6Components = [
   SafeKeepingDetailComponent,
   CalendarsTabePageComponent,
   ErrorPageComponent,
+  NotificationsListComponent,
   // NotificationsTabPageComponent,
   // NotificationDetailComponent,
   ChatsTabePageComponent,
@@ -89,6 +92,7 @@ const routes: Routes = [
   ],
   declarations: [
     dbFlow6Components,
+    NotificationsListComponent,
     // SafeKeepingDetailComponent,
   ],
 //  providers: [{ provide: Todos, useClass: remotedev(Todos) }],

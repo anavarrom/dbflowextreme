@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ChatsQuery } from '../../../core/state/chats/chats.query';
 import { ChatsService } from '../../../core/state/chats/chats.service';
 import { SessionQuery } from '../../../core/state/session/session.query';
@@ -19,7 +19,8 @@ export class ChatDetailComponent implements OnInit {
 
   // @Select(ChatStore.selected) public selected$: Observable<Chat>;
 
-  newMessageText = 'Patata';
+  @Input() newMessageText = '';
+  sendButtonOptions:any;
 
   constructor(private sessionQuery: SessionQuery,
               private chatsQuery: ChatsQuery,
@@ -31,9 +32,20 @@ export class ChatDetailComponent implements OnInit {
 
     this.selectedChat$  = this.chatsQuery.selectActive() as Observable<Chat>;
     this.me             = this.sessionQuery.Me;
+
+    this.sendButtonOptions = {
+      icon: 'fas fa-paper-plane',
+      onClick: () => {
+        // this.router.navigate(['/home'])
+        this.chatsService.newMessage(this.newMessageText);
+        // this.toastService.info(this.newMessageText);
+      }
+    };
   }
 
   sendMessage() {
+    this.chatsService.newMessage(this.newMessageText);
+
     /*
     let msg: ChatMessage = new ChatMessage();
     msg.body = this.newMessageText;
