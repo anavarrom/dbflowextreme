@@ -30,6 +30,7 @@ import { CalendarsTabePageComponent } from './calendars/calendars-tabe-page/cale
 import { ErrorPageComponent } from './error/error-page.component';
 import { ChatsTabePageComponent } from './chats/chats-tabe-page/chats-tabe-page.component';
 import { NotificationsListComponent } from './notifications/notifications-list/notifications-list.component';
+import { NotificationCardListComponent } from './notifications/notification-card-list/notification-card-list.component';
 // import { ErrorPageComponent } from './error/error.component';
 // import { SharedModule } from '../shared/shared.module';
 
@@ -64,6 +65,7 @@ const dbFlow6Components = [
   CalendarsTabePageComponent,
   ErrorPageComponent,
   NotificationsListComponent,
+  NotificationCardListComponent,
   // NotificationsTabPageComponent,
   // NotificationDetailComponent,
   ChatsTabePageComponent,

@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { NotificationStore } from 'src/app/core/states/notification.state';
-import { Store, Select, ofActionSuccessful, Actions } from '@ngxs/store';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -11,7 +9,7 @@ import { Observable } from 'rxjs';
 })
 export class NotificationDetailComponent implements OnInit {
 
-  @Select(NotificationStore.selected) public selected$: Observable<Notification>;
+//   @Select(NotificationStore.selected) public selected$: Observable<Notification>;
 
   constructor(private route: ActivatedRoute) { }
 

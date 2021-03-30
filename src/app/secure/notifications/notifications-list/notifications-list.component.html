@@ -1,1 +1,73 @@
-<p>notifications-list works!</p>
+<div class="dbflow-notifications-view">
+  <div class="row h-100">
+    <div class="col-4 dbflow-notification-block">
+      <div class="dbflow-notification-block-title">
+        Hola Caracola
+      </div>
+      <!-- <dx-scroll-view scrollByContent="true" scrollByThumb="true" showScrollbar="true" height="100%"   showScrollbar= "always"
+    reachBottomText="Updating...">
+  </dx-scroll-view> -->
+      <div class="card dx-card dx-theme-text-color dx-theme-background-color"
+        *ngFor="let notification of (notifications$ | async)">
+        <!-- <div class="card-priority" [ngClass]="'priority-' + task.Task_Priority"></div> -->
+        <div class="card-subject">{{notification.subject}}</div>
+        <!-- <div class="card-assignee">{{employees[task.Task_Assigned_Employee_ID]}}</div> -->
+      </div>
+
+    </div>
+    <div class="col-4 dbflow-notification-block">
+      <dx-list #chatList [dataSource]="(notifications$ | async)" [grouped]="false" [searchEnabled]="false"
+        selectionMode="none" (onSelectionChanged)=notificationSelected($event)>
+        <div *dxTemplate="let notification of 'item'">
+          <app-notification-card-list [notification]=notification></app-notification-card-list>
+          <!-- <div class="card dx-card dx-theme-text-color dx-theme-background-color"> -->
+          <!-- <div class="card">
+            <div class="row dbflow-card-header">
+              <div class="col">
+                Header
+              </div>
+            </div>
+            <div class="row dbflow-card-body">
+              <div class="col">
+                Body
+              </div>
+            </div>
+            <div class="row dbflow-card-footer">
+              <div class="col">
+                <dx-toolbar class="dbflow-toolbar">
+                  <dxi-item location="before" widget="dxButton" locateInMenu="never" [options]="drawerButtonOptions">
+                  </dxi-item>
+
+                  <dxi-item location="before" widget="dxButton" locateInMenu="never" [options]="homeButtonOptions">
+                  </dxi-item>
+                </dx-toolbar>
+              </div>
+            </div>
+
+          </div>-->
+         <!-- <div class="card-priority" [ngClass]="'priority-' + task.Task_Priority"></div> -->
+            <!-- <div class="card-subject">{{notification.subject}}</div>        <dx-button
+                        stylingMode="contained"
+                        text="Contained"
+                        type="normal"
+                        [width]="120"
+                        (onClick)="click($event)">
+                    </dx-button> -->
+            <!-- <div class="card-assignee">{{employees[task.Task_Assigned_Employee_ID]}}</div> -->
+        </div>
+      </dx-list>
+    </div>
+    <div class="col-4 dbflow-notification-block">
+      Hola Caracola 3
+    </div>
+  </div>
+</div>
+<!-- <p>notifications-list works!</p>
+
+<dx-list #chatList [dataSource]="(notifications$ | async)" [grouped]="false" [searchEnabled]="false" selectionMode="none"
+(onSelectionChanged)=notificationSelected($event)>
+<div *dxTemplate="let notification of 'item'" class="notification">
+  {{ notification.subject }}
+</div>
+</dx-list>
+ -->
