@@ -3,17 +3,12 @@ import { NavigationActions } from './../../../core/effects/navigation.actions';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { IChat, IDbFlowAccount } from 'src/app/data/interfaces/models';
-import { DxTileViewModule, DxButtonModule, DxListModule } from 'devextreme-angular';
 import { Chat } from 'src/app/core/models/chat';
-import { ActivatedRoute } from '@angular/router';
 import { ChatsQuery } from 'src/app/core/state/chats/chats.query';
 import { SessionQuery } from 'src/app/core/state/session/session.query';
-import { SessionStore } from 'src/app/core/state/session/session.store';
 import { ChatsService } from 'src/app/core/state/chats/chats.service';
 import { ToastService } from 'src/app/shared/services/toast.service';
 import { Actions } from '@datorama/akita-ng-effects';
-import { StompService } from '@stomp/ng2-stompjs';
-import { map } from 'rxjs/operators';
 
 
 @Component({

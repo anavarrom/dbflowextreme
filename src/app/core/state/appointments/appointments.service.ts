@@ -31,4 +31,9 @@ export class AppointmentsService {
         }
     );
   }
+
+  selectAppointment(appointmentId: number)
+  {
+    this.appointmentsStore.setActive(appointmentId);
+  }
 }

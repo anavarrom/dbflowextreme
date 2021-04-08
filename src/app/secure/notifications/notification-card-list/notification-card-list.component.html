@@ -1,1 +1,31 @@
-<p>notification-card-list works! {{notification.subject}}</p>
+<div class="card">
+  <div class="row dbflow-card-header">
+    <div class="col-4">
+      <div class="dbflow-duedate" *ngIf="notification.dueDate">
+        {{notification.dueDate | amLocal | amDateFormat: 'YYYY-MM-DD HH:MM'}}
+      </div>
+    </div>
+  </div>
+  <div class="row dbflow-card-body">
+    <div class="col">
+      {{ notification.subject }}
+    </div>
+  </div>
+  <div class="row dbflow-card-footer">
+    <div class="col">
+      <dx-toolbar class="dbflow-toolbar">
+        <dxi-item *ngIf="notification.dueDate" location="after" widget="dxButton" locateInMenu="never" [options]="dueDateButtonOptions">
+        </dxi-item>
+
+        <dxi-item *ngIf="notification.chatId" location="after" widget="dxButton" locateInMenu="never" [options]="chatButtonOptions">
+        </dxi-item>
+      </dx-toolbar>
+    </div>
+  </div>
+</div>
+<dx-popup [width]="500" [height]="650" [showTitle]="true" [position]=position title="Information" [dragEnabled]="false"
+  [closeOnOutsideClick]="true" [(visible)]="popupVisible">
+  <div *dxTemplate="let data of 'content'">
+    <app-chat-detail></app-chat-detail>
+  </div>
+</dx-popup>

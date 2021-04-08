@@ -30,4 +30,8 @@ export class NotificationsService {
     );
   }
 
+  selectNotification(notificationId: number)
+  {
+    this.notificationsStore.setActive(notificationId);
+  }
 }

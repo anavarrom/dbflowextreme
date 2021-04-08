@@ -9,6 +9,7 @@ import { Actions, Effect, ofType } from '@datorama/akita-ng-effects';
 import { map, switchMap, tap } from 'rxjs/operators';
 import { NavigationActions } from './navigation.actions';
 import { Chat } from '../models/chat';
+import { Notification } from '../models/notification';
 
 @Injectable()
 export class NavigationEffects {
@@ -71,4 +72,12 @@ export class NavigationEffects {
       this.chatsService.selectChat(chat.id);
     }
    ));
-}
+
+   @Effect()
+   notificationClickedSuccess = this.actions$.pipe(
+     ofType(NavigationActions.notificationClicked),
+     map((notification: Notification) => {
+       this.notificationsService.selectNotification(notification.id);
+     }
+    ));
+ }

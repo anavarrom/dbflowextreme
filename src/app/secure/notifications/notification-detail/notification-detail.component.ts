@@ -1,6 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Notification } from './../../../core/models/notification';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { INotification } from '../../../data/interfaces/models';
 import { Observable } from 'rxjs';
+import { NotificationsQuery } from './../../../core/state/notifications/notifications.query';
 
 @Component({
   selector: 'app-notification-detail',
@@ -9,10 +12,15 @@ import { Observable } from 'rxjs';
 })
 export class NotificationDetailComponent implements OnInit {
 
-//   @Select(NotificationStore.selected) public selected$: Observable<Notification>;
+  selectedNotification$: Observable<Notification>;
 
-  constructor(private route: ActivatedRoute) { }
+  @Input() notification: INotification;
 
-  ngOnInit() {}
+  constructor(private route: ActivatedRoute,
+              private notificationsQuery: NotificationsQuery) { }
+
+  ngOnInit() {
+    // this.selectedNotification$  = this.notificationsQuery.selectActive() as Observable<Notification>;
+  }
 
 }

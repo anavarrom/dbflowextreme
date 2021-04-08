@@ -22,7 +22,7 @@ import { ChatDetailComponent } from './chats/chat-detail/chat-detail.component';
 // import { SafeKeepingDetailComponent } from './calendars/safe-keeping-detail/safe-keeping-detail.component';
 
 import { DxTileViewModule, DxToolbarModule, DxButtonModule, DxListModule, DxBoxModule,
-         DxDrawerModule, DxResponsiveBoxModule, DxTemplateModule, DxSchedulerModule, DxTextBoxModule, DxContextMenuModule, DxDropDownButtonModule, DxScrollViewModule } from 'devextreme-angular';
+         DxDrawerModule, DxResponsiveBoxModule, DxTemplateModule, DxSchedulerModule, DxTextBoxModule, DxContextMenuModule, DxDropDownButtonModule, DxScrollViewModule, DxPopupModule } from 'devextreme-angular';
 import { HomeComponent } from './home/home.component';
 import { OktaAuthGuard } from '@okta/okta-angular';
 import { SafeKeepingDetailComponent } from './calendars/safe-keeping-detail/safe-keeping-detail.component';
@@ -31,6 +31,7 @@ import { ErrorPageComponent } from './error/error-page.component';
 import { ChatsTabePageComponent } from './chats/chats-tabe-page/chats-tabe-page.component';
 import { NotificationsListComponent } from './notifications/notifications-list/notifications-list.component';
 import { NotificationCardListComponent } from './notifications/notification-card-list/notification-card-list.component';
+import { NotificationDetailComponent } from './notifications/notification-detail/notification-detail.component';
 // import { ErrorPageComponent } from './error/error.component';
 // import { SharedModule } from '../shared/shared.module';
 
@@ -47,7 +48,8 @@ const devExtremeModule = [
   DxTextBoxModule,
   DxContextMenuModule,
   DxDropDownButtonModule,
-  DxScrollViewModule
+  DxScrollViewModule,
+  DxPopupModule
 ];
 
 const externalModules = [
@@ -67,7 +69,7 @@ const dbFlow6Components = [
   NotificationsListComponent,
   NotificationCardListComponent,
   // NotificationsTabPageComponent,
-  // NotificationDetailComponent,
+  NotificationDetailComponent,
   ChatsTabePageComponent,
   ChatDetailComponent,
   // DisplayDataComponent,

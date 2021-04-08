@@ -1,7 +1,10 @@
+HOLACA ROCALCA
 <p>
-  notification-detail works! in
+  notification-detail works! in {{ notification.body }}
 </p>
-
+<form >
+<input type="text" class="form-control" id="subject" [(ngModel)]='notification.subject' name="subject">
+</form>
 <!-- <ion-card>
   <ion-card-header color="warning">
     <ion-card-title> Title</ion-card-title>
