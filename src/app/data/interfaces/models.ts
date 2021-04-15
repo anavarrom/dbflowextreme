@@ -37,10 +37,9 @@ export interface INotification {
     readDate?: Moment;
     dueDate?: Moment;
     status?: NotificationStatus;
-    fromId?: number;
-    toId?: number;
     chatId?: number;
     appointmentId?: number;
+    safeKeepingProjectId?: number;
 }
 
 export interface IChatMessage {

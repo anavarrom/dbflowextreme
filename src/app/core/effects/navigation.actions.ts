@@ -4,9 +4,12 @@ import { createAction, props } from '@datorama/akita-ng-effects';
 
 // tslint:disable-next-line: no-namespace
 export namespace NavigationActions {
-  export const calendarsClicked = createAction('[Navigation] Click Calendars');
-  export const notificationsClicked = createAction('[Navigation] Click Notifications');
-  export const notificationClicked = createAction('[Navigation] Click Notification', props<Notification>());
+  export const calendarsClicked          = createAction('[Navigation] Click Calendars');
+
+  export const notificationsClicked      = createAction('[Navigation] Click Notifications');
+  export const notificationClicked       = createAction('[Navigation] Click Notification', props<Notification>());
+  export const saveNotificationClicked  = createAction('[Navigation] Save Notification', props<Notification>());
+
   export const chatsClicked     = createAction('[Navigation] Click Chats');
   export const chatClicked      = createAction('[Navigation] Click Chat', props<Chat>());
 

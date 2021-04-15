@@ -3,6 +3,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Actions } from '@datorama/akita-ng-effects';
 import { NavigationActions } from '../../../core/effects/navigation.actions';
 import { Chat } from '../../../core/models/chat';
+import { normalizeGenFileSuffix } from '@angular/compiler/src/aot/util';
 
 @Component({
   selector: 'app-notification-card-list',
@@ -21,6 +22,8 @@ export class NotificationCardListComponent implements OnInit {
   ngOnInit(): void {
     // YYYY-MM-DD
     this.dueDateButtonOptions = {
+      stylingMode: 'outlined',
+      type: 'normal',
       icon: 'fas fa-clock',
       text: this.notification.dueDate.format('MMM Do YY'),
       onClick: () => {
@@ -28,6 +31,8 @@ export class NotificationCardListComponent implements OnInit {
     };
 
     this.chatButtonOptions = {
+      stylingMode: 'outlined',
+      type: 'normal',
       icon: 'fas fa-comments',
       text: '',
       onClick: (event) => {
@@ -40,4 +45,10 @@ export class NotificationCardListComponent implements OnInit {
       }
     };
   }
+
+  cancel(e) {
+   // this.toastService.info("cancel");
+
+  }
+
 }

@@ -22,7 +22,7 @@ import { ChatDetailComponent } from './chats/chat-detail/chat-detail.component';
 // import { SafeKeepingDetailComponent } from './calendars/safe-keeping-detail/safe-keeping-detail.component';
 
 import { DxTileViewModule, DxToolbarModule, DxButtonModule, DxListModule, DxBoxModule,
-         DxDrawerModule, DxResponsiveBoxModule, DxTemplateModule, DxSchedulerModule, DxTextBoxModule, DxContextMenuModule, DxDropDownButtonModule, DxScrollViewModule, DxPopupModule } from 'devextreme-angular';
+         DxDrawerModule, DxResponsiveBoxModule, DxTemplateModule, DxSchedulerModule, DxTextBoxModule, DxContextMenuModule, DxDropDownButtonModule, DxScrollViewModule, DxPopupModule, DxFormComponent, DxFormModule, DxDateBoxModule, DxTextAreaModule, DxSpeedDialActionModule } from 'devextreme-angular';
 import { HomeComponent } from './home/home.component';
 import { OktaAuthGuard } from '@okta/okta-angular';
 import { SafeKeepingDetailComponent } from './calendars/safe-keeping-detail/safe-keeping-detail.component';
@@ -39,6 +39,7 @@ const devExtremeModule = [
   DxTemplateModule,
   DxTileViewModule,
   DxButtonModule,
+  DxDateBoxModule,
   DxListModule,
   DxBoxModule,
   DxResponsiveBoxModule,
@@ -46,10 +47,13 @@ const devExtremeModule = [
   DxSchedulerModule,
   DxDrawerModule,
   DxTextBoxModule,
+  DxTextAreaModule,
   DxContextMenuModule,
   DxDropDownButtonModule,
   DxScrollViewModule,
-  DxPopupModule
+  DxPopupModule,
+  DxFormModule,
+  DxSpeedDialActionModule
 ];
 
 const externalModules = [

@@ -2,7 +2,7 @@ import { INotification, NotificationStatus } from 'src/app/data/interfaces/model
 import { Moment } from 'moment';
 
 export class Notification implements INotification {
-    constructor(
+  constructor(
       public id?: number,
       public subject?: string,
       public body?: string,
@@ -12,10 +12,9 @@ export class Notification implements INotification {
       public readDate?: Moment,
       public dueDate?: Moment,
       public status?: NotificationStatus,
-      public fromId?: number,
-      public toId?: number,
       public chatId?: number,
-      public appointmentId?: number
+      public appointmentId?: number,
+      public safeKeepingProjectId?: number,
     ) {}
   }
 

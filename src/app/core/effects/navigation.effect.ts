@@ -1,3 +1,4 @@
+import { NotificationsQuery } from './../state/notifications/notifications.query';
 import { NotificationsService } from './../state/notifications/notifications.service';
 import { ChatsService } from './../state/chats/chats.service';
 import { ProjectsService } from './../state/projects/projects.service';
@@ -20,26 +21,27 @@ export class NavigationEffects {
     private chatsService: ChatsService,
     private sessionService: SessionService,
     private projectsService: ProjectsService,
-  ) {}
-/*
-  loadMainNavigation$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(loadMainNavigation),
-      switchMap((_) =>
-         this.navigationService.loadMainNavigation().pipe(
-           map((mainNav) => loadMainNavigationSuccess({ mainNav }))
+    private notificationsQuery: NotificationsQuery,
+  ) { }
+  /*
+    loadMainNavigation$ = createEffect(() =>
+      this.actions$.pipe(
+        ofType(loadMainNavigation),
+        switchMap((_) =>
+           this.navigationService.loadMainNavigation().pipe(
+             map((mainNav) => loadMainNavigationSuccess({ mainNav }))
+          )
         )
-      )
-    ), { dispatch: true }
-  );
+      ), { dispatch: true }
+    );
 
-  // Or use the decorator
-  @Effect()
-  loadMainNavigationSuccess$ = this.actions$.pipe(
-    ofType(loadMainNavigationSuccess),
-    map(({ mainNav }) => this.navigationService.updateNavigationTree(mainNav)),
-    tap((mainRoutes) => this.store.updateNavigation(mainRoutes))
-  );*/
+    // Or use the decorator
+    @Effect()
+    loadMainNavigationSuccess$ = this.actions$.pipe(
+      ofType(loadMainNavigationSuccess),
+      map(({ mainNav }) => this.navigationService.updateNavigationTree(mainNav)),
+      tap((mainRoutes) => this.store.updateNavigation(mainRoutes))
+    );*/
 
   @Effect()
   calendarClickedSuccess$ = this.actions$.pipe(
@@ -47,7 +49,7 @@ export class NavigationEffects {
     map((_) => {
       this.appointmentsService.loadAppointments();
     }
-  ));
+    ));
 
   @Effect()
   notificationClickedSuccess$ = this.actions$.pipe(
@@ -55,7 +57,7 @@ export class NavigationEffects {
     map((_) => {
       this.notificationsService.loadNotifications();
     }
-  ));
+    ));
 
   @Effect()
   chatsClickedSuccess$ = this.actions$.pipe(
@@ -63,21 +65,43 @@ export class NavigationEffects {
     map((_) => {
       this.chatsService.initChats();
     }
-  ));
+    ));
 
   @Effect()
   chatClickedSuccess = this.actions$.pipe(
     ofType(NavigationActions.chatClicked),
-    map((chat:Chat) => {
+    map((chat: Chat) => {
       this.chatsService.selectChat(chat.id);
     }
-   ));
-
-   @Effect()
-   notificationClickedSuccess = this.actions$.pipe(
-     ofType(NavigationActions.notificationClicked),
-     map((notification: Notification) => {
-       this.notificationsService.selectNotification(notification.id);
-     }
     ));
- }
+
+  @Effect()
+  notificationClickedSuccess = this.actions$.pipe(
+    ofType(NavigationActions.notificationClicked),
+    map((notification: Notification) => {
+      this.notificationsService.selectNotification(notification.id);
+    }
+    ));
+
+  @Effect()
+  saveNotificationClickedSuccess = this.actions$.pipe(
+    ofType(NavigationActions.saveNotificationClicked),
+    map((notification: Notification) => {
+      // Check if this is update or create
+      if (notification.id) {
+        // Find the notification
+       // let notifReal = this.notificationsQuery.getEntity(notification.id);
+       // if (notifReal) {
+       //   notifReal.subject = notification.subject;
+       //   notifReal.body    = notification.body;
+       //   notifReal.dueDate = notification.dueDate;
+
+        this.notificationsService.updateNotification(notification);
+       // }
+      } else {
+        this.notificationsService.createNotification(notification);
+      }
+      // this.notificationsService.selectNotification(notification.id);
+    }
+    ));
+}

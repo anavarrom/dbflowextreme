@@ -1,16 +1,70 @@
-HOLACA ROCALCA
-<p>
-  notification-detail works! in {{ notification.body }}
-</p>
-<form >
-<input type="text" class="form-control" id="subject" [(ngModel)]='notification.subject' name="subject">
-</form>
-<!-- <ion-card>
-  <ion-card-header color="warning">
-    <ion-card-title> Title</ion-card-title>
-    <ion-card-subtitle> Subtitle</ion-card-subtitle>
-  </ion-card-header>
-  <ion-card-content>
-    CONTENIDOS sfgfsg sfgsfgsfg sfgsfg fsfgsfgsfgsf gfs sfg sf gsfgsfgsfgsfg
-  </ion-card-content>
-</ion-card> -->
+<div class="row align-items-center notification-detail-row" >
+  <div class="col-1">
+    <i class="fas fa-pencil-alt"></i>
+  </div>
+  <div class="col-11">
+    <dx-text-box #subject [(ngModel)]="notification.subject" placeholder='patata'></dx-text-box>
+  </div>
+</div>
+<div class="row align-items-center notification-detail-row">
+  <div class="col-1">
+    <i class="fas fa-clock"></i>
+  </div>
+  <div class="col-11">
+    <dx-date-box #dueDate [(ngModel)]="notification.dueDate" type="datetime"> </dx-date-box>
+  </div>
+</div>
+<div class="row align-items-start notification-detail-row">
+  <div class="col-1">
+    <i class="fas fa-paragraph"></i>
+  </div>
+  <div class="col-11">
+    <dx-text-area #body [(ngModel)]='notification.body' [height]='90' ></dx-text-area>
+  </div>
+</div>
+
+<!--
+    <div class="col-12">
+    <dx-date-box #dueDate [(ngModel)]="notification.dueDate" type="datetime"> </dx-date-box>
+  </div>
+
+  <dx-text-area [height]="90" [maxLength]="maxLength" [(value)]="value">
+</dx-text-area> -->
+
+<!-- <div class="dx-fieldset">
+  <div class="dx-field">
+    <i class="fas fa-pencil-alt"></i> <dx-text-box #subject  [(ngModel)]="notification.subject" ></dx-text-box>
+  </div>
+  <div class="dx-field">
+    <dx-date-box #dueDate [(ngModel)]="notification.dueDate"    type="datetime"> </dx-date-box>
+  </div>
+</div> -->
+
+<!-- <div class="row">
+  <div class="col-12">
+    <dx-text-box #subject  [(ngModel)]="notification.subject" ></dx-text-box>
+  </div>
+    <div class="col-12">
+      <dx-date-box #dueDate [(ngModel)]="notification.dueDate"    type="datetime"> </dx-date-box>
+    </div>
+  </div> -->
+<!-- <div class="dx-field">
+      <div class="dx-field-label">Default mode</div>
+      <div class="dx-field-value">
+      </div>
+  </div>
+  <div> No sé si funcjona : {{notification.subject}}</div> -->
+
+<!-- <dx-form id="form" [colCount]="2" [formData]="notification">
+      <dxi-item #subject label="pararta" dataField="subject" [editorOptions]="{ disabled: false }" [colSpan]="2">
+        <dxo-label>PATATA</dxo-label>
+
+      </dxi-item>
+      <dxi-item dataField="dueDate" [editorOptions]="{ disabled: false }" editorType="dxDateBox" [colSpan]="2">
+      </dxi-item>
+      <dxi-item dataField="body" [editorOptions]="{ disabled: false }" editorType="dxTextArea"
+        [editorOptions]="{ height: 90 }" [colSpan]="2"></dxi-item>
+
+
+    </dx-form>
+  </div>-->
