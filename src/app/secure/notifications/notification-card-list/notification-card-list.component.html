@@ -1,18 +1,20 @@
 <div class="card">
   <div class="row dbflow-card-body">
     <div class="card-priority priority-1"></div>
-    <div class="col">
-      <b>{{ notification.subject }}</b>
+      <div class="col">
+        <b>{{ notification.subject }}</b>
+      </div>
     </div>
-  </div>
   <div class="row dbflow-card-footer">
     <div class="col">
       <dx-toolbar class="dbflow-toolbar">
-        <dxi-item *ngIf="notification.dueDate" location="after" widget="dxButton"
+        <dxi-item location="after" widget="dxButton" locateInMenu="never" [options]="deleteButtonOptions">
+        </dxi-item>
+          <dxi-item *ngIf="notification.dueDate" location="after" widget="dxButton"
                   locateInMenu="never" [options]="dueDateButtonOptions">
         </dxi-item>
 
-        <dxi-item *ngIf="notification.chatId" location="after" widget="dxButton"
+        <dxi-item location="after" widget="dxButton"
               locateInMenu="never" [options]="chatButtonOptions">
         </dxi-item>
       </dx-toolbar>

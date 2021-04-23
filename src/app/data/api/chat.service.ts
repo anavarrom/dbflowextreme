@@ -5,7 +5,7 @@ import * as moment from 'moment';
 import { map } from 'rxjs/operators';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { DATE_FORMAT } from '../../shared/input.constants';
+import { DATE_FORMAT, DATE_TIME_FORMAT } from '../../shared/input.constants';
 import { createRequestOption } from '../../shared/request-util';
 import { IChat, IChatMessage } from '../../data/interfaces/models';
 
@@ -65,8 +65,8 @@ export class ChatService {
 
   protected convertDateFromClient(chat: IChat): IChat {
     const copy: IChat = Object.assign({}, chat, {
-      createdDate: chat.createdDate != null && chat.createdDate.isValid() ? chat.createdDate.format(DATE_FORMAT) : null,
-      lastMessage: chat.lastMessageDate != null && chat.lastMessageDate.isValid() ? chat.lastMessageDate.format(DATE_FORMAT) : null
+      createdDate: chat.createdDate != null && chat.createdDate.isValid() ? chat.createdDate.format(DATE_TIME_FORMAT) : null,
+      lastMessage: chat.lastMessageDate != null && chat.lastMessageDate.isValid() ? chat.lastMessageDate.format(DATE_TIME_FORMAT) : null
     });
     return copy;
   }

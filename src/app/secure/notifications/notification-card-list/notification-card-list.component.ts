@@ -3,6 +3,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Actions } from '@datorama/akita-ng-effects';
 import { NavigationActions } from '../../../core/effects/navigation.actions';
 import { Chat } from '../../../core/models/chat';
+import { Notification } from '../../../core/models/notification';
 import { normalizeGenFileSuffix } from '@angular/compiler/src/aot/util';
 
 @Component({
@@ -16,6 +17,7 @@ export class NotificationCardListComponent implements OnInit {
   popupVisible = false;
   chatButtonOptions: any;
   dueDateButtonOptions: any;
+  deleteButtonOptions: any;
   @Input() notification: INotification;
   position = 'right top';
 
@@ -40,7 +42,20 @@ export class NotificationCardListComponent implements OnInit {
         const chat: Chat = new Chat();
         chat.id = this.notification.chatId;
 
-        this.actions.dispatch(NavigationActions.chatClicked(chat));
+        this.actions.dispatch(NavigationActions.openChatFromNotificationClicked(this.notification));
+        event.stopPropagation();
+      }
+    };
+    this.deleteButtonOptions = {
+      stylingMode: 'outlined',
+      type: 'normal',
+      icon: 'fas fa-trash-alt',
+      text: '',
+      onClick: (event) => {
+        let notif: Notification = new Notification();
+        notif.id = this.notification.id;
+
+        this.actions.dispatch(NavigationActions.deleteNotificationClicked(notif));
         event.stopPropagation();
       }
     };

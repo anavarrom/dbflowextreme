@@ -1,3 +1,4 @@
+import { ChatsQuery } from './../state/chats/chats.query';
 import { NotificationsQuery } from './../state/notifications/notifications.query';
 import { NotificationsService } from './../state/notifications/notifications.service';
 import { ChatsService } from './../state/chats/chats.service';
@@ -19,6 +20,7 @@ export class NavigationEffects {
     private appointmentsService: AppointmentsService,
     private notificationsService: NotificationsService,
     private chatsService: ChatsService,
+    private chatsQuery: ChatsQuery,
     private sessionService: SessionService,
     private projectsService: ProjectsService,
     private notificationsQuery: NotificationsQuery,
@@ -63,7 +65,7 @@ export class NavigationEffects {
   chatsClickedSuccess$ = this.actions$.pipe(
     ofType(NavigationActions.chatsClicked),
     map((_) => {
-      this.chatsService.initChats();
+      this.chatsService.loadChats();
     }
     ));
 
@@ -71,7 +73,10 @@ export class NavigationEffects {
   chatClickedSuccess = this.actions$.pipe(
     ofType(NavigationActions.chatClicked),
     map((chat: Chat) => {
-      this.chatsService.selectChat(chat.id);
+      if (this.chatsQuery.getCount() === 0) {
+         this.chatsService.loadChats();
+      }
+      this.chatsService.loadMessages(chat.id);
     }
     ));
 
@@ -89,19 +94,38 @@ export class NavigationEffects {
     map((notification: Notification) => {
       // Check if this is update or create
       if (notification.id) {
-        // Find the notification
-       // let notifReal = this.notificationsQuery.getEntity(notification.id);
-       // if (notifReal) {
-       //   notifReal.subject = notification.subject;
-       //   notifReal.body    = notification.body;
-       //   notifReal.dueDate = notification.dueDate;
-
         this.notificationsService.updateNotification(notification);
        // }
       } else {
         this.notificationsService.createNotification(notification);
       }
-      // this.notificationsService.selectNotification(notification.id);
     }
-    ));
+  ));
+
+  @Effect()
+  deleteNotificationClickedSuccess = this.actions$.pipe(
+    ofType(NavigationActions.deleteNotificationClicked),
+    map((notification: Notification) => {
+      // Check if this is update or create
+      if (notification.id) {
+        this.notificationsService.deleteNotification(notification);
+      }
+    }
+  ));
+
+  @Effect()
+  openChatFromNotificationClickedSuccess = this.actions$.pipe(
+    ofType(NavigationActions.openChatFromNotificationClicked),
+    map((notification: Notification) => {
+      // Check if this is update or create
+      if (notification.chatId) {
+        let chat: Chat = new Chat();
+        chat.id = notification.chatId;
+
+        this.actions$.dispatch(NavigationActions.chatClicked(chat));
+      } else {
+        this.chatsService.createChatFromNotification(notification);
+      }
+    }
+  ));
 }

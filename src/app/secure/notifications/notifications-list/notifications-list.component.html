@@ -37,9 +37,9 @@
   </div>
 </div>
 
-<dx-popup [width]="500" [height]="450" [showTitle]="true" [position]=position [dragEnabled]="false"
+<dx-popup [width]="500" [height]="350" [showTitle]="true" [position]=position [dragEnabled]="false"
   [closeOnOutsideClick]="true" [(visible)]="popupVisible">
-  <dxi-toolbar-item [text]='(selectedNotification$ | async)?.subject' location="before">
+  <dxi-toolbar-item [text]='(selectedNotification$ | async)?.subject' location="before" placeholder='Enter the subject'>
   </dxi-toolbar-item>
   <dxi-toolbar-item widget="dxButton" location="after" [options]="saveButtonOptions">
   </dxi-toolbar-item>
@@ -51,7 +51,7 @@
 
 <dx-speed-dial-action
     icon="add"
-    label="New notification"
+    label=""
     [index]="1"
     (onClick)="addNotification()">
 </dx-speed-dial-action>

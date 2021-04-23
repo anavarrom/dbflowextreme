@@ -1,7 +1,8 @@
+import { Notification } from './../../models/notification';
 import { APIProvider } from './../../../data/api.provider';
 import { ToastService } from 'src/app/shared/services/toast.service';
 import { ChatMessage } from 'src/app/core/models/message';
-import { IChatMessage } from './../../../data/interfaces/models';
+import { ChatType, IChatMessage } from './../../../data/interfaces/models';
 import { IChat } from 'src/app/data/interfaces/models';
 import { SessionQuery } from './../session/session.query';
 import { ChatService } from 'src/app/data/api/chat.service';
@@ -16,59 +17,82 @@ import { Chat } from '../../models/chat';
 import { StompService } from '@stomp/ng2-stompjs';
 import { Subject, Subscription } from 'rxjs';
 import { Message } from '@stomp/stompjs'
+import * as moment from 'moment';
+import { NotificationsService } from '../notifications/notifications.service';
 
 @Injectable({ providedIn: 'root' })
-export class ChatsService{
+export class ChatsService {
 
   private topicSubscription: Subscription;
   ngDestroy$ = new Subject();
 
   constructor(private chatsStore: ChatsStore, private chatsQuery: ChatsQuery,
               private chatService: ChatService, private apiProvider: APIProvider,
-              private sessionQuery: SessionQuery, private  toastService: ToastService)
-  {
-/*      const topic = '/chat'; //' + this.sessionQuery.Me;
-      this.topicSubscription = this._stompService.watch(topic).pipe(map(function (message) {
-      //  this.topicSubscription = this._stompService.watch('/user/queue/specific-user').pipe(map(function (message) {
-        return JSON.parse(message.body);
-      })).subscribe(function (payload) {
-        this.toastService.info("Yujuuuuu");
-        // displayIncomingMessage(payload.user, payload.message);
-      });
-      */
-    /* const topic = '/chat'; //' + this.sessionQuery.Me;
-     this.topicSubscription = this._stompService.subscribe(topic).subscribe((message) => {
-       const newMessage: IChatMessage = JSON.parse(message.body);
+              private sessionQuery: SessionQuery, private toastService: ToastService,
+              private notificationsService: NotificationsService) {
 
-      this.toastService.info("Yujuuuuu");
-    });*/
+                // Cargamos los mensajes y seleccionamos
   }
 
-  initChats()
-  {
-// const projectId = this.projectsQuery.getActiveId() as number;
+  loadChats() {
+    // const projectId = this.projectsQuery.getActiveId() as number;
     this.chatService.findAllByUser().subscribe(
-        // (notifs: INotification[]) => {
-        (chats: HttpResponse<IChat[]>) => {
-          let newChats:IChat[] = chats.body.map( (chat: IChat) => {
-            chat.withContact = (chat.owner === this.sessionQuery.Me) ? chat.to : chat.owner;
-            return Object.assign({messages:[]}, chat);
+      // (notifs: INotification[]) => {
+      (chats: HttpResponse<IChat[]>) => {
+        let newChats: IChat[] = chats.body.map((chat: IChat) => {
+          chat.withContact = (chat.owner === this.sessionQuery.Me) ? chat.to : chat.owner;
+          return Object.assign({ messages: [] }, chat);
         });
 
-          this.chatsStore.set(newChats);
-        }, err => {
-          // Log errors if any
-          console.log(err);
-        }
+        this.chatsStore.set(newChats);
+      }, err => {
+        // Log errors if any
+        console.log(err);
+      }
     );
   }
 
-  selectChat(chatId: number)
-  {
+  init(username: string) {
+    this.apiProvider.messageProvider.init(username);
+
+    this.apiProvider.messageProvider.newNotification().subscribe(
+      (newMessage: IChatMessage) => {
+        this.chatsStore.addMessages(newMessage.chatId, [newMessage]);
+      }, err => {
+        // Log errors if any
+        console.log(err);
+      }
+    );
+  }
+
+  createChatFromNotification(notification: Notification) {
+    let chat: Chat = new Chat();
+    chat.owner = notification.from;
+    chat.to = notification.to;
+    chat.subject = notification.subject;
+    chat.createdDate = moment();
+    chat.type = ChatType.NOTIFICATION;
+    chat.withContact = (chat.owner === this.sessionQuery.Me) ? chat.to : chat.owner;
+
+    this.chatService.create(chat).subscribe(
+      // (notifs: INotification[]) => {
+      (chatResponse: HttpResponse<IChat>) => {
+        this.chatsStore.add(chatResponse.body);
+        this.chatsStore.setActive(chatResponse.body.id);
+        // Update notification
+        this.notificationsService.updateChatNotification(notification.id, chatResponse.body);
+      }, err => {
+        // Log errors if any
+        console.log(err);
+      }
+    )
+  }
+
+  loadMessages(chatId: number) {
     // Cargamos los mensajes y seleccionamos
     this.apiProvider.messageProvider.findAllMessagesByChat(chatId)
-    .pipe(takeUntil(this.ngDestroy$))
-    .subscribe(
+      .pipe(takeUntil(this.ngDestroy$))
+      .subscribe(
         (messages: IChatMessage[]) => {
           this.chatsStore.fillMessages(chatId, messages);
           this.chatsStore.setActive(chatId);
@@ -76,29 +100,28 @@ export class ChatsService{
           // Log errors if any
           console.log(err);
         }
-    );
+      );
   }
 
-  newMessage(body:string)
-  {
-    let message:IChatMessage = new ChatMessage();
-    message.chatId  = this.chatsQuery.getActiveId();
-    message.from    = this.sessionQuery.Me;
-    message.to      = (this.chatsQuery.getActive() as Chat).withContact;
-    message.body    = body;
+  newMessage(body: string) {
+    let message: IChatMessage = new ChatMessage();
+    message.chatId = this.chatsQuery.getActiveId();
+    message.from = this.sessionQuery.Me;
+    message.to = (this.chatsQuery.getActive() as Chat).withContact;
+    message.body = body;
 
     // Cargamos los mensajes y seleccionamos
     this.apiProvider.messageProvider.newMessage(message).subscribe(
-        (newMessage: IChatMessage) => {
-          this.chatsStore.addMessages(newMessage.chatId, [newMessage]);
-        }, err => {
-          // Log errors if any
-          console.log(err);
-        }
+      (newMessage: IChatMessage) => {
+        this.chatsStore.addMessages(newMessage.chatId, [newMessage]);
+      }, err => {
+        // Log errors if any
+        console.log(err);
+      }
     );
   }
 
-  ngOnDestroy(){
+  ngOnDestroy() {
     this.ngDestroy$.next(true);
     this.ngDestroy$.complete();
   }

@@ -6,11 +6,16 @@ import { tap } from 'rxjs/operators';
 import { DbAccountConfiguration, DbFlowAccount } from '../../models/account';
 import { ProjectsService } from '../projects/projects.service';
 import { SessionStore } from './session.store';
+import { ChatsService } from '../chats/chats.service';
 
 @Injectable({ providedIn: 'root' })
 export class SessionService {
 
-  constructor(private sessionStore: SessionStore, private http: HttpClient, public oktaAuth: OktaAuthService, public projectsService: ProjectsService ) {
+  constructor(private sessionStore: SessionStore,
+              private http: HttpClient,
+              public oktaAuth: OktaAuthService,
+              public projectsService: ProjectsService,
+              public chatsService: ChatsService ) {
   }
 
   async loginSusccesfull() {
@@ -31,6 +36,7 @@ export class SessionService {
       };
       this.sessionStore.update({ userAccount: account });
       this.projectsService.initProjects(account);
+      this.chatsService.init(account.username);
     });
 
     const config: DbAccountConfiguration = {

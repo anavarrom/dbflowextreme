@@ -3,7 +3,7 @@
     <i class="fas fa-pencil-alt"></i>
   </div>
   <div class="col-11">
-    <dx-text-box #subject [(ngModel)]="notification.subject" placeholder='patata'></dx-text-box>
+    <dx-text-box #subject [(ngModel)]="notification.subject" placeholder='Enter the subject'></dx-text-box>
   </div>
 </div>
 <div class="row align-items-center notification-detail-row">
@@ -19,7 +19,7 @@
     <i class="fas fa-paragraph"></i>
   </div>
   <div class="col-11">
-    <dx-text-area #body [(ngModel)]='notification.body' [height]='90' ></dx-text-area>
+    <dx-text-area #body [(ngModel)]='notification.body' [height]='90' placeholder='Enter the notification details'></dx-text-area>
   </div>
 </div>
 

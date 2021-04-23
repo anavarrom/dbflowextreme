@@ -4,7 +4,7 @@
       <dx-toolbar class="dbflow-chat-toolbar">
         <dxi-item location="center" widget="dxButton" locateInMenu="never">
           <div *dxTemplate>
-            <div class='toolbar-chat-label'>THIS IS the chat toolbar</div>
+            <div class='toolbar-chat-label'>{{(selectedChat$ | async)?.subject}}</div>
           </div>
         </dxi-item>
       </dx-toolbar>

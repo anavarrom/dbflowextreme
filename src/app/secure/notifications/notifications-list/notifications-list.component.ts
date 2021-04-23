@@ -64,6 +64,7 @@ export class NotificationsListComponent implements OnInit {
       text: '',
       onClick: (event) => {
 
+        this.selectedNotification.dueDate = moment(this.selectedNotification.dueDate);
         this.actions.dispatch(NavigationActions.saveNotificationClicked(this.selectedNotification));
         this.popupVisible = false;
         // this.toastService.info("save!!");
@@ -102,7 +103,7 @@ export class NotificationsListComponent implements OnInit {
   addNotification(){
     this.selectedNotification         = new Notification();
     this.selectedNotification.subject = '';
-    this.selectedNotification.dueDate = moment(moment.now());
+    this.selectedNotification.dueDate = moment();
     this.selectedNotification.body    = '';
     this.popupVisible = true;
   }

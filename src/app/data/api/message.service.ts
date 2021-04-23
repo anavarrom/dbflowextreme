@@ -23,6 +23,14 @@ export class MessageService implements IMessageProvider{
 
   constructor(protected http: HttpClient) {}
 
+  init(owner: string): boolean {
+    throw new Error('Method not implemented.');
+  }
+
+  newNotification(): Observable<IChatMessage> {
+    throw new Error('Method not implemented.');
+  }
+
   newMessage(message: IChatMessage): Observable<IChatMessage> {
     const copy = this.convertDateFromClient(message);
     return this.http
