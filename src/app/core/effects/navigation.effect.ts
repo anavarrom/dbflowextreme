@@ -1,3 +1,4 @@
+import { RestTestService } from './../../data/api/test.service';
 import { ChatsQuery } from './../state/chats/chats.query';
 import { NotificationsQuery } from './../state/notifications/notifications.query';
 import { NotificationsService } from './../state/notifications/notifications.service';
@@ -12,6 +13,8 @@ import { map, switchMap, tap } from 'rxjs/operators';
 import { NavigationActions } from './navigation.actions';
 import { Chat } from '../models/chat';
 import { Notification } from '../models/notification';
+import { HttpResponse } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class NavigationEffects {
@@ -22,8 +25,7 @@ export class NavigationEffects {
     private chatsService: ChatsService,
     private chatsQuery: ChatsQuery,
     private sessionService: SessionService,
-    private projectsService: ProjectsService,
-    private notificationsQuery: NotificationsQuery,
+
   ) { }
   /*
     loadMainNavigation$ = createEffect(() =>
@@ -44,6 +46,15 @@ export class NavigationEffects {
       map(({ mainNav }) => this.navigationService.updateNavigationTree(mainNav)),
       tap((mainRoutes) => this.store.updateNavigation(mainRoutes))
     );*/
+
+  @Effect()
+  searchClickedSuccess$ = this.actions$.pipe(
+    ofType(NavigationActions.searchClicked),
+    map((_) => {
+      this.sessionService.search();
+
+    }
+  ));
 
   @Effect()
   calendarClickedSuccess$ = this.actions$.pipe(

@@ -8,6 +8,8 @@ export interface SessionState {
   userConfig: IDbAccountConfiguration;
   lastError: DbFlowError;
   isAuthenticated: boolean;
+
+  lastSearchResult: string;
 }
 
 export function createInitialState(): SessionState {
@@ -15,7 +17,8 @@ export function createInitialState(): SessionState {
     userAccount : null,
     userConfig: null,
     lastError: null,
-    isAuthenticated:false
+    isAuthenticated:false,
+    lastSearchResult : ''
 };
 }
 

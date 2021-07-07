@@ -1,9 +1,13 @@
+import { HttpResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ToastService } from '../../services/toast.service';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 import { Router } from '@angular/router';
 import { SessionQuery } from 'src/app/core/state/session/session.query';
 import { SessionService } from 'src/app/core/state/session/session.service';
+import { GenericSearchService } from './../../../data/api/search.service';
+import { Actions } from '@datorama/akita-ng-effects';
+import { NavigationActions } from 'src/app/core/effects/navigation.actions';
 
 @Component({
   selector: 'app-header',
@@ -36,6 +40,7 @@ export class HeaderComponent implements OnInit {
   loginButtonOptions: any;
   homeButtonOptions: any;
   drawerButtonOptions: any;
+  searchButtonOptions: any;
 
     navigation = [
       { id: 1, text: "Products", icon: "product" },
@@ -56,7 +61,9 @@ export class HeaderComponent implements OnInit {
     elementAttr: any;
 
 
-  constructor(private router: Router, public sessionQuery: SessionQuery, public sessionService: SessionService, public toast: ToastService) {
+  constructor(private router: Router, private actions: Actions, public sessionQuery: SessionQuery,
+              public genericSearchService: GenericSearchService,
+              public sessionService: SessionService, public toast: ToastService) {
 
 
     this.drawerButtonOptions = {
@@ -70,6 +77,27 @@ export class HeaderComponent implements OnInit {
       text: 'Sign in',
       onClick: () => {
           this.login();
+      }
+    };
+
+    this.searchButtonOptions = {
+      icon: 'fas fa-home',
+      text: 'Search',
+      onClick: () => {
+        this.actions.dispatch(NavigationActions.searchClicked());
+        this.router.navigate(['/genericSearch']);
+
+        /*this.genericSearchService.test().subscribe(
+          // (notifs: INotification[]) => {
+          (response: HttpResponse<any>) => {
+            const mydata = response.body;
+            this.router.navigate(['/genericSearch'], { queryParams: { data: mydata} });
+          }, err => {
+            // Log errors if any
+            console.log(err);
+          }
+      );*/
+        // this.router.navigate(['/home']);
       }
     };
 

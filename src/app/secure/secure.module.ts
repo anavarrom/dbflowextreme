@@ -7,6 +7,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { MomentModule } from 'ngx-moment';
 
+import { NgxJsonViewerModule } from 'ngx-json-viewer';
 
 // Custom modules
 import { CoreModule } from '../core/core.module';
@@ -32,6 +33,7 @@ import { ChatsTabePageComponent } from './chats/chats-tabe-page/chats-tabe-page.
 import { NotificationsListComponent } from './notifications/notifications-list/notifications-list.component';
 import { NotificationCardListComponent } from './notifications/notification-card-list/notification-card-list.component';
 import { NotificationDetailComponent } from './notifications/notification-detail/notification-detail.component';
+import { GenericSearchComponent } from './search/generic-search/generic-search.component';
 // import { ErrorPageComponent } from './error/error.component';
 // import { SharedModule } from '../shared/shared.module';
 
@@ -61,7 +63,8 @@ const externalModules = [
   FormsModule,
   RouterModule,
   devExtremeModule,
-  MomentModule
+  MomentModule,
+  NgxJsonViewerModule
   // OnsenModule
 ];
 
@@ -76,6 +79,7 @@ const dbFlow6Components = [
   NotificationDetailComponent,
   ChatsTabePageComponent,
   ChatDetailComponent,
+  GenericSearchComponent,
   // DisplayDataComponent,
   // ProfileComponent,
 ];

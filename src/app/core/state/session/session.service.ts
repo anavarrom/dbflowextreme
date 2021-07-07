@@ -1,5 +1,5 @@
 import { DbFlowError } from './../../models/error';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { OktaAuthService } from '@okta/okta-angular';
 import { tap } from 'rxjs/operators';
@@ -7,6 +7,8 @@ import { DbAccountConfiguration, DbFlowAccount } from '../../models/account';
 import { ProjectsService } from '../projects/projects.service';
 import { SessionStore } from './session.store';
 import { ChatsService } from '../chats/chats.service';
+import { RestTestService } from '../../../data/api/test.service';
+import { GenericSearchService } from '../../..//data/api/search.service';
 
 @Injectable({ providedIn: 'root' })
 export class SessionService {
@@ -15,7 +17,8 @@ export class SessionService {
               private http: HttpClient,
               public oktaAuth: OktaAuthService,
               public projectsService: ProjectsService,
-              public chatsService: ChatsService ) {
+              public chatsService: ChatsService,
+              private genericSearchService: GenericSearchService, ) {
   }
 
   async loginSusccesfull() {
@@ -53,6 +56,19 @@ export class SessionService {
 
   login() {
     this.oktaAuth.signInWithRedirect();
+  }
+
+  search() {
+    this.genericSearchService.test().subscribe(
+      // (notifs: INotification[]) => {
+      (data: HttpResponse<any>) => {
+        let data2 = JSON.stringify(data.body);
+        this.sessionStore.update({ lastSearchResult: data.body });
+      }, err => {
+        // Log errors if any
+        console.log(err);
+      }
+    );
   }
 
   registerLastError(error: DbFlowError) {

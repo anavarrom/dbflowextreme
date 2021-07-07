@@ -19,14 +19,16 @@ type AppointmentArrayResponseType = HttpResponse<IAppointment[]>;
 export class RestTestService {
 
   public publicTestURL    : string = 'http://localhost:8080/management/gateway';
-  public accountURL       : string = 'http://localhost:8080/api/account'; 
+  public accountURL       : string = 'http://localhost:8080/api/account';
+  public testElasticURL       : string = 'http://localhost:8081/test/testElastic';
+
 
   public testSecuredServerURL = SERVER_ENDPOINT + 'testSecuredServer';
   public testServerURL = environment.gatewayServer + '/management/testServer';
-  
+
   constructor(protected http: HttpClient) {}
 
- 
+
 
   testGateway(): Observable<HttpResponse<any>> {
     return this.http
@@ -44,5 +46,9 @@ export class RestTestService {
 
   testSecuredServer(): Observable<HttpResponse<any>> {
     return this.http.get<any>(`${this.testSecuredServerURL}`, { observe: 'response' });
+  }
+
+  testElastic(): Observable<HttpResponse<any>> {
+    return this.http.get<any>(`${this.testElasticURL}`, { observe: 'response' });
   }
 }

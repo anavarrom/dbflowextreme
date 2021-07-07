@@ -12,6 +12,7 @@ import { AuthInterceptor } from './core/auth/auth.interceptor';
 import { SafeKeepingDetailComponent } from './secure/calendars/safe-keeping-detail/safe-keeping-detail.component';
 import { CalendarsTabePageComponent } from './secure/calendars/calendars-tabe-page/calendars-tabe-page.component';
 import { NotificationsListComponent } from './secure/notifications/notifications-list/notifications-list.component';
+import { GenericSearchComponent } from './secure/search/generic-search/generic-search.component';
 
 const oktaConfig = {
   issuer: 'https://dev-811107.okta.com/oauth2/default',
@@ -54,6 +55,12 @@ const routes: Routes = [
   {
     path: 'error',
     component: ErrorPageComponent,
+    canActivate: [OktaAuthGuard],
+    data: { roles: ['ROLE_USER'] }
+  },
+  {
+    path: 'genericSearch',
+    component: GenericSearchComponent,
     canActivate: [OktaAuthGuard],
     data: { roles: ['ROLE_USER'] }
   },
